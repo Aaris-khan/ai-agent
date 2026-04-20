@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Arif AI Agent • V18.0 ULTIMATE MEGA</title>
+    <title>Arif AI Agent • V19.0 GREEN THEME</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
@@ -11,97 +11,136 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <style>
-        /* ================= iOS PREMIUM THEME ================= */
+        /* ================= THEME VARIABLES ================= */
         :root { 
-            --ios-green: #30D158; --ios-blue: #0A84FF; --ios-red: #FF453A; --ios-purple: #BF5AF2; --ios-gray: #8E8E93; --ios-cyan: #32ADE6; --ios-orange: #FF9F0A; --ios-dark: #1C1C1E;
-            --bg: #000000; --card: rgba(28, 28, 30, 0.7); --border: rgba(255, 255, 255, 0.08); 
+            /* Core Colors (Green is the new Primary) */
+            --primary: #34C759; 
+            --primary-light: rgba(52, 199, 89, 0.15);
+            --danger: #FF3B30;
+            --warning: #FF9F0A;
+            --purple: #BF5AF2;
+
+            /* Dark Theme (Default) */
+            --bg: #000000; 
+            --card: #1C1C1E; 
+            --card-glass: rgba(28, 28, 30, 0.7);
+            --border: rgba(255, 255, 255, 0.08); 
+            --text-main: #FFFFFF;
+            --text-muted: #8E8E93;
+            --input-bg: rgba(118, 118, 128, 0.24);
         }
+
+        /* Light Theme Override */
+        .light {
+            --bg: #F2F2F7;
+            --card: #FFFFFF;
+            --card-glass: rgba(255, 255, 255, 0.8);
+            --border: rgba(0, 0, 0, 0.05);
+            --text-main: #000000;
+            --text-muted: #8E8E93;
+            --input-bg: rgba(0, 0, 0, 0.05);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; }
-        body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(circle at top left, rgba(10, 132, 255, 0.15), transparent 40%), radial-gradient(circle at bottom right, rgba(191, 90, 242, 0.15), transparent 50%); z-index: -1; }
+        body { background-color: var(--bg); color: var(--text-main); overflow-x: hidden; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
+        
+        body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(circle at top left, var(--primary-light), transparent 40%); z-index: -1; }
 
         .app-container { max-width: 480px; margin: 0 auto; padding: 30px 20px 100px; }
         .view { display: none; flex-direction: column; animation: slideFadeUp 0.4s ease; }
         .view.active { display: flex; }
         @keyframes slideFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .glass-card { background: var(--card); backdrop-filter: blur(40px); border: 0.5px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .glass-card { background: var(--card-glass); backdrop-filter: blur(40px); border: 1px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s ease; }
         
-        h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 20px; }
-        .section-title { font-size: 13px; font-weight: 600; color: var(--ios-gray); text-transform: uppercase; letter-spacing: 0.05em; margin: 24px 0 10px 12px; display: flex; justify-content: space-between;}
+        h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text-main); }
+        .section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin: 24px 0 10px 12px; display: flex; justify-content: space-between;}
 
-        .input-box { width: 100%; background: rgba(118, 118, 128, 0.24); border: none; border-radius: 14px; padding: 16px; color: #fff; font-size: 16px; outline: none; transition: 0.2s; }
-        .input-box:focus { background: rgba(118, 118, 128, 0.34); border: 1px solid var(--ios-cyan); }
+        .input-box { width: 100%; background: var(--input-bg); border: 1px solid transparent; border-radius: 14px; padding: 16px; color: var(--text-main); font-size: 16px; outline: none; transition: 0.2s; }
+        .input-box:focus { border: 1px solid var(--primary); }
         
         .btn { border: none; border-radius: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; width: 100%; font-size: 16px; transition: 0.2s; }
-        .btn-primary { background: linear-gradient(135deg, var(--ios-blue), var(--ios-purple)); color: #fff; }
+        
+        /* New Green Primary Button */
+        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 16px var(--primary-light); }
         .btn-primary:active { transform: scale(0.96); opacity: 0.8; }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
-        .btn-secondary:active { background: rgba(255,255,255,0.2); }
+        
+        .btn-secondary { background: var(--input-bg); color: var(--text-main); padding: 10px; font-size: 13px; border-radius: 12px; }
+        .btn-secondary:active { opacity: 0.8; }
 
-        .icon-box { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; }
+        .icon-box { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-main); background: var(--card); border: 1px solid var(--border); transition: 0.3s; cursor: pointer;}
+        .icon-box:active { transform: scale(0.9); }
 
         /* Sensors */
         .sensor-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-        .sensor-item { background: rgba(118, 118, 128, 0.18); border-radius: 16px; padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #fff; font-size: 12px; font-weight: 500; }
-        .sensor-item i { font-size: 20px; color: var(--ios-blue); }
+        .sensor-item { background: var(--input-bg); border-radius: 16px; padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-main); font-size: 12px; font-weight: 500; }
+        .sensor-item i { font-size: 20px; color: var(--primary); }
+
+        /* Status Bar */
+        .status-bar { border-left: 4px solid var(--primary); display: flex; justify-content: space-between; align-items: center;}
+        .status-dot { display: inline-block; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px var(--primary); animation: blink 2s infinite;}
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
         /* Step Builder UI */
         .step-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-        .step-item { background: rgba(0,0,0,0.4); border: 1px solid var(--border); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .step-item { background: var(--input-bg); border: 1px solid var(--border); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
         .step-info { display: flex; flex-direction: column; gap: 4px; }
-        .step-type { font-size: 11px; font-weight: 800; color: var(--ios-cyan); text-transform: uppercase; }
-        .step-detail { font-size: 13px; color: #fff; font-family: monospace;}
-
-        /* App Grid UI */
-        .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px;}
-        .app-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 11px; color: var(--ios-gray); cursor: pointer;}
-        .app-icon-box { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #fff; }
-
-        /* Floating Conversational AI (Restored) */
-        .fab { position: fixed; bottom: 40px; right: 24px; width: 60px; height: 60px; border-radius: 30px; background: linear-gradient(135deg, var(--ios-blue), var(--ios-cyan)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 100; cursor: pointer; box-shadow: 0 10px 30px rgba(10, 132, 255, 0.4); }
-        .chat-area { overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; height: 350px; }
-        .msg { padding: 12px 16px; border-radius: 20px; font-size: 15px; max-width: 85%; }
-        .msg-ai { background: rgba(255,255,255,0.1); align-self: flex-start; border-bottom-left-radius: 4px; }
-        .msg-user { background: var(--ios-blue); align-self: flex-end; border-bottom-right-radius: 4px; color: white;}
+        .step-type { font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
+        .step-detail { font-size: 13px; color: var(--text-main); font-family: monospace;}
 
         /* Bottom Sheets */
-        .sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: var(--ios-dark); border-top-left-radius: 24px; border-top-right-radius: 24px; z-index: 102; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.5); padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
+        .sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: var(--card); border-top-left-radius: 24px; border-top-right-radius: 24px; z-index: 102; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.2); padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
         .sheet.open { bottom: 0; }
         .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
-        
         .tree-container { overflow-y: auto; flex: 1; margin-top: 10px; }
-        .tree-node { padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 8px; cursor: pointer; border-left: 3px solid var(--ios-cyan); }
+        .tree-node { padding: 12px; background: var(--input-bg); border-radius: 12px; margin-bottom: 8px; cursor: pointer; border-left: 3px solid var(--primary); }
 
         /* Toasts & Modals */
-        .toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: #000; border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; gap: 12px; color: #fff; font-size: 14px; font-weight: 500; z-index: 9999; transition: 0.4s ease; border: 1px solid var(--border); }
+        .toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: var(--bg); border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; z-index: 9999; transition: 0.4s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .toast.show { top: 20px; }
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--ios-dark); padding: 20px; border-radius: 24px; width: 100%; border: 1px solid var(--border); }
+        .modal-content { background: var(--card); padding: 20px; border-radius: 24px; width: 100%; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
 
-<div id="toast" class="toast"><i id="toast-icon" class="fa-solid fa-circle-info" style="color: var(--ios-blue);"></i> <span id="toast-msg">Notice</span></div>
+<div id="toast" class="toast"><i id="toast-icon" class="fa-solid fa-circle-info" style="color: var(--bg);"></i> <span id="toast-msg">Notice</span></div>
 
 <div id="view-login" class="view active" style="justify-content: center; align-items: center; text-align: center; height: 90vh;">
-    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #007AFF, #AF52DE); border-radius: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px;">
-        <i class="fa-solid fa-bolt text-5xl text-white"></i>
+    <div style="width: 100px; height: 100px; background: var(--card); border: 1px solid var(--border); border-radius: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 15px 30px var(--primary-light);">
+        <i class="fa-solid fa-leaf text-5xl" style="color: var(--primary); font-size: 45px;"></i>
     </div>
-    <h1 style="font-size: 38px; margin-bottom: 8px;">ArifOS V18</h1>
-    <p style="color: var(--ios-gray); font-size: 17px; margin-bottom: 40px;">The Ultimate Mega Blueprint</p>
-    <input type="password" id="api-key" class="input-box" style="margin-bottom: 20px; text-align: center;" placeholder="Enter Gemini API Key">
-    <button class="btn btn-primary" onclick="initApp()">Initialize System</button>
-    <button style="background: none; border: none; color: var(--ios-blue); margin-top: 24px; font-weight: 500; font-size: 15px;" onclick="demoMode()">Continue in Demo Mode</button>
+    
+    <h1 style="font-size: 38px; margin-bottom: 8px;">ArifOS V19</h1>
+    <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 50px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;">Pro Automation Hub</p>
+    
+    <button class="btn btn-primary" style="padding: 18px; font-size: 18px; border-radius: 20px; width: 90%; color: #fff;" onclick="startSession()">
+        Continue to Dashboard
+    </button>
 </div>
 
 <div id="view-main" class="view app-container">
+    
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
         <div>
-            <p style="color: var(--ios-gray); font-size: 13px; font-weight: 600; text-transform: uppercase;">Arif Engine</p>
-            <h1 style="margin-bottom: 0;">Dashboard</h1>
+            <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; text-transform: uppercase;">Arif Engine</p>
+            <h1 style="margin-bottom: 0; color: var(--primary);">Dashboard</h1>
         </div>
-        <div class="icon-box" style="background: rgba(255, 69, 58, 0.2); color: var(--ios-red);" onclick="logout()"><i class="fa-solid fa-power-off"></i></div>
+        
+        <div style="display: flex; gap: 10px;">
+            <div class="icon-box" onclick="toggleTheme()" id="theme-btn"><i class="fa-solid fa-moon"></i></div>
+            <div class="icon-box" style="color: var(--danger);" onclick="logout()"><i class="fa-solid fa-power-off"></i></div>
+        </div>
+    </div>
+
+    <div class="glass-card status-bar" style="padding: 16px;">
+        <div>
+            <p style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 4px;">Agent Status</p>
+            <h3 style="font-size: 15px; color: var(--text-main); margin: 0;" id="agent-status-text">Monitoring System...</h3>
+        </div>
+        <div style="background: var(--primary-light); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: var(--primary);">
+            <span class="status-dot"></span> ACTIVE
+        </div>
     </div>
 
     <div class="sensor-grid">
@@ -112,118 +151,78 @@
     </div>
 
     <div class="glass-card">
-        <h3 style="margin-bottom: 4px; font-size: 18px;"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--ios-cyan);"></i> Smart AI Builder</h3>
-        <p style="color: var(--ios-gray); font-size: 13px; margin-bottom: 16px;">Type natural language to auto-generate a routine.</p>
-        
-        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-            <textarea id="builder-prompt" class="input-box" style="height: 60px; resize: none; margin-bottom: 0;" placeholder="E.g. Turn off wifi at 11 PM..."></textarea>
-            <button class="btn-secondary" style="width: 60px; border-radius: 14px; color: var(--ios-cyan);" onclick="showToast('Listening...', 'info')">
-                <i class="fa-solid fa-microphone"></i>
-            </button>
+        <h3 style="margin-bottom: 4px; font-size: 16px;"><i class="fa-solid fa-key" style="color: var(--warning);"></i> API Configuration</h3>
+        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 12px;">Enter Gemini Key for Smart AI features.</p>
+        <div style="display: flex; gap: 10px;">
+            <input type="password" id="api-key" class="input-box" placeholder="Enter API Key here..." style="padding: 12px;">
+            <button class="btn btn-primary" style="width: auto; padding: 0 20px;" onclick="saveApiKey()"><i class="fa-solid fa-check"></i></button>
         </div>
-        <button class="btn btn-secondary" onclick="generateAIRule()">Generate AI Routine</button>
     </div>
 
     <div class="glass-card">
-        <h3 style="margin-bottom: 4px; font-size: 18px;"><i class="fa-solid fa-layer-group" style="color: var(--ios-orange);"></i> Advanced Macro Editor</h3>
-        <p style="color: var(--ios-gray); font-size: 13px; margin-bottom: 16px;">Build JSON logic block by block manually.</p>
-        <button class="btn btn-primary" onclick="openMacroBuilder()"><i class="fa-solid fa-tools"></i> Open Macro Workspace</button>
+        <h3 style="margin-bottom: 4px; font-size: 18px;"><i class="fa-solid fa-layer-group" style="color: var(--primary);"></i> Advanced Macro Editor</h3>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Build logic block by block manually.</p>
+        <button class="btn btn-primary" onclick="openMacroBuilder()"><i class="fa-solid fa-tools"></i> Open Workspace</button>
     </div>
 
-    <div class="section-title"><span>Saved Automations</span> <i class="fa-solid fa-download" style="cursor:pointer;" onclick="showToast('Rules Exported', 'success')"></i></div>
-    <div id="rules-container">
-        </div>
+    <div class="section-title"><span>Saved Automations</span> <i class="fa-solid fa-download" style="cursor:pointer;" onclick="showToast('Exported', 'success')"></i></div>
+    <div id="rules-container"></div>
 </div>
 
-<div class="fab" id="main-fab" onclick="openSheet('agent-chat-sheet')" style="display: none;">
-    <i class="fa-solid fa-robot"></i>
-</div>
-
-<div class="sheet" id="agent-chat-sheet" style="height: 80vh;">
-    <div class="sheet-header">
-        <b style="font-size: 18px;">Arif Assistant</b>
-        <button class="icon-box" style="background: rgba(255,255,255,0.1); width: 30px; height: 30px;" onclick="closeSheet('agent-chat-sheet')"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    
-    <div class="chat-area" id="chat-body">
-        <div class="msg msg-ai">Hello! Main background mein active hoon. Aap mujhe commands de sakte hain ya madad maang sakte hain.</div>
-    </div>
-    
-    <div style="display: flex; gap: 10px; margin-top: 10px;">
-        <input type="text" id="chat-input" class="input-box" style="margin: 0; border-radius: 20px;" placeholder="Message Arif...">
-        <button onclick="sendChat()" style="background: var(--ios-blue); border: none; border-radius: 50%; width: 50px; height: 50px; color: #fff;"><i class="fa-solid fa-arrow-up"></i></button>
-    </div>
-</div>
 
 <div class="sheet" id="macro-workspace" style="height: 90vh;">
     <div class="sheet-header">
-        <h3 style="margin:0;">Macro Workspace</h3>
-        <button class="icon-box" style="background: rgba(255,255,255,0.1); width: 30px; height: 30px;" onclick="closeSheet('macro-workspace')"><i class="fa-solid fa-xmark"></i></button>
+        <h3 style="margin:0; color: var(--text-main);">Macro Workspace</h3>
+        <button class="icon-box" onclick="closeSheet('macro-workspace')"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
     <div style="flex: 1; overflow-y: auto;">
-        <input type="text" id="macro-name" class="input-box" placeholder="Rule Name (e.g., Auto Reply WhatsApp)">
+        <input type="text" id="macro-name" class="input-box" placeholder="Rule Name (e.g., Auto Reply WhatsApp)" style="margin-bottom: 15px;">
         
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <select id="macro-trigger" class="input-box" style="flex: 1;">
+            <select id="macro-trigger" class="input-box" style="flex: 1; padding: 12px;">
                 <option value="manual">Manual Trigger</option>
                 <option value="time">Time Trigger</option>
                 <option value="battery">Battery Trigger</option>
             </select>
-            <input type="text" id="macro-trigger-val" class="input-box" style="flex: 1;" placeholder="Value (e.g., 10:00)">
+            <input type="text" id="macro-trigger-val" class="input-box" style="flex: 1; padding: 12px;" placeholder="Value (e.g., 10:00)">
         </div>
 
-        <button class="btn btn-secondary" style="margin-bottom: 15px; background: rgba(10, 132, 255, 0.15); color: var(--ios-blue);" onclick="openSheet('app-selector-sheet')">
-            <i class="fa-solid fa-bullseye"></i> Select Target App Scope
-        </button>
-
-        <p style="font-size: 13px; font-weight: bold; color: var(--ios-cyan); margin-bottom: 10px; text-transform: uppercase;">Action Sequence:</p>
+        <p style="font-size: 12px; font-weight: bold; color: var(--primary); margin-bottom: 10px; text-transform: uppercase;">Action Sequence:</p>
         
         <div class="step-list" id="live-steps"></div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-            <button class="btn btn-secondary" onclick="openSheet('ui-inspector')"><i class="fa-solid fa-crosshairs"></i> UI Inspector</button>
+            <button class="btn btn-secondary" onclick="openSheet('ui-inspector')"><i class="fa-solid fa-crosshairs" style="color: var(--primary);"></i> UI Inspector</button>
             <button class="btn btn-secondary" onclick="addDelayStep()"><i class="fa-solid fa-hourglass-half"></i> Add Delay</button>
             <button class="btn btn-secondary" onclick="addOpenAppStep()"><i class="fa-solid fa-mobile"></i> Open App</button>
             <button class="btn btn-secondary" onclick="addSystemAction('BACK')"><i class="fa-solid fa-arrow-left"></i> Press Back</button>
         </div>
     </div>
 
-    <button class="btn btn-primary" style="margin-top: 15px;" onclick="saveFinalMacro()"><i class="fa-solid fa-check-double"></i> Save Automation</button>
-</div>
-
-<div class="sheet" id="app-selector-sheet">
-    <div class="sheet-header">
-        <b style="font-size: 18px; color: var(--ios-cyan);">Target App</b>
-        <button class="icon-box" style="background: rgba(255,255,255,0.1); width: 30px; height: 30px;" onclick="closeSheet('app-selector-sheet')"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="app-grid">
-        <div class="app-icon" onclick="selectTargetApp('System')"><div class="app-icon-box" style="background: #8E8E93;"><i class="fa-solid fa-gear"></i></div>System</div>
-        <div class="app-icon" onclick="selectTargetApp('WhatsApp')"><div class="app-icon-box" style="background: #25D366;"><i class="fa-brands fa-whatsapp"></i></div>WhatsApp</div>
-        <div class="app-icon" onclick="selectTargetApp('YouTube')"><div class="app-icon-box" style="background: #FF0000;"><i class="fa-brands fa-youtube"></i></div>YouTube</div>
-    </div>
+    <button class="btn btn-primary" style="margin-top: 15px;" onclick="saveFinalMacro()">Save Automation</button>
 </div>
 
 <div class="sheet" id="ui-inspector">
     <div class="sheet-header">
-        <div><b style="font-size: 16px;">UI Inspector</b><br><span style="font-size: 11px; color: var(--ios-gray);">Simulated Android Node Tree</span></div>
-        <button class="icon-box" style="background: rgba(255,255,255,0.1); width: 30px; height: 30px;" onclick="closeSheet('ui-inspector')"><i class="fa-solid fa-xmark"></i></button>
+        <div><b style="font-size: 16px; color: var(--text-main);">UI Inspector</b><br><span style="font-size: 11px; color: var(--text-muted);">Simulated Node Tree</span></div>
+        <button class="icon-box" onclick="closeSheet('ui-inspector')"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="tree-container" id="mock-tree"></div>
 </div>
 
 <div class="modal" id="action-modal">
     <div class="modal-content">
-        <h3 id="action-node-name" style="margin-bottom: 15px; color: var(--ios-cyan);">Node Selected</h3>
+        <h3 id="action-node-name" style="margin-bottom: 15px; color: var(--primary);">Node Selected</h3>
         
         <div style="display: flex; flex-direction: column; gap: 10px;">
-            <button class="btn btn-secondary" style="background: rgba(50, 173, 230, 0.2); color: var(--ios-cyan);" onclick="addNodeStep('CLICK')"><i class="fa-solid fa-hand-pointer"></i> Perform Click</button>
-            <button class="btn btn-secondary" style="background: rgba(191, 90, 242, 0.2); color: var(--ios-purple);" onclick="showTextInput()"><i class="fa-solid fa-keyboard"></i> Type Text (Input)</button>
-            <button class="btn btn-secondary" style="background: rgba(255, 159, 10, 0.2); color: var(--ios-orange);" onclick="addNodeStep('EXTRACT_TEXT')"><i class="fa-solid fa-copy"></i> Extract Text to Variable</button>
+            <button class="btn btn-secondary" style="color: var(--primary);" onclick="addNodeStep('CLICK')"><i class="fa-solid fa-hand-pointer"></i> Perform Click</button>
+            <button class="btn btn-secondary" onclick="showTextInput()"><i class="fa-solid fa-keyboard"></i> Type Text</button>
+            <button class="btn btn-secondary" onclick="addNodeStep('EXTRACT_TEXT')"><i class="fa-solid fa-copy"></i> Extract to Var</button>
         </div>
         
         <div id="text-input-area" style="display: none; margin-top: 15px;">
-            <input type="text" id="type-text-val" class="input-box" placeholder="Enter text or %VAR% to type...">
+            <input type="text" id="type-text-val" class="input-box" placeholder="Enter text..." style="margin-bottom: 10px;">
             <button class="btn btn-primary" onclick="addNodeStep('TYPE')">Save Type Action</button>
         </div>
         <button class="btn btn-secondary" style="margin-top: 15px;" onclick="closeModal('action-modal')">Cancel</button>
@@ -232,11 +231,11 @@
 
 <script>
     // ==================== STATE MANAGEMENT ====================
-    let savedRules = JSON.parse(localStorage.getItem('arif_real_rules_v18')) || [];
+    let savedRules = JSON.parse(localStorage.getItem('arif_rules_v19')) || [];
     let currentMacroDraft = []; 
     let activeNode = null; 
-    let geminiKey = localStorage.getItem('arif_key_v18') || '';
 
+    // Fake Nodes
     const mockNodes = [
         { class: "android.widget.ImageButton", id: "com.whatsapp:id/back", text: "Back" },
         { class: "android.widget.TextView", id: "com.whatsapp:id/contact_name", text: "Boss" },
@@ -244,15 +243,40 @@
         { class: "android.widget.ImageButton", id: "com.whatsapp:id/send", text: "Send" }
     ];
 
-    window.onload = () => { if(geminiKey) startSession(); };
+    window.onload = () => { 
+        checkTheme();
+        // Check if previously logged in (optional logic, skipping for direct continue)
+    };
+
+    // --- Theme Toggle Logic ---
+    function checkTheme() {
+        const savedTheme = localStorage.getItem('arif_theme') || 'dark';
+        if (savedTheme === 'light') {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+            document.getElementById('theme-btn').innerHTML = '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>';
+        }
+    }
+
+    function toggleTheme() {
+        document.documentElement.classList.toggle('light');
+        const isLight = document.documentElement.classList.contains('light');
+        localStorage.setItem('arif_theme', isLight ? 'light' : 'dark');
+        
+        const btn = document.getElementById('theme-btn');
+        if(isLight) {
+            document.documentElement.classList.remove('dark');
+            btn.innerHTML = '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>';
+        } else {
+            document.documentElement.classList.add('dark');
+            btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        }
+    }
 
     // --- UI Helpers ---
     function showToast(msg, type = 'info') {
         const t = document.getElementById('toast');
         document.getElementById('toast-msg').innerText = msg;
-        const icon = document.getElementById('toast-icon');
-        icon.className = type === 'success' ? "fa-solid fa-check-circle" : "fa-solid fa-info-circle";
-        icon.style.color = type === 'success' ? "var(--ios-green)" : (type === 'error' ? "var(--ios-red)" : "var(--ios-blue)");
         t.classList.add('show');
         setTimeout(() => t.classList.remove('show'), 2500);
     }
@@ -263,19 +287,14 @@
     function closeModal(id) { document.getElementById(id).style.display = 'none'; document.getElementById('text-input-area').style.display = 'none'; }
 
     // --- Core Navigation ---
-    function initApp() {
-        geminiKey = document.getElementById('api-key').value.trim();
-        if(!geminiKey) return showToast("API Key required!", "error");
-        localStorage.setItem('arif_key_v18', geminiKey);
-        startSession();
-    }
-    function demoMode() { geminiKey = 'DEMO'; startSession(); showToast("Demo Mode Activated", "info"); }
-    function logout() { localStorage.removeItem('arif_key_v18'); location.reload(); }
-
     function startSession() {
         document.getElementById('view-login').classList.remove('active');
         document.getElementById('view-main').classList.add('active');
-        document.getElementById('main-fab').style.display = 'flex';
+        
+        // Restore API Key if saved
+        const key = localStorage.getItem('arif_api_key') || '';
+        document.getElementById('api-key').value = key;
+
         renderRules();
         setInterval(() => {
             let d = new Date();
@@ -283,42 +302,19 @@
         }, 1000);
     }
 
-    // --- Chatbot Logic (Restored) ---
-    function sendChat() {
-        const inp = document.getElementById('chat-input');
-        const txt = inp.value.trim();
-        if(!txt) return;
-        const body = document.getElementById('chat-body');
-        body.innerHTML += `<div class="msg msg-user">${txt}</div>`;
-        inp.value = ''; body.scrollTop = body.scrollHeight;
-        
-        setTimeout(() => {
-            body.innerHTML += `<div class="msg msg-ai">Main background system ko monitor kar raha hoon. User Request logged.</div>`;
-            body.scrollTop = body.scrollHeight;
-        }, 800);
+    function saveApiKey() {
+        const key = document.getElementById('api-key').value.trim();
+        localStorage.setItem('arif_api_key', key);
+        showToast("API Key Saved!", "success");
     }
 
-    function generateAIRule() {
-        showToast("Simulating AI Generation...", "info");
-        setTimeout(() => {
-            savedRules.unshift({
-                id: Date.now(), name: "AI Generated Rule", trigger: "time", triggerValue: "11:00",
-                actions: [{type: "SYSTEM_ACTION", action: "TOGGLE_WIFI"}], enabled: true
-            });
-            localStorage.setItem('arif_real_rules_v18', JSON.stringify(savedRules));
-            renderRules();
-            showToast("Rule Generated via AI", "success");
-        }, 1000);
+    function logout() { location.reload(); }
+
+    function updateAgentStatus(text) {
+        document.getElementById('agent-status-text').innerText = text;
     }
 
-    // --- App Selector (From V16) ---
-    function selectTargetApp(name) {
-        showToast(`Scope set to ${name}`, "success");
-        closeSheet('app-selector-sheet');
-    }
-
-    // ==================== MACRO BUILDER LOGIC (From V17) ====================
-    
+    // ==================== MACRO BUILDER LOGIC (Unchanged) ====================
     function openMacroBuilder() {
         currentMacroDraft = [];
         document.getElementById('macro-name').value = '';
@@ -327,8 +323,8 @@
         
         document.getElementById('mock-tree').innerHTML = mockNodes.map(n => `
             <div class="tree-node" onclick="handleNodeSelect('${n.id}', '${n.class}')">
-                <span style="font-weight:bold; color:var(--ios-purple); font-size: 12px;">${n.class.split('.').pop()}</span><br>
-                <span style="color:var(--ios-green); font-size: 11px; word-break: break-all;">${n.id}</span>
+                <span style="font-weight:bold; color:var(--text-main); font-size: 13px;">${n.class.split('.').pop()}</span><br>
+                <span style="color:var(--text-muted); font-size: 11px;">${n.id}</span>
             </div>
         `).join('');
     }
@@ -359,7 +355,7 @@
         let step = { type: "UI_ACTION", targetId: activeNode, action: actionType };
         if(actionType === 'TYPE') {
             const txt = document.getElementById('type-text-val').value;
-            if(!txt) return showToast("Enter text to type", "error");
+            if(!txt) return showToast("Enter text", "error");
             step.textValue = txt;
         }
         currentMacroDraft.push(step);
@@ -369,11 +365,11 @@
     function renderLiveSteps() {
         const container = document.getElementById('live-steps');
         if(currentMacroDraft.length === 0) {
-            container.innerHTML = `<p style="color:var(--ios-gray); font-size: 12px; text-align:center;">No actions added yet.</p>`; return;
+            container.innerHTML = `<p style="color:var(--text-muted); font-size: 12px; text-align:center;">No actions added yet.</p>`; return;
         }
         container.innerHTML = currentMacroDraft.map((step, index) => {
-            let detail = step.type === "DELAY" ? `Wait ${step.value}ms` : (step.type === "OPEN_APP" ? `Launch: ${step.package}` : (step.type === "SYSTEM_ACTION" ? `Press ${step.action}` : `Target: ${step.targetId.split('/').pop()} ${step.textValue ? '-> "'+step.textValue+'"' : ''}`));
-            return `<div class="step-item"><div class="step-info"><span class="step-type">[${index + 1}] ${step.type} ${step.action ? '- '+step.action : ''}</span><span class="step-detail">${detail}</span></div><i class="fa-solid fa-trash" style="color: var(--ios-red); padding: 10px;" onclick="removeStep(${index})"></i></div>`;
+            let detail = step.type === "DELAY" ? `Wait ${step.value}ms` : (step.type === "OPEN_APP" ? `Launch: ${step.package}` : (step.type === "SYSTEM_ACTION" ? `Press ${step.action}` : `Target: ${step.targetId.split('/').pop()}`));
+            return `<div class="step-item"><div class="step-info"><span class="step-type">[${index + 1}] ${step.type}</span><span class="step-detail">${detail}</span></div><i class="fa-solid fa-trash" style="color: var(--danger); padding: 10px;" onclick="removeStep(${index})"></i></div>`;
         }).join('');
     }
 
@@ -386,25 +382,24 @@
             id: Date.now(), name: name, trigger: document.getElementById('macro-trigger').value, triggerValue: document.getElementById('macro-trigger-val').value || "None",
             actions: currentMacroDraft, enabled: true
         });
-        localStorage.setItem('arif_real_rules_v18', JSON.stringify(savedRules));
+        localStorage.setItem('arif_rules_v19', JSON.stringify(savedRules));
         closeSheet('macro-workspace'); renderRules(); showToast("Rule Saved!", "success");
     }
 
     function renderRules() {
         const container = document.getElementById('rules-container');
-        if(savedRules.length === 0) { container.innerHTML = `<p style="color:var(--ios-gray); font-size:13px; text-align:center;">No rules yet.</p>`; return; }
+        if(savedRules.length === 0) { container.innerHTML = `<p style="color:var(--text-muted); font-size:13px; text-align:center;">No rules yet.</p>`; return; }
         container.innerHTML = savedRules.map(rule => `
             <div class="glass-card" style="padding: 16px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                    <div><h4 style="font-size: 16px; margin-bottom: 4px;">${rule.name}</h4><span style="font-size: 11px; background: rgba(50, 173, 230, 0.2); color: var(--ios-cyan); padding: 4px 8px; border-radius: 6px; font-weight: bold; text-transform: uppercase;">Trigger: ${rule.trigger} [${rule.triggerValue}]</span></div>
-                    <button style="background: none; border: none; color: var(--ios-red); cursor:pointer;" onclick="deleteRule(${rule.id})"><i class="fa-solid fa-trash"></i></button>
+                    <div><h4 style="font-size: 16px; margin-bottom: 4px; color: var(--text-main);">${rule.name}</h4><span style="font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Trigger: ${rule.trigger} [${rule.triggerValue}]</span></div>
+                    <button style="background: none; border: none; color: var(--danger); cursor:pointer;" onclick="deleteRule(${rule.id})"><i class="fa-solid fa-trash"></i></button>
                 </div>
-                <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; font-family: monospace; font-size: 10px; color: var(--ios-green); overflow-x: auto; white-space: pre-wrap;">${JSON.stringify(rule.actions, null, 2)}</div>
             </div>
         `).join('');
     }
 
-    function deleteRule(id) { savedRules = savedRules.filter(r => r.id !== id); localStorage.setItem('arif_real_rules_v18', JSON.stringify(savedRules)); renderRules(); }
+    function deleteRule(id) { savedRules = savedRules.filter(r => r.id !== id); localStorage.setItem('arif_rules_v19', JSON.stringify(savedRules)); renderRules(); }
 </script>
 </body>
 </html>
