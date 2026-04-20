@@ -161,12 +161,14 @@
             <button class="btn btn-primary" style="width: auto; padding: 0 20px;" onclick="saveApiKey()"><i class="fa-solid fa-check"></i></button>
         </div>
     </div>
-
     <div class="glass-card">
         <h3 style="margin-bottom: 4px; font-size: 18px;"><i class="fa-solid fa-layer-group" style="color: var(--primary);"></i> Advanced Macro Editor</h3>
         <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Build logic block by block manually.</p>
-        <button class="btn btn-primary" onclick="openMacroBuilder()"><i class="fa-solid fa-tools"></i> Open Workspace</button>
+        
+        <div style="background: var(--card); border: 1px dashed var(--border); border-radius: 16px; height: 50px; width: 100%;"></div>
     </div>
+
+    
 
     <div class="section-title"><span>Saved Automations</span> <i class="fa-solid fa-download" style="cursor:pointer;" onclick="showToast('Exported', 'success')"></i></div>
     <div id="rules-container"></div>
