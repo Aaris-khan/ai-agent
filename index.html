@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Arif AI Agent • V19.1 PRO PWA</title>
+    <title>Arif AI Agent • V19.2 PRO PWA</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#34C759">
@@ -77,8 +77,7 @@
         /* Sensors */
         .sensor-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
         .sensor-item { background: var(--input-bg); border-radius: 16px; padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-main); font-size: 12px; font-weight: 500; }
-        .sensor-item i { font-size: 20px; color: var(--primary); }
-
+        
         /* Status Bar */
         .status-bar { border-left: 4px solid var(--primary); display: flex; justify-content: space-between; align-items: center;}
         .status-dot { display: inline-block; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px var(--primary); animation: blink 2s infinite;}
@@ -91,16 +90,16 @@
         .step-type { font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
         .step-detail { font-size: 13px; color: var(--text-main); font-family: monospace;}
 
-        /* Bottom Sheets */
+        /* Bottom Sheets & Modals */
         .sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: var(--card); border-top-left-radius: 24px; border-top-right-radius: 24px; z-index: 102; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.2); padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
         .sheet.open { bottom: 0; }
         .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
         .tree-container { overflow-y: auto; flex: 1; margin-top: 10px; }
         .tree-node { padding: 12px; background: var(--input-bg); border-radius: 12px; margin-bottom: 8px; cursor: pointer; border-left: 3px solid var(--primary); }
 
-        /* Toasts & Modals */
         .toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: var(--bg); border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; z-index: 9999; transition: 0.4s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .toast.show { top: 20px; }
+        
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card); padding: 20px; border-radius: 24px; width: 100%; border: 1px solid var(--border); }
 
@@ -131,12 +130,24 @@
 
 <div id="view-main" class="view app-container">
     
+    <div id="install-banner" class="glass-card" style="display: none; background: var(--primary-light); border: 1px solid var(--primary); padding: 12px 20px; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="background: var(--primary); width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center; align-items: center; color: white;">
+                <i class="fa-solid fa-download"></i>
+            </div>
+            <div>
+                <b style="font-size: 14px; color: var(--text-main);">Install ArifOS</b>
+                <p style="font-size: 11px; color: var(--text-muted);">Add to home screen for full experience</p>
+            </div>
+        </div>
+        <button id="install-btn" class="btn btn-primary" style="width: auto; padding: 8px 16px; font-size: 13px; border-radius: 12px;">Install</button>
+    </div>
+
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
         <div>
             <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; text-transform: uppercase;">Arif Engine</p>
             <h1 style="margin-bottom: 0; color: var(--primary);">Dashboard</h1>
         </div>
-        
         <div style="display: flex; gap: 10px;">
             <div class="icon-box" onclick="toggleTheme()" id="theme-btn"><i class="fa-solid fa-moon"></i></div>
             <div class="icon-box" style="color: var(--danger);" onclick="logout()"><i class="fa-solid fa-power-off"></i></div>
@@ -154,12 +165,10 @@
     </div>
 
     <div class="sensor-grid">
-        <div class="sensor-item"><i class="fa-solid fa-battery-half"></i> <span id="lbl-batt">85%</span></div>
-        
         <div class="sensor-item" style="background: var(--card); border: 1px dashed var(--border); min-height: 70px;"></div>
         <div class="sensor-item" style="background: var(--card); border: 1px dashed var(--border); min-height: 70px;"></div>
-        
-        <div class="sensor-item"><i class="fa-solid fa-database"></i> <span>Vars</span></div>
+        <div class="sensor-item" style="background: var(--card); border: 1px dashed var(--border); min-height: 70px;"></div>
+        <div class="sensor-item" style="background: var(--card); border: 1px dashed var(--border); min-height: 70px;"></div>
     </div>
 
     <div class="glass-card">
@@ -174,7 +183,6 @@
     <div class="glass-card">
         <h3 style="margin-bottom: 4px; font-size: 18px;"><i class="fa-solid fa-layer-group" style="color: var(--primary);"></i> Advanced Macro Editor</h3>
         <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Build logic block by block manually.</p>
-        
         <div style="background: var(--card); border: 1px dashed var(--border); border-radius: 16px; height: 50px; width: 100%;"></div>
     </div>
 
@@ -202,78 +210,10 @@
     </div>
 </div>
 
-<div class="sheet" id="macro-workspace" style="height: 90vh;">
-    <div class="sheet-header">
-        <h3 style="margin:0; color: var(--text-main);">Macro Workspace</h3>
-        <button class="icon-box" onclick="closeSheet('macro-workspace')"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-
-    <div style="flex: 1; overflow-y: auto;">
-        <input type="text" id="macro-name" class="input-box" placeholder="Rule Name (e.g., Auto Reply WhatsApp)" style="margin-bottom: 15px;">
-        
-        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <select id="macro-trigger" class="input-box" style="flex: 1; padding: 12px;">
-                <option value="manual">Manual Trigger</option>
-                <option value="time">Time Trigger</option>
-                <option value="battery">Battery Trigger</option>
-            </select>
-            <input type="text" id="macro-trigger-val" class="input-box" style="flex: 1; padding: 12px;" placeholder="Value (e.g., 10:00)">
-        </div>
-
-        <p style="font-size: 12px; font-weight: bold; color: var(--primary); margin-bottom: 10px; text-transform: uppercase;">Action Sequence:</p>
-        
-        <div class="step-list" id="live-steps"></div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-            <button class="btn btn-secondary" onclick="openSheet('ui-inspector')"><i class="fa-solid fa-crosshairs" style="color: var(--primary);"></i> UI Inspector</button>
-            <button class="btn btn-secondary" onclick="addDelayStep()"><i class="fa-solid fa-hourglass-half"></i> Add Delay</button>
-            <button class="btn btn-secondary" onclick="addOpenAppStep()"><i class="fa-solid fa-mobile"></i> Open App</button>
-            <button class="btn btn-secondary" onclick="addSystemAction('BACK')"><i class="fa-solid fa-arrow-left"></i> Press Back</button>
-        </div>
-    </div>
-
-    <button class="btn btn-primary" style="margin-top: 15px;" onclick="saveFinalMacro()">Save Automation</button>
-</div>
-
-<div class="sheet" id="ui-inspector">
-    <div class="sheet-header">
-        <div><b style="font-size: 16px; color: var(--text-main);">UI Inspector</b><br><span style="font-size: 11px; color: var(--text-muted);">Simulated Node Tree</span></div>
-        <button class="icon-box" onclick="closeSheet('ui-inspector')"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="tree-container" id="mock-tree"></div>
-</div>
-
-<div class="modal" id="action-modal">
-    <div class="modal-content">
-        <h3 id="action-node-name" style="margin-bottom: 15px; color: var(--primary);">Node Selected</h3>
-        
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <button class="btn btn-secondary" style="color: var(--primary);" onclick="addNodeStep('CLICK')"><i class="fa-solid fa-hand-pointer"></i> Perform Click</button>
-            <button class="btn btn-secondary" onclick="showTextInput()"><i class="fa-solid fa-keyboard"></i> Type Text</button>
-            <button class="btn btn-secondary" onclick="addNodeStep('EXTRACT_TEXT')"><i class="fa-solid fa-copy"></i> Extract to Var</button>
-        </div>
-        
-        <div id="text-input-area" style="display: none; margin-top: 15px;">
-            <input type="text" id="type-text-val" class="input-box" placeholder="Enter text..." style="margin-bottom: 10px;">
-            <button class="btn btn-primary" onclick="addNodeStep('TYPE')">Save Type Action</button>
-        </div>
-        <button class="btn btn-secondary" style="margin-top: 15px;" onclick="closeModal('action-modal')">Cancel</button>
-    </div>
-</div>
-
 <script>
     // ==================== STATE MANAGEMENT ====================
     let savedRules = JSON.parse(localStorage.getItem('arif_rules_v19')) || [];
-    let currentMacroDraft = []; 
-    let activeNode = null; 
-
-    const mockNodes = [
-        { class: "android.widget.ImageButton", id: "com.whatsapp:id/back", text: "Back" },
-        { class: "android.widget.TextView", id: "com.whatsapp:id/contact_name", text: "Boss" },
-        { class: "android.widget.EditText", id: "com.whatsapp:id/entry", text: "Message..." },
-        { class: "android.widget.ImageButton", id: "com.whatsapp:id/send", text: "Send" }
-    ];
-
+    
     window.onload = () => { 
         checkTheme();
     };
@@ -313,8 +253,6 @@
 
     function openSheet(id) { document.getElementById(id).classList.add('open'); }
     function closeSheet(id) { document.getElementById(id).classList.remove('open'); }
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; document.getElementById('text-input-area').style.display = 'none'; }
 
     // --- Core Navigation ---
     function startSession() {
@@ -324,7 +262,6 @@
         
         const key = localStorage.getItem('arif_api_key') || '';
         document.getElementById('api-key').value = key;
-
         renderRules();
     }
 
@@ -335,10 +272,6 @@
     }
 
     function logout() { location.reload(); }
-
-    function updateAgentStatus(text) {
-        document.getElementById('agent-status-text').innerText = text;
-    }
 
     // --- Chatbot Logic ---
     function sendChat() {
@@ -355,94 +288,48 @@
         }, 800);
     }
 
-    // --- Macro Logic ---
-    function openMacroBuilder() {
-        currentMacroDraft = [];
-        document.getElementById('macro-name').value = '';
-        renderLiveSteps();
-        openSheet('macro-workspace');
-        
-        document.getElementById('mock-tree').innerHTML = mockNodes.map(n => `
-            <div class="tree-node" onclick="handleNodeSelect('${n.id}', '${n.class}')">
-                <span style="font-weight:bold; color:var(--text-main); font-size: 13px;">${n.class.split('.').pop()}</span><br>
-                <span style="color:var(--text-muted); font-size: 11px;">${n.id}</span>
-            </div>
-        `).join('');
-    }
-
-    function addDelayStep() {
-        const ms = prompt("Enter delay in ms (e.g. 2000):", "2000");
-        if(ms) { currentMacroDraft.push({ type: "DELAY", value: parseInt(ms) }); renderLiveSteps(); }
-    }
-
-    function addOpenAppStep() {
-        const pkg = prompt("Enter App Package Name:", "com.whatsapp");
-        if(pkg) { currentMacroDraft.push({ type: "OPEN_APP", package: pkg }); renderLiveSteps(); }
-    }
-
-    function addSystemAction(action) {
-        currentMacroDraft.push({ type: "SYSTEM_ACTION", action: action }); renderLiveSteps();
-    }
-
-    function handleNodeSelect(id, className) {
-        activeNode = id;
-        document.getElementById('action-node-name').innerText = className.split('.').pop();
-        openModal('action-modal');
-    }
-
-    function showTextInput() { document.getElementById('text-input-area').style.display = 'block'; }
-
-    function addNodeStep(actionType) {
-        let step = { type: "UI_ACTION", targetId: activeNode, action: actionType };
-        if(actionType === 'TYPE') {
-            const txt = document.getElementById('type-text-val').value;
-            if(!txt) return showToast("Enter text", "error");
-            step.textValue = txt;
-        }
-        currentMacroDraft.push(step);
-        closeModal('action-modal'); closeSheet('ui-inspector'); renderLiveSteps();
-    }
-
-    function renderLiveSteps() {
-        const container = document.getElementById('live-steps');
-        if(currentMacroDraft.length === 0) {
-            container.innerHTML = `<p style="color:var(--text-muted); font-size: 12px; text-align:center;">No actions added yet.</p>`; return;
-        }
-        container.innerHTML = currentMacroDraft.map((step, index) => {
-            let detail = step.type === "DELAY" ? `Wait ${step.value}ms` : (step.type === "OPEN_APP" ? `Launch: ${step.package}` : (step.type === "SYSTEM_ACTION" ? `Press ${step.action}` : `Target: ${step.targetId.split('/').pop()}`));
-            return `<div class="step-item"><div class="step-info"><span class="step-type">[${index + 1}] ${step.type}</span><span class="step-detail">${detail}</span></div><i class="fa-solid fa-trash" style="color: var(--danger); padding: 10px;" onclick="removeStep(${index})"></i></div>`;
-        }).join('');
-    }
-
-    function removeStep(index) { currentMacroDraft.splice(index, 1); renderLiveSteps(); }
-
-    function saveFinalMacro() {
-        const name = document.getElementById('macro-name').value;
-        if(!name || currentMacroDraft.length === 0) return showToast("Enter name & steps!", "error");
-        savedRules.unshift({
-            id: Date.now(), name: name, trigger: document.getElementById('macro-trigger').value, triggerValue: document.getElementById('macro-trigger-val').value || "None",
-            actions: currentMacroDraft, enabled: true
-        });
-        localStorage.setItem('arif_rules_v19', JSON.stringify(savedRules));
-        closeSheet('macro-workspace'); renderRules(); showToast("Rule Saved!", "success");
-    }
-
+    // --- Rules Rendering ---
     function renderRules() {
         const container = document.getElementById('rules-container');
         if(savedRules.length === 0) { container.innerHTML = `<p style="color:var(--text-muted); font-size:13px; text-align:center;">No rules yet.</p>`; return; }
         container.innerHTML = savedRules.map(rule => `
             <div class="glass-card" style="padding: 16px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                    <div><h4 style="font-size: 16px; margin-bottom: 4px; color: var(--text-main);">${rule.name}</h4><span style="font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Trigger: ${rule.trigger} [${rule.triggerValue}]</span></div>
+                    <div><h4 style="font-size: 16px; margin-bottom: 4px; color: var(--text-main);">${rule.name}</h4><span style="font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Trigger: ${rule.trigger}</span></div>
                     <button style="background: none; border: none; color: var(--danger); cursor:pointer;" onclick="deleteRule(${rule.id})"><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>
         `).join('');
     }
-
     function deleteRule(id) { savedRules = savedRules.filter(r => r.id !== id); localStorage.setItem('arif_rules_v19', JSON.stringify(savedRules)); renderRules(); }
 
-    // ==================== SERVICE WORKER REGISTRATION (For PWA) ====================
+    // ==================== PWA INSTALL LOGIC ====================
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); 
+        deferredPrompt = e; 
+        installBanner.style.display = 'flex'; 
+    });
+
+    installBtn.addEventListener('click', async () => {
+        installBanner.style.display = 'none'; 
+        if(deferredPrompt) {
+            deferredPrompt.prompt(); 
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response: ${outcome}`);
+            deferredPrompt = null;
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        installBanner.style.display = 'none'; 
+        console.log('ArifOS App Installed Successfully!');
+    });
+
+    // ==================== SERVICE WORKER REGISTRATION ====================
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./service-worker.js')
