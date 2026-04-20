@@ -82,6 +82,29 @@
             color: #000000;
             letter-spacing: 1px;
         }
+                /* HEADER WALA "+ NEW" PREMIUM BUTTON */
+        .premium-add-btn {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 12px 24px;
+            border-left: 8px solid var(--primary);
+            border-right: 8px solid var(--primary);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 20px; 
+            font-weight: 800;
+            color: #000000;
+        }
+
+        .premium-add-btn:active {
+            transform: scale(0.92);
+            background: #F2F2F7;
+        }
+
     </style>
 </head>
 <body>
@@ -114,16 +137,16 @@
         </div>
     </div>
 
-    <div class="premium-action-card">
+        <div class="premium-action-card" onclick="openPage('view-offline')">
         <div class="premium-action-text">Offline Control</div>
     </div>
-           <div class="premium-action-card">
+    <div class="premium-action-card" onclick="openPage('view-hybrid')">
         <div class="premium-action-text">Offline Online Control</div>
     </div>
-
-    <div class="premium-action-card">
+    <div class="premium-action-card" onclick="openPage('view-manual')">
         <div class="premium-action-text">Manual Control</div>
     </div>
+
 
 
     <div id="install-card">
@@ -131,17 +154,48 @@
             <div style="background: var(--primary); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff;">
                 <i class="fa-solid fa-download"></i>
             </div>
-            <div>
-                <b style="font-size: 15px;">Install App</b>
-                <p style="font-size: 12px; color: var(--muted);">Add to Home Screen</p>
-            </div>
+            <div id="view-offline" class="view app-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="icon-round btn-theme" onclick="showDashboard()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1 style="color: var(--primary); font-size: 26px;">Offline</h1>
         </div>
-        <button id="install-btn" style="background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 13px;">Install</button>
+        <div class="premium-add-btn">
+            + New
+        </div>
     </div>
-
 </div>
 
-<script>
+<div id="view-hybrid" class="view app-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="icon-round btn-theme" onclick="showDashboard()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1 style="color: var(--primary); font-size: 26px;">Hybrid</h1>
+        </div>
+        <div class="premium-add-btn">
+            + New
+        </div>
+    </div>
+</div>
+
+<div id="view-manual" class="view app-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="icon-round btn-theme" onclick="showDashboard()">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h1 style="color: var(--primary); font-size: 26px;">Manual</h1>
+        </div>
+        <div class="premium-add-btn">
+            + New
+        </div>
+    </div>
+</div>
+
     // THEME LOGIC
     function checkSavedTheme() {
         const savedTheme = localStorage.getItem('arif_theme');
@@ -167,8 +221,19 @@
     }
 
     // PAGE SWITCH & LOGOUT
+        // KISI BHI NAYE PAGE KO KHOLNE KA SYSTEM
+    function openPage(pageId) {
+        document.getElementById('view-main').classList.remove('active'); // Dashboard chhupao
+        document.getElementById(pageId).classList.add('active'); // Naya page dikhao
+    }
+
+    // WAPAS DASHBOARD PAR AANE KA SYSTEM
     function showDashboard() {
-        document.getElementById('view-login').classList.remove('active');
+        // Sabhi pages ko pehle chhupa do
+        document.querySelectorAll('.view').forEach(page => {
+            page.classList.remove('active');
+        });
+        // Sirf Dashboard ko dikhao
         document.getElementById('view-main').classList.add('active');
     }
 
