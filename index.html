@@ -55,7 +55,7 @@
 
         #install-card { background: var(--card); border: 1px solid var(--icon-bg); border-radius: 24px; padding: 20px; display: none; align-items: center; justify-content: space-between; margin-top: 20px; transition: 0.3s; }
 
-        /* NAYA OFFLINE CARD YAHAN HAI */
+        /* NAYA OFFLINE CARD */
         .premium-action-card {
             margin-top: 30px; 
             background: #FFFFFF; 
@@ -82,7 +82,8 @@
             color: #000000;
             letter-spacing: 1px;
         }
-                /* HEADER WALA "+ NEW" PREMIUM BUTTON */
+
+        /* HEADER WALA "+ NEW" PREMIUM BUTTON */
         .premium-add-btn {
             background: #FFFFFF;
             border-radius: 20px;
@@ -137,7 +138,7 @@
         </div>
     </div>
 
-        <div class="premium-action-card" onclick="openPage('view-offline')">
+    <div class="premium-action-card" onclick="openPage('view-offline')">
         <div class="premium-action-text">Offline Control</div>
     </div>
     <div class="premium-action-card" onclick="openPage('view-hybrid')">
@@ -147,14 +148,22 @@
         <div class="premium-action-text">Manual Control</div>
     </div>
 
-
-
     <div id="install-card">
         <div style="display: flex; align-items: center; gap: 15px;">
             <div style="background: var(--primary); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff;">
                 <i class="fa-solid fa-download"></i>
             </div>
-            <div id="view-offline" class="view app-container">
+            <div>
+                <b style="font-size: 15px;">Install App</b>
+                <p style="font-size: 12px; color: var(--muted);">Add to Home Screen</p>
+            </div>
+        </div>
+        <button id="install-btn" style="background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 13px;">Install</button>
+    </div>
+
+</div>
+
+<div id="view-offline" class="view app-container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
         <div style="display: flex; align-items: center; gap: 15px;">
             <button class="icon-round btn-theme" onclick="showDashboard()">
@@ -162,9 +171,7 @@
             </button>
             <h1 style="color: var(--primary); font-size: 26px;">Offline</h1>
         </div>
-        <div class="premium-add-btn">
-            + New
-        </div>
+        <div class="premium-add-btn">+ New</div>
     </div>
 </div>
 
@@ -176,9 +183,7 @@
             </button>
             <h1 style="color: var(--primary); font-size: 26px;">Hybrid</h1>
         </div>
-        <div class="premium-add-btn">
-            + New
-        </div>
+        <div class="premium-add-btn">+ New</div>
     </div>
 </div>
 
@@ -190,12 +195,11 @@
             </button>
             <h1 style="color: var(--primary); font-size: 26px;">Manual</h1>
         </div>
-        <div class="premium-add-btn">
-            + New
-        </div>
+        <div class="premium-add-btn">+ New</div>
     </div>
 </div>
 
+<script>
     // THEME LOGIC
     function checkSavedTheme() {
         const savedTheme = localStorage.getItem('arif_theme');
@@ -220,20 +224,17 @@
         }
     }
 
-    // PAGE SWITCH & LOGOUT
-        // KISI BHI NAYE PAGE KO KHOLNE KA SYSTEM
+    // KISI BHI NAYE PAGE KO KHOLNE KA SYSTEM
     function openPage(pageId) {
-        document.getElementById('view-main').classList.remove('active'); // Dashboard chhupao
-        document.getElementById(pageId).classList.add('active'); // Naya page dikhao
+        document.getElementById('view-main').classList.remove('active'); 
+        document.getElementById(pageId).classList.add('active'); 
     }
 
     // WAPAS DASHBOARD PAR AANE KA SYSTEM
     function showDashboard() {
-        // Sabhi pages ko pehle chhupa do
         document.querySelectorAll('.view').forEach(page => {
             page.classList.remove('active');
         });
-        // Sirf Dashboard ko dikhao
         document.getElementById('view-main').classList.add('active');
     }
 
