@@ -3,130 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Arif Engine • Zero Base</title>
+    <title>ArifOS V20 • PWA Edition</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#34C759">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/892/892926.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
-        /* ================= ZERO BASE THEME (LIGHT/SAFED) ================= */
         :root { 
-            --primary: #34C759; 
-            --primary-light: rgba(52, 199, 89, 0.15);
-            --bg: #F2F2F7;         /* Safed Background */
-            --card: #FFFFFF;       /* Safed Card */
-            --border: rgba(0, 0, 0, 0.05);
-            --text-main: #000000;  /* Kaala Text */
-            --text-muted: #8E8E93;
+            --primary: #34C759; /* Wahi Green Color */
+            --primary-light: rgba(52, 199, 89, 0.1);
+            --bg: #FFFFFF;      /* Safed Background */
+            --card: #F9F9F9;    /* Light Gray Card */
+            --text: #000000;    /* Kaala Text */
+            --muted: #8E8E93;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            background-color: var(--bg); 
-            color: var(--text-main); 
-            overflow-x: hidden; 
-            min-height: 100vh; 
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; }
 
-        /* Views System */
-        .app-container { max-width: 480px; margin: 0 auto; padding: 30px 20px; }
-        .view { display: none; flex-direction: column; animation: slideFadeUp 0.4s ease; min-height: 100vh; }
+        /* Page System */
+        .app-container { max-width: 480px; margin: 0 auto; padding: 40px 20px; }
+        .view { display: none; min-height: 100vh; flex-direction: column; animation: fadeUp 0.4s ease; }
         .view.active { display: flex; }
-        @keyframes slideFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Login UI */
+        .logo-box { width: 100px; height: 100px; background: #fff; border-radius: 28px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
         
-        /* UI Elements */
-        .glass-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .btn { border: none; border-radius: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; width: 100%; font-size: 16px; transition: 0.2s; }
-        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 16px var(--primary-light); }
-        .btn-primary:active { transform: scale(0.96); opacity: 0.8; }
+        /* Buttons */
+        .btn { border: none; border-radius: 18px; font-weight: 700; cursor: pointer; padding: 18px; width: 100%; font-size: 17px; transition: 0.2s; }
+        .btn-green { background: var(--primary); color: #fff; box-shadow: 0 10px 20px var(--primary-light); }
+        .btn-green:active { transform: scale(0.97); }
+
+        /* Install Banner */
+        #install-card { background: var(--card); border: 1px solid #eee; border-radius: 24px; padding: 20px; display: none; align-items: center; justify-content: space-between; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div id="view-login" class="view active app-container" style="justify-content: center; align-items: center; text-align: center;">
-    
-    <div style="width: 100px; height: 100px; background: var(--card); border: 1px solid var(--border); border-radius: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 15px 30px var(--primary-light);">
+    <div class="logo-box">
         <i class="fa-solid fa-leaf" style="color: var(--primary); font-size: 45px;"></i>
     </div>
+    <h1 style="font-size: 36px; margin-bottom: 10px;">ArifOS</h1>
+    <p style="color: var(--muted); margin-bottom: 50px; font-weight: 500; letter-spacing: 1px;">V20 PRO ENGINE</p>
     
-    <h1 style="font-size: 38px; margin-bottom: 8px; font-weight: 700;">ArifOS V20</h1>
-    <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 50px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;">Fresh Base</p>
-    
-    <button class="btn btn-primary" style="padding: 18px; font-size: 18px; border-radius: 20px; width: 90%;" onclick="openDashboard()">
-        Continue to App
-    </button>
+    <button class="btn btn-green" onclick="showDashboard()">Continue</button>
 </div>
 
 <div id="view-main" class="view app-container">
-    
-    <div style="margin-bottom: 30px;">
-        <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; text-transform: uppercase;">Arif Engine</p>
-        <h1 style="font-size: 34px; color: var(--primary); font-weight: 700;">Dashboard</h1>
+    <div style="margin-bottom: 40px;">
+        <p style="color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Arif Intelligence</p>
+        <h1 style="color: var(--primary); font-size: 38px;">Dashboard</h1>
     </div>
 
-    <div id="install-banner" class="glass-card" style="display: none; background: var(--primary-light); border: 1px solid var(--primary); padding: 16px 20px; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="background: var(--primary); width: 44px; height: 44px; border-radius: 12px; display: flex; justify-content: center; align-items: center; color: white; font-size: 20px;">
+    <div id="install-card">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="background: var(--primary); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff;">
                 <i class="fa-solid fa-download"></i>
             </div>
             <div>
-                <b style="font-size: 16px; color: var(--text-main);">Install ArifOS</b>
-                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Download directly to phone</p>
+                <b style="font-size: 15px;">Install App</b>
+                <p style="font-size: 12px; color: var(--muted);">Add to Home Screen</p>
             </div>
         </div>
-        <button id="install-btn" class="btn btn-primary" style="width: auto; padding: 10px 20px; font-size: 14px; border-radius: 12px;">Install App</button>
+        <button id="install-btn" style="background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 13px;">Install</button>
     </div>
 
     </div>
 
 <script>
-    // ==================== VIEW SWITCHING LOGIC ====================
-    function openDashboard() {
+    // Page Switch
+    function showDashboard() {
         document.getElementById('view-login').classList.remove('active');
         document.getElementById('view-main').classList.add('active');
     }
 
-    // ==================== PWA INSTALL LOGIC ====================
+    // PWA Logic (Install Prompt catch karna)
     let deferredPrompt;
-    const installBanner = document.getElementById('install-banner');
+    const installCard = document.getElementById('install-card');
     const installBtn = document.getElementById('install-btn');
 
-    // Browser check karta hai ki app install ho sakti hai ya nahi
     window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); // Default popup roko
-        deferredPrompt = e; // Event save karo
-        installBanner.style.display = 'flex'; // Apna safed page wala Download button dikhao
+        e.preventDefault();
+        deferredPrompt = e;
+        // Agar app installable hai toh Green button dikhao
+        installCard.style.display = 'flex';
     });
 
-    // Jab user "Install App" button dabaye
     installBtn.addEventListener('click', async () => {
-        installBanner.style.display = 'none'; // Button hatao
-        if(deferredPrompt) {
-            deferredPrompt.prompt(); // Mobile ka asli install prompt dikhao
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User response: ${outcome}`);
+            if (outcome === 'accepted') {
+                installCard.style.display = 'none';
+            }
             deferredPrompt = null;
         }
     });
 
-    // Jab app successfully install ho jaye
-    window.addEventListener('appinstalled', () => {
-        installBanner.style.display = 'none'; 
-        console.log('App Installed Successfully!');
-    });
-
-    // ==================== SERVICE WORKER REGISTRATION ====================
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./service-worker.js')
-                .then(reg => console.log('Service Worker OK!'))
-                .catch(err => console.log('Service Worker Failed:', err));
-        });
+        navigator.serviceWorker.register('./service-worker.js');
     }
 </script>
 </body>
