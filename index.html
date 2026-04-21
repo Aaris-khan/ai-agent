@@ -3,505 +3,704 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ArifOS V21 • PRO ENGINE</title>
-    
-    <link rel="manifest" href="manifest.json">
+    <title>ArifOS V21.2 • PRO ENGINE</title>
     <meta name="theme-color" content="#34C759">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
     <style>
-        :root { 
-            --primary: #34C759; 
-            --primary-light: rgba(52, 199, 89, 0.1);
-            
-            /* Light Theme Default */
-            --bg: #FFFFFF;      
-            --card: #F9F9F9;    
-            --text: #000000;    
+        :root {
+            --primary: #34C759;
+            --primary-light: rgba(52,199,89,0.12);
+            --primary-dark: #28a046;
+            --danger: #FF3B30;
+            --warning: #FF9F0A;
+            --blue: #007AFF;
+            --purple: #AF52DE;
+            --teal: #32ADE6;
+            --bg: #F2F2F7;
+            --card: #FFFFFF;
+            --text: #000000;
             --muted: #8E8E93;
-            --icon-bg: rgba(0, 0, 0, 0.05); 
+            --border: rgba(0,0,0,0.08);
+            --icon-bg: rgba(0,0,0,0.06);
+            --sheet-bg: #FFFFFF;
+            --input-bg: #F2F2F7;
+            font-family: 'Outfit', sans-serif;
         }
-
-        /* DARK THEME COLORS */
         body.dark {
-            --bg: #000000;      
-            --card: #1C1C1E;    
-            --text: #FFFFFF;    
-            --muted: #8E8E93;
-            --icon-bg: rgba(255, 255, 255, 0.1); 
+            --bg: #000000;
+            --card: #1C1C1E;
+            --text: #FFFFFF;
+            --muted: #636366;
+            --border: rgba(255,255,255,0.08);
+            --icon-bg: rgba(255,255,255,0.1);
+            --sheet-bg: #2C2C2E;
+            --input-bg: #3A3A3C;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
-
-        .app-container { max-width: 480px; margin: 0 auto; padding: 40px 20px; }
-        .view { display: none; min-height: 100vh; flex-direction: column; animation: fadeUp 0.4s ease; }
-        .view.active { display: flex; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .logo-box { width: 100px; height: 100px; background: var(--card); border-radius: 28px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--icon-bg); }
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body { background:var(--bg); color:var(--text); min-height:100vh; font-family:'Outfit',sans-serif; transition:background 0.3s,color 0.3s; }
         
-        .btn { border: none; border-radius: 18px; font-weight: 700; cursor: pointer; padding: 18px; width: 100%; font-size: 17px; transition: 0.2s; }
-        .btn-green { background: var(--primary); color: #fff; box-shadow: 0 10px 20px var(--primary-light); }
-        .btn-green:active { transform: scale(0.97); }
-
-        .header-icons { display: flex; gap: 12px; align-items: center; }
-        .icon-round { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; font-size: 16px; transition: 0.2s; }
-        .icon-round:active { transform: scale(0.9); }
-        .btn-theme { background: var(--icon-bg); color: var(--text); }
-        .btn-logout { background: rgba(255, 59, 48, 0.1); color: #FF3B30; }
-
-        #install-card { background: var(--card); border: 1px solid var(--icon-bg); border-radius: 24px; padding: 20px; display: none; align-items: center; justify-content: space-between; margin-top: 20px; transition: 0.3s; }
-
-        /* MAIN DASHBOARD CARDS */
-        .premium-action-card {
-            margin-top: 30px; background: #FFFFFF; border-radius: 20px; padding: 24px 24px;
-            border-left: 8px solid var(--primary); border-right: 8px solid var(--primary);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08); display: flex; align-items: center;
-            justify-content: flex-start; cursor: pointer; transition: 0.3s;
-        }
-        .premium-action-card:active { transform: scale(0.96); background: #F2F2F7; }
-        .premium-action-text { font-size: 24px; font-weight: 800; color: #000000; letter-spacing: 1px; }
-
-        /* HEADER WALA "+ NEW" PREMIUM BUTTON */
-        .premium-add-btn {
-            background: #FFFFFF; border-radius: 20px; padding: 12px 24px;
-            border-left: 8px solid var(--primary); border-right: 8px solid var(--primary);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06); display: inline-flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-size: 20px; font-weight: 800; color: #000000;
-        }
-        .premium-add-btn:active { transform: scale(0.92); background: #F2F2F7; }
-
-        /* PERMISSION PAGE & LIST CSS */
-        .premium-list-item {
-            background: #FFFFFF; border-radius: 16px; padding: 18px 20px;
-            border-left: 6px solid var(--primary); border-right: 6px solid var(--primary);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06); display: flex; justify-content: space-between;
-            align-items: center; margin-bottom: 15px;
-        }
-        .premium-search {
-            width: 100%; padding: 18px 20px; border-radius: 16px; border: none; background: #FFFFFF;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06); border-left: 6px solid var(--primary);
-            border-right: 6px solid var(--primary); font-size: 16px; font-weight: 700; color: #000000;
-            margin-bottom: 25px; outline: none;
-        }
-        .premium-search::placeholder { color: #A1A1A6; font-weight: 500; }
-
-        /* ON/OFF Switch */
-        .switch { position: relative; display: inline-block; width: 52px; height: 30px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #FF3B30; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        /* BOTTOM SHEET & MODAL CSS */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); z-index: 1000; align-items: flex-end; justify-content: center;
-        }
-        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .bottom-sheet {
-            background: #FFFFFF; width: 100%; max-width: 480px; padding: 30px 20px;
-            border-top-left-radius: 25px; border-top-right-radius: 25px;
-            animation: slideUp 0.3s ease; box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
-        }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .center-modal {
-            background: #FFFFFF; width: 90%; max-width: 400px; padding: 25px;
-            border-radius: 20px; align-self: center;
-            border-left: 8px solid var(--primary); border-right: 8px solid var(--primary);
-            max-height: 85vh; overflow-y: auto;
-        }
-
-        .premium-input {
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ddd;
-            font-size: 16px; font-weight: 600; margin-bottom: 15px; outline: none; background: #fff;
-        }
+        /* ── VIEWS ── */
+        .app-container { max-width:480px; margin:0 auto; padding:50px 18px 120px; }
+        .view { display:none; min-height:100vh; flex-direction:column; }
+        .view.active { display:flex; animation:fadeUp 0.35s ease; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
         
-        /* Utility for dynamic forms */
-        .hidden-field { display: none; }
+        /* ── TYPOGRAPHY ── */
+        .screen-title { color:var(--primary); font-size:32px; font-weight:900; letter-spacing:-0.5px; }
+        .screen-sub { color:var(--muted); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; }
+        
+        /* ── HEADER ── */
+        .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+        .header-left { display:flex; align-items:center; gap:14px; }
+        .icon-round { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; font-size:16px; transition:0.2s; }
+        .icon-round:active { transform:scale(0.88); }
+        .btn-back { background:var(--icon-bg); color:var(--text); }
+        .btn-theme { background:var(--icon-bg); color:var(--text); }
+        .btn-logout { background:rgba(255,59,48,0.1); color:var(--danger); }
+        
+        /* ── TAB BAR ── */
+        .tab-bar { display:flex; background:var(--card); border-radius:16px; padding:5px; gap:4px; margin-bottom:22px; box-shadow:0 2px 10px var(--border); }
+        .tab-btn { flex:1; padding:9px 6px; border:none; border-radius:12px; background:transparent; color:var(--muted); font-family:'Outfit',sans-serif; font-size:12px; font-weight:700; cursor:pointer; transition:0.25s; display:flex; flex-direction:column; align-items:center; gap:3px; }
+        .tab-btn i { font-size:15px; }
+        .tab-btn.active { background:var(--primary); color:#fff; box-shadow:0 4px 12px rgba(52,199,89,0.35); }
+        
+        /* ── CARDS ── */
+        .p-card { background:var(--card); border-radius:18px; padding:18px 20px; border-left:6px solid var(--primary); border-right:6px solid var(--primary); box-shadow:0 4px 16px var(--border); margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:0.2s; -webkit-user-select:none; user-select:none; }
+        .p-card:active { transform:scale(0.97); }
+        .p-card.danger-card { border-left-color:var(--danger); border-right-color:var(--danger); }
+        .p-card.blue-card { border-left-color:var(--blue); border-right-color:var(--blue); }
+        .p-card.purple-card { border-left-color:var(--purple); border-right-color:var(--purple); }
+        
+        /* ── AGENT CARD ── */
+        .agent-card { background:var(--card); border-radius:18px; padding:16px 18px; border-left:5px solid var(--primary); box-shadow:0 3px 12px var(--border); margin-bottom:12px; cursor:pointer; transition:0.2s; -webkit-user-select:none; user-select:none; }
+        .agent-card:active { transform:scale(0.97); }
+        .agent-card-top { display:flex; justify-content:space-between; align-items:flex-start; }
+        .agent-name { font-size:17px; font-weight:800; color:var(--text); margin-bottom:6px; }
+        .agent-meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+        .badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+        .badge-trigger { background:rgba(0,122,255,0.12); color:var(--blue); }
+        .badge-steps { background:rgba(52,199,89,0.12); color:var(--primary-dark); }
+        .badge-status-on { background:rgba(52,199,89,0.12); color:var(--primary-dark); }
+        .badge-status-off { background:rgba(142,142,147,0.15); color:var(--muted); }
+        .badge-last { background:var(--icon-bg); color:var(--muted); }
+        
+        /* ── TRIGGER ICON BOX ── */
+        .trigger-icon { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+        
+        /* ── STEP ITEM ── */
+        .step-item { background:var(--card); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:10px; box-shadow:0 2px 8px var(--border); }
+        .step-num { width:28px; height:28px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; }
+        .step-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+        .step-detail { flex:1; }
+        .step-type { font-size:13px; font-weight:800; color:var(--text); }
+        .step-val { font-size:12px; color:var(--muted); font-weight:600; margin-top:2px; }
+        .step-delete { width:32px; height:32px; border-radius:50%; background:rgba(255,59,48,0.1); color:var(--danger); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; flex-shrink:0; }
+        
+        /* ── VARIABLE CARD ── */
+        .var-card { background:var(--card); border-radius:14px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 8px var(--border); margin-bottom:10px; }
+        .var-name { font-size:16px; font-weight:800; color:var(--primary); }
+        .var-type { font-size:11px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+        .var-value { font-size:15px; font-weight:600; color:var(--text); }
+        
+        /* ── LOG CARD ── */
+        .log-card { background:var(--card); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; box-shadow:0 2px 8px var(--border); margin-bottom:10px; }
+        .log-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+        .log-dot.success { background:var(--primary); }
+        .log-dot.failed { background:var(--danger); }
+        .log-dot.running { background:var(--warning); }
+        .log-info { flex:1; }
+        .log-name { font-size:15px; font-weight:800; color:var(--text); }
+        .log-time { font-size:12px; color:var(--muted); font-weight:600; }
+        .log-steps { font-size:12px; font-weight:700; color:var(--muted); }
+        
+        /* ── MACRO TEMPLATE ── */
+        .macro-card { background:var(--card); border-radius:18px; padding:16px 18px; box-shadow:0 3px 12px var(--border); margin-bottom:12px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:0.2s; }
+        .macro-card:active { transform:scale(0.97); }
+        .macro-icon { width:50px; height:50px; border-radius:15px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+        .macro-info { flex:1; }
+        .macro-name { font-size:16px; font-weight:800; color:var(--text); margin-bottom:3px; }
+        .macro-desc { font-size:12px; color:var(--muted); font-weight:600; }
+        .macro-steps-count { font-size:12px; font-weight:800; color:var(--primary); }
+        
+        /* ── BUTTONS ── */
+        .btn { border:none; border-radius:16px; font-weight:700; cursor:pointer; padding:16px; width:100%; font-size:16px; transition:0.2s; font-family:'Outfit',sans-serif; }
+        .btn-green { background:var(--primary); color:#fff; box-shadow:0 8px 20px rgba(52,199,89,0.3); }
+        .btn-green:active { transform:scale(0.97); }
+        .btn-gray { background:var(--input-bg); color:var(--text); }
+        .btn-red { background:rgba(255,59,48,0.1); color:var(--danger); }
+        .btn-blue { background:rgba(0,122,255,0.12); color:var(--blue); }
+        .btn-sm { padding:10px 18px; width:auto; font-size:14px; border-radius:12px; }
+        
+        /* ── ADD BUTTON ── */
+        .premium-add-btn { background:var(--card); border-radius:16px; padding:10px 20px; border-left:6px solid var(--primary); border-right:6px solid var(--primary); box-shadow:0 4px 14px var(--border); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; transition:0.25s; font-size:17px; font-weight:800; color:var(--text); border-top:none; border-bottom:none; }
+        .premium-add-btn:active { transform:scale(0.93); }
+        
+        /* ── SEARCH ── */
+        .premium-search { width:100%; padding:16px 18px; border-radius:14px; border:none; background:var(--card); box-shadow:0 3px 10px var(--border); border-left:5px solid var(--primary); border-right:5px solid var(--primary); font-size:15px; font-weight:700; color:var(--text); font-family:'Outfit',sans-serif; margin-bottom:20px; outline:none; }
+        .premium-search::placeholder { color:var(--muted); font-weight:500; }
+        
+        /* ── SWITCH ── */
+        .switch { position:relative; display:inline-block; width:50px; height:28px; flex-shrink:0; }
+        .switch input { opacity:0; width:0; height:0; }
+        .slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--danger); transition:.35s; border-radius:34px; }
+        .slider:before { position:absolute; content:""; height:20px; width:20px; left:4px; bottom:4px; background:#fff; transition:.35s; border-radius:50%; box-shadow:0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background:var(--primary); }
+        input:checked + .slider:before { transform:translateX(22px); }
+        
+        /* ── PERMISSION LIST ── */
+        .perm-item { background:var(--card); border-radius:14px; padding:16px 18px; border-left:5px solid var(--primary); border-right:5px solid var(--primary); box-shadow:0 3px 10px var(--border); display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+        .perm-label { font-size:15px; font-weight:800; color:var(--text); }
+        .perm-desc { font-size:12px; color:var(--muted); font-weight:500; margin-top:2px; }
+        
+        /* ── MODALS ── */
+        .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:1000; align-items:flex-end; justify-content:center; backdrop-filter:blur(4px); }
+        .modal-overlay.active { display:flex; animation:fadeBg 0.25s; }
+        @keyframes fadeBg { from{opacity:0} to{opacity:1} }
+        .bottom-sheet { background:var(--sheet-bg); width:100%; max-width:480px; padding:28px 18px 34px; border-top-left-radius:28px; border-top-right-radius:28px; animation:slideUp 0.3s ease; box-shadow:0 -8px 30px rgba(0,0,0,0.12); max-height:90vh; overflow-y:auto; }
+        @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+        .sheet-pill { width:40px; height:4px; background:var(--border); border-radius:2px; margin:0 auto 22px; }
+        .sheet-title { font-size:22px; font-weight:900; color:var(--text); margin-bottom:8px; }
+        .sheet-sub { font-size:13px; color:var(--muted); font-weight:600; margin-bottom:20px; }
+        .center-modal-wrap { align-items:center; }
+        .center-modal { background:var(--sheet-bg); width:92%; max-width:420px; padding:24px 20px; border-radius:22px; border-left:7px solid var(--primary); border-right:7px solid var(--primary); animation:popIn 0.25s ease; max-height:88vh; overflow-y:auto; }
+        @keyframes popIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
+        
+        /* ── INPUT ── */
+        .p-input { width:100%; padding:14px 16px; border-radius:12px; border:none; background:var(--input-bg); font-size:15px; font-weight:600; color:var(--text); font-family:'Outfit',sans-serif; margin-bottom:14px; outline:none; }
+        .p-input::placeholder { color:var(--muted); }
+        .p-label { font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:block; }
+        
+        /* ── TRIGGER GRID ── */
+        .trigger-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:16px; }
+        .trigger-option { background:var(--input-bg); border-radius:16px; padding:16px 12px; display:flex; flex-direction:column; align-items:flex-start; gap:8px; cursor:pointer; transition:0.2s; border:2px solid transparent; }
+        .trigger-option:active { transform:scale(0.96); }
+        .trigger-option.selected { border-color:var(--primary); background:var(--primary-light); }
+        .trigger-option .t-icon { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+        .trigger-option .t-name { font-size:13px; font-weight:800; color:var(--text); }
+        .trigger-option .t-desc { font-size:11px; color:var(--muted); font-weight:600; }
+        
+        /* ── ACTION GRID ── */
+        .action-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+        .action-option { background:var(--input-bg); border-radius:14px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; transition:0.2s; border:2px solid transparent; text-align:center; }
+        .action-option:active { transform:scale(0.94); }
+        .action-option.selected { border-color:var(--primary); background:var(--primary-light); }
+        .action-option .a-icon { font-size:22px; }
+        .action-option .a-name { font-size:11px; font-weight:800; color:var(--text); }
+        
+        /* ── STATUS INDICATOR ── */
+        .status-bar { display:flex; align-items:center; gap:8px; padding:12px 16px; background:var(--primary-light); border-radius:12px; margin-bottom:20px; }
+        .status-dot { width:8px; height:8px; border-radius:50%; background:var(--primary); animation:pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:0.7} }
+        .status-text { font-size:13px; font-weight:700; color:var(--primary-dark); }
+        
+        /* ── LOGO BOX ── */
+        .logo-box { width:100px; height:100px; background:var(--card); border-radius:28px; display:flex; align-items:center; justify-content:center; margin-bottom:30px; box-shadow:0 10px 30px var(--border); border:1px solid var(--border); }
+        
+        /* ── INSTALL CARD ── */
+        #install-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; display:none; align-items:center; justify-content:space-between; margin-top:16px; }
+        
+        /* ── EMPTY STATE ── */
+        .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 20px; text-align:center; }
+        .empty-icon { font-size:48px; margin-bottom:16px; opacity:0.4; }
+        .empty-title { font-size:17px; font-weight:800; color:var(--text); margin-bottom:6px; }
+        .empty-desc { font-size:13px; color:var(--muted); font-weight:500; }
+        
+        /* ── SECTION LABEL ── */
+        .section-label { font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; margin-top:4px; }
+        
+        ::-webkit-scrollbar { display:none; }
     </style>
 </head>
 <body>
 
-<div id="view-login" class="view active app-container" style="justify-content: center; align-items: center; text-align: center;">
-    <div class="logo-box">
-        <i class="fa-solid fa-leaf" style="color: var(--primary); font-size: 45px;"></i>
-    </div>
-    <h1 style="font-size: 36px; margin-bottom: 10px;">ArifOS</h1>
-    <p style="color: var(--muted); margin-bottom: 50px; font-weight: 500; letter-spacing: 1px;">V21 PRO ENGINE</p>
-    <button class="btn btn-green" onclick="showDashboard()">Continue</button>
+<div id="view-login" class="view active app-container" style="justify-content:center;align-items:center;text-align:center;">
+    <div class="logo-box"><i class="fa-solid fa-leaf" style="color:var(--primary);font-size:46px;"></i></div>
+    <h1 style="font-size:42px;font-weight:900;letter-spacing:-1px;">ArifOS</h1>
+    <p class="screen-sub" style="margin-bottom:12px;">V21.2 PRO ENGINE</p>
+    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Advanced Phone Automation</p>
+    <button class="btn btn-green" onclick="showDashboard()">Get Started</button>
 </div>
 
 <div id="view-main" class="view app-container">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;">
         <div>
-            <p style="color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Arif Intelligence</p>
-            <h1 style="color: var(--primary); font-size: 38px;">Dashboard</h1>
+            <p class="screen-sub">Arif Intelligence</p>
+            <h1 class="screen-title">Dashboard</h1>
         </div>
-        <div class="header-icons">
-            <button class="icon-round btn-theme" onclick="toggleTheme()" id="theme-btn">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <button class="icon-round btn-logout" onclick="logoutApp()">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            </button>
+        <div style="display:flex;gap:10px;">
+            <button class="icon-round btn-theme" onclick="toggleTheme()" id="theme-btn"><i class="fa-solid fa-moon"></i></button>
+            <button class="icon-round btn-logout" onclick="logoutApp()"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </div>
     </div>
 
-    <div class="premium-action-card" onclick="openPage('view-offline')"><div class="premium-action-text">Offline Control</div></div>
-    <div class="premium-action-card" onclick="openPage('view-hybrid')"><div class="premium-action-text">Offline Online Control</div></div>
-    <div class="premium-action-card" onclick="openPage('view-manual')"><div class="premium-action-text">Manual Control</div></div>
+    <div id="dashboard-status" class="status-bar" style="display:none;">
+        <div class="status-dot"></div>
+        <span class="status-text" id="active-agents-count">0 agents running</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;" id="stats-row">
+        <div style="background:var(--card);border-radius:16px;padding:14px;text-align:center;box-shadow:0 2px 8px var(--border);">
+            <div style="font-size:24px;font-weight:900;color:var(--primary);" id="stat-agents">0</div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);">AGENTS</div>
+        </div>
+        <div style="background:var(--card);border-radius:16px;padding:14px;text-align:center;box-shadow:0 2px 8px var(--border);">
+            <div style="font-size:24px;font-weight:900;color:var(--blue);" id="stat-runs">0</div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);">RUNS</div>
+        </div>
+        <div style="background:var(--card);border-radius:16px;padding:14px;text-align:center;box-shadow:0 2px 8px var(--border);">
+            <div style="font-size:24px;font-weight:900;color:var(--purple);" id="stat-vars">0</div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);">VARIABLES</div>
+        </div>
+    </div>
+
+    <div class="section-label">Modules</div>
+    
+    <div class="p-card" onclick="openPage('view-offline')">
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:46px;height:46px;border-radius:14px;background:rgba(52,199,89,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">⚡</div>
+            <div>
+                <div style="font-size:18px;font-weight:900;color:var(--text);">Offline Control</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Triggers, Agents & Macros</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+    </div>
+    
+    <div class="p-card blue-card" onclick="openPage('view-hybrid')">
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,122,255,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🌐</div>
+            <div>
+                <div style="font-size:18px;font-weight:900;color:var(--text);">Hybrid Control</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Online + Offline</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+    </div>
+    
+    <div class="p-card purple-card" onclick="openPage('view-manual')">
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:46px;height:46px;border-radius:14px;background:rgba(175,82,222,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🎛️</div>
+            <div>
+                <div style="font-size:18px;font-weight:900;color:var(--text);">Manual Control</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Direct Actions</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+    </div>
 
     <div id="install-card">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="background: var(--primary); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff;"><i class="fa-solid fa-download"></i></div>
-            <div><b style="font-size: 15px;">Install App</b><p style="font-size: 12px; color: var(--muted);">Add to Home Screen</p></div>
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div style="background:var(--primary);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;"><i class="fa-solid fa-download"></i></div>
+            <div><b style="font-size:14px;">Install App</b><p style="font-size:12px;color:var(--muted);">Add to Home Screen</p></div>
         </div>
-        <button id="install-btn" style="background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 13px;">Install</button>
+        <button id="install-btn" style="background:var(--primary);color:#fff;border:none;padding:10px 16px;border-radius:12px;font-weight:700;font-size:13px;font-family:'Outfit',sans-serif;">Install</button>
     </div>
 </div>
 
 <div id="view-offline" class="view app-container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button class="icon-round btn-theme" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
-            <h1 style="color: var(--primary); font-size: 26px;">Offline</h1>
+    <div class="page-header">
+        <div class="header-left">
+            <button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
+            <div>
+                <p class="screen-sub">ArifOS</p>
+                <h1 class="screen-title" style="font-size:26px;">Offline Control</h1>
+            </div>
         </div>
-        <div class="premium-add-btn" onclick="showNewActionSheet()">+ New</div>
+        <div class="premium-add-btn" onclick="openTriggerFlow()">+ New</div>
     </div>
 
-    <div class="premium-action-card" onclick="openPage('view-permissions')" style="padding: 18px 24px; margin-bottom: 30px;">
-        <div class="premium-action-text" style="font-size: 18px;">
-            <i class="fa-solid fa-shield-halved" style="color: var(--primary); margin-right: 10px;"></i> Change Permissions
+    <div class="tab-bar">
+        <button class="tab-btn active" id="tab-agents" onclick="switchTab('agents')"><i class="fa-solid fa-robot"></i>Agents</button>
+        <button class="tab-btn" id="tab-macros" onclick="switchTab('macros')"><i class="fa-solid fa-bolt"></i>Macros</button>
+        <button class="tab-btn" id="tab-vars" onclick="switchTab('vars')"><i class="fa-solid fa-code"></i>Variables</button>
+        <button class="tab-btn" id="tab-logs" onclick="switchTab('logs')"><i class="fa-solid fa-list"></i>Logs</button>
+    </div>
+
+    <div id="tab-content-agents">
+        <div class="p-card" onclick="openPage('view-permissions')" style="margin-bottom:20px;padding:14px 18px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <i class="fa-solid fa-shield-halved" style="color:var(--primary);font-size:20px;"></i>
+                <div>
+                    <div style="font-size:15px;font-weight:800;">Agent Permissions</div>
+                    <div style="font-size:12px;color:var(--muted);font-weight:600;">Accessibility, Overlay, Notifications</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+        </div>
+        <div class="section-label">Your Agents</div>
+        <div id="agent-list-container">
+            <div class="empty-state">
+                <div class="empty-icon">🤖</div>
+                <div class="empty-title">No Agents Yet</div>
+                <div class="empty-desc">Tap "+ New" to create your first automation agent</div>
+            </div>
         </div>
     </div>
 
-    <div id="agent-list-container"></div>
+    <div id="tab-content-macros" style="display:none;">
+        <div class="section-label">Quick Macro Templates</div>
+        <div class="macro-card" onclick="importMacro('morning')"><div class="macro-icon" style="background:rgba(255,159,10,0.15);">🌅</div><div class="macro-info"><div class="macro-name">Morning Routine</div><div class="macro-desc">Disable silent, open news, WhatsApp check</div><div class="macro-steps-count">4 steps • Time trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('night')"><div class="macro-icon" style="background:rgba(0,122,255,0.12);">🌙</div><div class="macro-info"><div class="macro-name">Night Mode</div><div class="macro-desc">Enable DND, reduce brightness, stop media</div><div class="macro-steps-count">3 steps • Time trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('work')"><div class="macro-icon" style="background:rgba(52,199,89,0.12);">💼</div><div class="macro-info"><div class="macro-name">Work Mode</div><div class="macro-desc">Enable WiFi, open Mail, silent social apps</div><div class="macro-steps-count">5 steps • WiFi trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('battery')"><div class="macro-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="macro-info"><div class="macro-name">Battery Saver</div><div class="macro-desc">When 20%, reduce brightness, enable battery saver</div><div class="macro-steps-count">3 steps • Battery trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+    </div>
+
+    <div id="tab-content-vars" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div class="section-label" style="margin:0;">Variables</div>
+            <button class="btn btn-green btn-sm" onclick="openVarModal()">+ Add Variable</button>
+        </div>
+        <div id="variables-container">
+            <div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No Variables</div><div class="empty-desc">Create variables to use in your agents with {var_name} syntax</div></div>
+        </div>
+    </div>
+
+    <div id="tab-content-logs" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div class="section-label" style="margin:0;">Run History</div>
+            <button class="btn btn-red btn-sm" onclick="clearLogs()" style="padding:8px 14px;font-size:12px;">Clear All</button>
+        </div>
+        <div id="logs-container">
+            <div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No Runs Yet</div><div class="empty-desc">Agent run history will appear here</div></div>
+        </div>
+    </div>
 </div>
 
-<div id="view-hybrid" class="view app-container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button class="icon-round btn-theme" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
-            <h1 style="color: var(--primary); font-size: 26px;">Hybrid</h1>
+<div id="view-agent-detail" class="view app-container">
+    <div class="page-header">
+        <div class="header-left">
+            <button class="icon-round btn-back" onclick="openPage('view-offline')"><i class="fa-solid fa-arrow-left"></i></button>
+            <div><p class="screen-sub">Agent Editor</p><h1 class="screen-title" style="font-size:24px;" id="detail-agent-name">Agent 1</h1></div>
         </div>
-        <div class="premium-add-btn" onclick="showNewActionSheet()">+ New</div>
+        <button class="btn btn-green btn-sm" onclick="runAgentNow()">▶ Run Now</button>
     </div>
-</div>
 
-<div id="view-manual" class="view app-container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button class="icon-round btn-theme" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
-            <h1 style="color: var(--primary); font-size: 26px;">Manual</h1>
-        </div>
-        <div class="premium-add-btn" onclick="showNewActionSheet()">+ New</div>
+    <div id="detail-trigger-card" style="background:var(--card);border-radius:18px;padding:16px 18px;margin-bottom:20px;box-shadow:0 3px 12px var(--border);display:flex;align-items:center;gap:14px;">
+        <div id="detail-trigger-icon" class="trigger-icon" style="background:rgba(0,122,255,0.12);font-size:24px;">⏰</div>
+        <div><div class="section-label" style="margin-bottom:2px;">Trigger</div><div id="detail-trigger-text" style="font-size:16px;font-weight:800;color:var(--text);">Time: 07:00</div></div>
+        <div style="margin-left:auto;"><label class="switch"><input type="checkbox" id="detail-agent-toggle" checked onchange="toggleAgentActive()"><span class="slider"></span></label></div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div class="section-label" style="margin:0;">Steps</div>
+        <button class="btn btn-blue btn-sm" onclick="openAddStepSheet()" style="padding:8px 14px;font-size:12px;">+ Add Step</button>
+    </div>
+    <div id="steps-container">
+        <div class="empty-state"><div class="empty-icon">⚙️</div><div class="empty-title">No Steps</div><div class="empty-desc">Add steps to define what this agent will do</div></div>
     </div>
 </div>
 
 <div id="view-permissions" class="view app-container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <button class="icon-round btn-theme" onclick="openPage('view-offline')"><i class="fa-solid fa-arrow-left"></i></button>
-            <h1 style="color: var(--primary); font-size: 26px;">Agent Access</h1>
+    <div class="page-header">
+        <div class="header-left">
+            <button class="icon-round btn-back" onclick="openPage('view-offline')"><i class="fa-solid fa-arrow-left"></i></button>
+            <div><p class="screen-sub">ArifOS</p><h1 class="screen-title" style="font-size:24px;">Agent Access</h1></div>
         </div>
-        <button class="btn btn-green" style="width: auto; padding: 10px 20px; font-size: 15px;" onclick="openPage('view-offline')">Save</button>
+        <button class="btn btn-green btn-sm" onclick="openPage('view-offline')">Save</button>
     </div>
-
     <input type="text" id="appSearchInput" class="premium-search" placeholder="Search apps (e.g. WhatsApp)..." onkeyup="filterApps()">
-
-    <p style="font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px;">Core Permissions</p>
-
-    <div class="premium-list-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Screen Control (Auto-Click)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-    <div class="premium-list-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Screen Capture (AI Vision)</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-    <div class="premium-list-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Ignore Battery Limits</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-    <div class="premium-list-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Network & WiFi Access</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-    <div class="premium-list-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Display Over Other Apps</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-    <div class="premium-list-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Notification Access</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; margin-bottom: 15px;">
-        <p style="font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;">Select Apps</p>
-        <span style="font-size: 14px; font-weight: 700; color: var(--primary); cursor: pointer;">Select All</span>
+    
+    <div class="section-label">Core Permissions</div>
+    <div class="perm-item"><div><div class="perm-label">Screen Control (Auto-Click)</div><div class="perm-desc">Accessibility Service</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    <div class="perm-item"><div><div class="perm-label">Screen Capture (AI Vision)</div><div class="perm-desc">Media Projection API</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    <div class="perm-item"><div><div class="perm-label">Ignore Battery Limits</div><div class="perm-desc">Background execution</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    <div class="perm-item"><div><div class="perm-label">Network & WiFi Access</div><div class="perm-desc">Trigger on WiFi events</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    <div class="perm-item"><div><div class="perm-label">Display Over Other Apps</div><div class="perm-desc">Overlay permission</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    <div class="perm-item"><div><div class="perm-label">Notification Access</div><div class="perm-desc">Read & control notifications</div></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+    
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:22px;margin-bottom:14px;">
+        <div class="section-label" style="margin:0;">Select Apps</div>
+        <span style="font-size:13px;font-weight:700;color:var(--primary);cursor:pointer;" onclick="selectAllApps()">Select All</span>
     </div>
-
     <div id="appListContainer">
-        <div class="premium-list-item app-item"><span style="font-weight: 800; font-size: 16px; color: #000;">WhatsApp</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        <div class="premium-list-item app-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Instagram</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        <div class="premium-list-item app-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Chrome</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        <div class="premium-list-item app-item"><span style="font-weight: 800; font-size: 16px; color: #000;">Settings</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">WhatsApp</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">Instagram</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">Chrome</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">Settings</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
     </div>
 </div>
 
-<div id="new-action-sheet" class="modal-overlay" onclick="closeModal(event, 'new-action-sheet')">
+<div id="view-hybrid" class="view app-container">
+    <div class="page-header"><div class="header-left"><button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button><h1 class="screen-title" style="font-size:26px;">Hybrid Control</h1></div><div class="premium-add-btn" onclick="alert('Coming soon!')">+ New</div></div>
+    <div class="empty-state" style="margin-top:60px;"><div class="empty-icon">🌐</div><div class="empty-title">Coming Soon</div><div class="empty-desc">Online + Offline hybrid automation will be available in next build</div></div>
+</div>
+<div id="view-manual" class="view app-container">
+    <div class="page-header"><div class="header-left"><button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button><h1 class="screen-title" style="font-size:26px;">Manual Control</h1></div><div class="premium-add-btn" onclick="openAddStepSheet()">+ New</div></div>
+    <div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>
+</div>
+
+<div id="trigger-select-sheet" class="modal-overlay" onclick="closeSheet('trigger-select-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
-        <h3 style="margin-bottom: 20px; font-size: 22px;">Create New Agent</h3>
-        <button class="btn btn-green" style="margin-bottom: 15px;" onclick="startLiveRecording()">🔴 Start Recording</button>
-        <button class="btn" style="background: #F2F2F7; color: #000; margin-bottom: 15px;" onclick="openManualTaskModal()">⚙️ Start Without Recording</button>
-        <button class="btn" style="background: transparent; color: #FF3B30;" onclick="closeSheet('new-action-sheet')">Cancel</button>
+        <div class="sheet-pill"></div>
+        <div class="sheet-title">Choose Trigger</div>
+        <div class="sheet-sub">When should this agent run?</div>
+        <div class="trigger-grid">
+            <div class="trigger-option" onclick="selectTrigger('time')"><div class="t-icon" style="background:rgba(255,159,10,0.15);">⏰</div><div class="t-name">Time Schedule</div><div class="t-desc">Run at specific time</div></div>
+            <div class="trigger-option" onclick="selectTrigger('notification')"><div class="t-icon" style="background:rgba(0,122,255,0.12);">🔔</div><div class="t-name">Notification</div><div class="t-desc">When app gets notif</div></div>
+            <div class="trigger-option" onclick="selectTrigger('wifi')"><div class="t-icon" style="background:rgba(52,199,89,0.12);">📶</div><div class="t-name">WiFi Event</div><div class="t-desc">Connected/Disconnected</div></div>
+            <div class="trigger-option" onclick="selectTrigger('battery')"><div class="t-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="t-name">Battery Level</div><div class="t-desc">Above or below X%</div></div>
+            <div class="trigger-option" onclick="selectTrigger('app_open')"><div class="t-icon" style="background:rgba(175,82,222,0.12);">📱</div><div class="t-name">App Opened</div><div class="t-desc">When specific app opens</div></div>
+            <div class="trigger-option" onclick="selectTrigger('location')"><div class="t-icon" style="background:rgba(50,173,230,0.12);">📍</div><div class="t-name">Location Zone</div><div class="t-desc">Home/Office/Custom</div></div>
+        </div>
+        <button class="btn btn-red" style="margin-top:4px;" onclick="closeSheet('trigger-select-sheet')">Cancel</button>
     </div>
 </div>
 
-<div id="manual-task-modal" class="modal-overlay" onclick="closeModal(event, 'manual-task-modal')">
+<div id="trigger-config-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('trigger-config-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
-        <h3 style="margin-bottom: 20px; font-size: 22px; color: var(--primary);">Pro Manual Action</h3>
-        
-        <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;">ACTION TYPE</p>
-        <select class="premium-input" id="manual-action" onchange="toggleManualInputs()">
-            <option value="CLICK">Click / Tap</option>
-            <option value="SWIPE">Swipe</option>
-            <option value="TYPE">Type Text</option>
-            <option value="WAIT">Wait (Delay)</option>
-            <option value="SYSTEM">System (Volume/Brightness)</option>
-            <option value="CONDITION">IF Condition</option>
-        </select>
-
-        <div id="input-group-target">
-            <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;">TARGET APP & NODE</p>
-            <input type="text" class="premium-input" id="manual-app" placeholder="App Name (e.g. WhatsApp)">
-            <input type="text" class="premium-input" id="manual-node" placeholder="Target Node (e.g. Send Button)">
-        </div>
-
-        <div id="input-group-extra" class="hidden-field">
-            <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;" id="extra-label">EXTRA CONFIG</p>
-            <input type="text" class="premium-input" id="manual-extra" placeholder="Value...">
-        </div>
-
-        <button class="btn btn-green" style="margin-top: 10px;" onclick="saveManualTask()">Save Manual Task</button>
-        <button class="btn" style="background: transparent; color: #FF3B30; margin-top: 10px;" onclick="closeSheet('manual-task-modal')">Cancel</button>
+        <div id="trigger-config-content"></div>
+        <button class="btn btn-green" onclick="confirmTriggerConfig()" style="margin-top:6px;">Next: Add Steps →</button>
+        <button class="btn btn-red" onclick="closeSheet('trigger-config-modal')" style="margin-top:10px;">Cancel</button>
     </div>
 </div>
 
-<div id="schedule-modal" class="modal-overlay" onclick="closeModal(event, 'schedule-modal')">
+<div id="add-step-sheet" class="modal-overlay" onclick="closeSheet('add-step-sheet')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+        <div class="sheet-pill"></div>
+        <div class="sheet-title">Add Action Step</div>
+        <div class="sheet-sub">What should the agent do?</div>
+        <div class="action-grid">
+            <div class="action-option" onclick="addStep('tap')"><div class="a-icon">👆</div><div class="a-name">Tap</div></div>
+            <div class="action-option" onclick="addStep('longpress')"><div class="a-icon">🖐️</div><div class="a-name">Long Press</div></div>
+            <div class="action-option" onclick="addStep('type')"><div class="a-icon">⌨️</div><div class="a-name">Type Text</div></div>
+            <div class="action-option" onclick="addStep('extract')"><div class="a-icon" style="color:var(--purple);">🔍</div><div class="a-name">Extract Text</div></div>
+            
+            <div class="action-option" onclick="addStep('open_app')"><div class="a-icon">📱</div><div class="a-name">Open App</div></div>
+            <div class="action-option" onclick="addStep('wait')"><div class="a-icon">⏳</div><div class="a-name">Wait</div></div>
+            <div class="action-option" onclick="addStep('loop')"><div class="a-icon">🔄</div><div class="a-name">Loop</div></div>
+            <div class="action-option" onclick="addStep('if_condition')"><div class="a-icon">❓</div><div class="a-name">IF Condition</div></div>
+            <div class="action-option" onclick="addStep('screenshot')"><div class="a-icon">📸</div><div class="a-name">Screenshot</div></div>
+            <div class="action-option" onclick="addStep('volume')"><div class="a-icon">🔊</div><div class="a-name">Set Volume</div></div>
+            <div class="action-option" onclick="addStep('brightness')"><div class="a-icon">☀️</div><div class="a-name">Brightness</div></div>
+            <div class="action-option" onclick="addStep('var_set')"><div class="a-icon">📊</div><div class="a-name">Set Var</div></div>
+        </div>
+        <button class="btn btn-green" onclick="finishAgent()" id="finish-agent-btn" style="display:none;margin-bottom:10px;">✓ Save Agent</button>
+        <button class="btn btn-red" onclick="closeSheet('add-step-sheet')">Close</button>
+    </div>
+</div>
+
+<div id="step-config-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('step-config-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
-        <h3 style="margin-bottom: 20px; font-size: 22px; color: var(--primary);">Configure Trigger</h3>
-        
-        <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;">TRIGGER TYPE</p>
-        <select class="premium-input" id="trigger-type" onchange="toggleTriggerInputs()">
-            <option value="TIME">Time & Date Schedule</option>
-            <option value="WIFI">WiFi Network Status</option>
-            <option value="BATTERY">Battery Level</option>
-            <option value="APP_OPEN">When App Opens</option>
-        </select>
+        <div id="step-config-content"></div>
+        <button class="btn btn-green" onclick="confirmStepConfig()" style="margin-top:6px;">Add Step</button>
+        <button class="btn btn-red" onclick="closeSheet('step-config-modal')" style="margin-top:10px;">Cancel</button>
+    </div>
+</div>
 
-        <div id="trigger-group-time">
-            <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;">SELECT REPEAT DAYS (Optional)</p>
-            <input type="text" class="premium-input" id="agent-days" placeholder="e.g. Mon, Wed, Fri">
-            <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;">TIME (Hr:Min:Sec)</p>
-            <input type="time" step="1" class="premium-input" id="agent-time">
-        </div>
+<div id="save-agent-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('save-agent-modal')">
+    <div class="center-modal" onclick="event.stopPropagation()">
+        <div style="font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px;">Save Agent</div>
+        <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:20px;">Give your agent a name</div>
+        <label class="p-label">Agent Name</label>
+        <input type="text" class="p-input" id="agent-name-input" placeholder="E.g. Morning Routine">
+        <button class="btn btn-green" onclick="saveNewAgent()" style="margin-top:6px;">✓ Create Agent</button>
+        <button class="btn btn-red" onclick="closeSheet('save-agent-modal')" style="margin-top:10px;">Cancel</button>
+    </div>
+</div>
 
-        <div id="trigger-group-pro" class="hidden-field">
-            <p style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 5px;" id="pro-trigger-label">CONDITION</p>
-            <input type="text" class="premium-input" id="pro-trigger-val" placeholder="Value...">
-        </div>
+<div id="var-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('var-modal')">
+    <div class="center-modal" onclick="event.stopPropagation()">
+        <div style="font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px;">New Variable</div>
+        <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:20px;">Store values for use in agents</div>
+        <label class="p-label">Variable Name</label>
+        <input type="text" class="p-input" id="var-name-input" placeholder="E.g. myName, counter">
+        <label class="p-label">Type</label>
+        <select class="p-input" id="var-type-input"><option value="text">Text</option><option value="number">Number</option></select>
+        <label class="p-label">Initial Value</label>
+        <input type="text" class="p-input" id="var-value-input" placeholder="E.g. Hello / 42">
+        <button class="btn btn-green" onclick="saveVariable()" style="margin-top:6px;">Save Variable</button>
+        <button class="btn btn-red" onclick="closeSheet('var-modal')" style="margin-top:10px;">Cancel</button>
+    </div>
+</div>
 
-        <button class="btn btn-green" style="margin-top: 10px;" onclick="confirmSchedule()">Confirm & Active Agent</button>
-        <button class="btn" style="background: transparent; color: #FF3B30; margin-top: 10px;" onclick="closeSheet('schedule-modal')">Cancel</button>
+<div id="agent-options-sheet" class="modal-overlay" onclick="closeSheet('agent-options-sheet')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+        <div class="sheet-pill"></div>
+        <div class="sheet-title" id="options-agent-name">Agent Options</div>
+        <button class="btn" style="background:var(--input-bg);color:var(--text);margin-bottom:10px;" onclick="editCurrentAgent()">✏️ Edit Agent</button>
+        <button class="btn" style="background:rgba(0,122,255,0.12);color:var(--blue);margin-bottom:10px;" onclick="runCurrentAgent()">▶ Run Now</button>
+        <button class="btn btn-red" onclick="deleteCurrentAgent()">🗑 Delete Agent</button>
+        <button class="btn" style="background:transparent;color:var(--muted);margin-top:10px;" onclick="closeSheet('agent-options-sheet')">Cancel</button>
     </div>
 </div>
 
 <script>
-    // 1. THEME & NAVIGATION
-    function checkSavedTheme() {
-        if (localStorage.getItem('arif_theme') === 'dark') {
-            document.body.classList.add('dark');
-            document.getElementById('theme-btn').innerHTML = '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>';
-        }
-    }
-    checkSavedTheme(); 
+    let agents = JSON.parse(localStorage.getItem('arif_agents') || '[]');
+    let variables = JSON.parse(localStorage.getItem('arif_variables') || '[]');
+    let runLogs = JSON.parse(localStorage.getItem('arif_logs') || '[]');
+    let currentTrigger = null; let currentSteps = []; let currentAgentIndex = -1; let pendingStepType = null;
 
-    function toggleTheme() {
-        document.body.classList.toggle('dark');
-        let isDark = document.body.classList.contains('dark');
-        localStorage.setItem('arif_theme', isDark ? 'dark' : 'light');
-        document.getElementById('theme-btn').innerHTML = isDark ? '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>' : '<i class="fa-solid fa-moon"></i>';
-    }
-
-    function openPage(pageId) {
-        document.querySelectorAll('.view').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active'); 
-    }
-    function showDashboard() { openPage('view-main'); }
+    function openPage(pageId) { document.querySelectorAll('.view').forEach(p => p.classList.remove('active')); document.getElementById(pageId).classList.add('active'); document.getElementById(pageId).scrollTop = 0; }
+    function showDashboard() { updateDashboardStats(); openPage('view-main'); }
     function logoutApp() { openPage('view-login'); }
 
-    // 2. SEARCH APPS
-    function filterApps() {
-        let input = document.getElementById('appSearchInput').value.toLowerCase();
-        document.querySelectorAll('.app-item').forEach(app => {
-            let name = app.querySelector('span').innerText.toLowerCase();
-            app.style.display = name.includes(input) ? "flex" : "none";
+    function checkSavedTheme() { if (localStorage.getItem('arif_theme') === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').innerHTML = '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>'; } }
+    checkSavedTheme();
+    function toggleTheme() { document.body.classList.toggle('dark'); let isDark = document.body.classList.contains('dark'); localStorage.setItem('arif_theme', isDark ? 'dark' : 'light'); document.getElementById('theme-btn').innerHTML = isDark ? '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>' : '<i class="fa-solid fa-moon"></i>'; }
+
+    function updateDashboardStats() {
+        document.getElementById('stat-agents').textContent = agents.length;
+        document.getElementById('stat-runs').textContent = runLogs.length;
+        document.getElementById('stat-vars').textContent = variables.length;
+        let activeCount = agents.filter(a => a.active).length;
+        let statusBar = document.getElementById('dashboard-status');
+        if (activeCount > 0) { statusBar.style.display = 'flex'; document.getElementById('active-agents-count').textContent = `${activeCount} active`; } else { statusBar.style.display = 'none'; }
+    }
+
+    function switchTab(tab) {
+        ['agents','macros','vars','logs'].forEach(t => { document.getElementById(`tab-content-${t}`).style.display = 'none'; document.getElementById(`tab-${t}`).classList.remove('active'); });
+        document.getElementById(`tab-content-${tab}`).style.display = 'block'; document.getElementById(`tab-${tab}`).classList.add('active');
+        if (tab === 'logs') renderLogs(); if (tab === 'vars') renderVariables();
+    }
+
+    function openTriggerFlow() { currentTrigger = null; currentSteps = []; currentAgentIndex = -1; closeSheet('add-step-sheet'); document.getElementById('trigger-select-sheet').classList.add('active'); }
+    const triggerMeta = { time:{icon:'⏰',color:'rgba(255,159,10,0.15)',label:'Time Schedule'}, notification:{icon:'🔔',color:'rgba(0,122,255,0.12)',label:'Notification'}, wifi:{icon:'📶',color:'rgba(52,199,89,0.12)',label:'WiFi Event'}, battery:{icon:'🔋',color:'rgba(255,59,48,0.1)',label:'Battery Level'}, app_open:{icon:'📱',color:'rgba(175,82,222,0.12)',label:'App Opened'} };
+
+    function selectTrigger(type) {
+        closeSheet('trigger-select-sheet'); currentTrigger = { type, config: {} };
+        let content = ''; const meta = triggerMeta[type] || {icon:'⏰', label:'Trigger'};
+        content += `<div style="font-size:30px;margin-bottom:8px;">${meta.icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${meta.label}</div>`;
+        if (type === 'time') { content += `<label class="p-label">Time</label><input type="time" class="p-input" id="t-time" value="07:00">`; }
+        else if (type === 'wifi') { content += `<label class="p-label">WiFi Name (SSID)</label><input type="text" class="p-input" id="t-ssid" placeholder="E.g. Home_WiFi">`; }
+        else if (type === 'battery') { content += `<label class="p-label">Battery %</label><input type="number" class="p-input" id="t-battery" placeholder="E.g. 20">`; }
+        else if (type === 'app_open') { content += `<label class="p-label">App Name</label><input type="text" class="p-input" id="t-app" placeholder="E.g. WhatsApp">`; }
+        document.getElementById('trigger-config-content').innerHTML = content; document.getElementById('trigger-config-modal').classList.add('active');
+    }
+
+    function confirmTriggerConfig() {
+        const t = currentTrigger.type;
+        if (t === 'time') currentTrigger.config = { time: document.getElementById('t-time')?.value || '07:00' };
+        else if (t === 'wifi') currentTrigger.config = { ssid: document.getElementById('t-ssid')?.value || 'Any' };
+        else if (t === 'battery') currentTrigger.config = { level: document.getElementById('t-battery')?.value || '20' };
+        else if (t === 'app_open') currentTrigger.config = { app: document.getElementById('t-app')?.value || 'Any' };
+        closeSheet('trigger-config-modal'); document.getElementById('finish-agent-btn').style.display = 'block'; document.getElementById('add-step-sheet').classList.add('active');
+    }
+
+    // UPDATED ACTION STEPS META WITH "EXTRACT TEXT"
+    const stepMeta = {
+        tap: { icon:'👆', color:'rgba(52,199,89,0.15)', label:'Tap / Click' },
+        longpress: { icon:'🖐️', color:'rgba(52,199,89,0.15)', label:'Long Press' },
+        type: { icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text' },
+        extract: { icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text' }, // NEW FEATURE
+        open_app: { icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App' },
+        wait: { icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait' },
+        loop: { icon:'🔄', color:'rgba(255,159,10,0.15)', label:'Loop' },
+        if_condition:{ icon:'❓', color:'rgba(142,142,147,0.15)', label:'IF Condition' },
+        screenshot: { icon:'📸', color:'rgba(50,173,230,0.15)', label:'Screenshot' },
+        volume: { icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume' },
+        brightness: { icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness' },
+        var_set: { icon:'📊', color:'rgba(52,199,89,0.15)', label:'Set Variable' }
+    };
+
+    function addStep(type) {
+        pendingStepType = type; const meta = stepMeta[type];
+        let content = `<div style="font-size:28px;margin-bottom:6px;">${meta.icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${meta.label}</div>`;
+        
+        if (type === 'tap' || type === 'longpress') {
+            content += `<label class="p-label">Target (Text/Node ID)</label><input type="text" class="p-input" id="s-target" placeholder="E.g. Send Button">`;
+            content += `<label class="p-label">App (optional)</label><input type="text" class="p-input" id="s-app" placeholder="E.g. WhatsApp">`;
+            // NEW FEATURE: AI VISION TOGGLE
+            content += `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:14px;background:var(--input-bg);border-radius:12px;">
+                            <div>
+                                <div style="font-size:14px;font-weight:800;color:var(--text);">AI Vision Fallback</div>
+                                <div style="font-size:11px;color:var(--muted);font-weight:600;">Use screen capture if node fails</div>
+                            </div>
+                            <label class="switch"><input type="checkbox" id="s-ai-vision"><span class="slider"></span></label>
+                        </div>`;
+        } else if (type === 'extract') {
+            // NEW FEATURE: READ/EXTRACT TEXT
+            content += `<label class="p-label">Target (Text/Node ID to read)</label><input type="text" class="p-input" id="s-extract-target" placeholder="E.g. OTP Message">`;
+            content += `<label class="p-label">Save to Variable</label><input type="text" class="p-input" id="s-extract-var" placeholder="E.g. otp_code">`;
+        } else if (type === 'type') { content += `<label class="p-label">Text to Type</label><input type="text" class="p-input" id="s-text" placeholder="Use {var_name} for variables">`; }
+        else if (type === 'wait') { content += `<label class="p-label">Wait Duration</label><input type="number" class="p-input" id="s-secs" placeholder="Seconds" value="2">`; }
+        else if (type === 'open_app') { content += `<label class="p-label">App Name</label><input type="text" class="p-input" id="s-app" placeholder="E.g. WhatsApp">`; }
+        else if (type === 'volume') { content += `<label class="p-label">Volume Level</label><input type="number" class="p-input" id="s-vol" placeholder="0-15" value="8">`; }
+        else if (type === 'brightness') { content += `<label class="p-label">Brightness</label><input type="number" class="p-input" id="s-bright" placeholder="0-255" value="128">`; }
+        
+        document.getElementById('step-config-content').innerHTML = content; document.getElementById('step-config-modal').classList.add('active');
+    }
+
+    function confirmStepConfig() {
+        const type = pendingStepType; let step = { type, ...stepMeta[type] };
+        
+        if (type === 'tap' || type === 'longpress') {
+            step.target = document.getElementById('s-target')?.value || 'Unknown';
+            step.app = document.getElementById('s-app')?.value || '';
+            step.useAiVision = document.getElementById('s-ai-vision')?.checked || false;
+            let aiText = step.useAiVision ? ' (+AI Vision)' : '';
+            step.display = `${step.target}${step.app ? ` in ${step.app}` : ''}${aiText}`;
+        } else if (type === 'extract') {
+            step.target = document.getElementById('s-extract-target')?.value || 'Unknown';
+            step.variable = document.getElementById('s-extract-var')?.value || 'temp';
+            step.display = `Read "${step.target}" -> {${step.variable}}`;
+        } else if (type === 'type') { step.text = document.getElementById('s-text')?.value || ''; step.display = `"${step.text}"`; }
+        else if (type === 'open_app') { step.app = document.getElementById('s-app')?.value || 'Unknown'; step.display = step.app; }
+        else if (type === 'wait') { step.seconds = document.getElementById('s-secs')?.value || '2'; step.display = `${step.seconds} seconds`; }
+        else if (type === 'volume') { step.level = document.getElementById('s-vol')?.value || '8'; step.display = `Vol: ${step.level}/15`; }
+        else if (type === 'brightness') { step.level = document.getElementById('s-bright')?.value || '128'; step.display = `Bright: ${step.level}/255`; }
+        
+        currentSteps.push(step); closeSheet('step-config-modal');
+        if (currentAgentIndex >= 0) { agents[currentAgentIndex].steps = currentSteps; saveAgents(); renderAgentDetail(currentAgentIndex); }
+    }
+
+    function finishAgent() { if (currentSteps.length === 0) { alert('Please add at least one step!'); return; } closeSheet('add-step-sheet'); document.getElementById('agent-name-input').value = ''; document.getElementById('save-agent-modal').classList.add('active'); }
+    function saveNewAgent() { let name = document.getElementById('agent-name-input').value.trim() || `Agent ${agents.length + 1}`; const agent = { id: Date.now(), name, trigger: currentTrigger, steps: currentSteps, active: true, lastRun: null }; agents.push(agent); saveAgents(); closeSheet('save-agent-modal'); renderAgentList(); updateDashboardStats(); addLog(name, 'created', 0); }
+    function saveAgents() { localStorage.setItem('arif_agents', JSON.stringify(agents)); }
+
+    function getTriggerLabel(agent) {
+        if (!agent.trigger) return 'Unknown'; const t = agent.trigger.type; const c = agent.trigger.config || {};
+        if (t === 'time') return c.time || 'Scheduled'; if (t === 'wifi') return `${c.ssid || 'Any'} connect`;
+        if (t === 'battery') return `Below ${c.level || '20'}%`; if (t === 'app_open') return `${c.app || 'Any'} open`; return 'Unknown';
+    }
+
+    function renderAgentList() {
+        const container = document.getElementById('agent-list-container');
+        if (agents.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">🤖</div><div class="empty-title">No Agents Yet</div><div class="empty-desc">Tap "+ New" to create your first agent</div></div>`; return; }
+        container.innerHTML = '';
+        agents.forEach((agent, index) => {
+            const meta = triggerMeta[agent.trigger?.type] || {icon:'⏰',color:'rgba(142,142,147,0.15)'};
+            const card = document.createElement('div'); card.className = 'agent-card';
+            card.innerHTML = `<div class="agent-card-top"><div style="display:flex;align-items:flex-start;gap:12px;flex:1;"><div class="trigger-icon" style="background:${meta.color};">${meta.icon}</div><div style="flex:1;"><div class="agent-name">${agent.name}</div><div class="agent-meta"><span class="badge badge-trigger">${meta.icon} ${getTriggerLabel(agent)}</span><span class="badge badge-steps">⚙️ ${agent.steps.length} steps</span></div></div></div><label class="switch" onclick="event.stopPropagation()"><input type="checkbox" ${agent.active?'checked':''} onchange="toggleAgent(${index})"><span class="slider"></span></label></div>`;
+            let pressTimer; card.ontouchstart = () => { pressTimer = setTimeout(() => { pressTimer = null; currentAgentIndex = index; document.getElementById('options-agent-name').textContent = agent.name; document.getElementById('agent-options-sheet').classList.add('active'); }, 700); };
+            card.ontouchend = () => { if (pressTimer !== null) { clearTimeout(pressTimer); pressTimer = null; } }; card.onclick = () => { currentAgentIndex = index; renderAgentDetail(index); openPage('view-agent-detail'); };
+            container.appendChild(card);
         });
     }
 
-    // 3. MODAL CONTROLS
-    function showNewActionSheet() { document.getElementById('new-action-sheet').classList.add('active'); }
+    function toggleAgent(index) { agents[index].active = !agents[index].active; saveAgents(); updateDashboardStats(); }
+
+    function renderAgentDetail(index) {
+        const agent = agents[index]; document.getElementById('detail-agent-name').textContent = agent.name; document.getElementById('detail-agent-toggle').checked = agent.active;
+        const meta = triggerMeta[agent.trigger?.type] || { icon:'⏰', color:'rgba(0,122,255,0.12)' }; document.getElementById('detail-trigger-icon').textContent = meta.icon; document.getElementById('detail-trigger-icon').style.background = meta.color; document.getElementById('detail-trigger-text').textContent = getTriggerLabel(agent);
+        const container = document.getElementById('steps-container');
+        if (!agent.steps || agent.steps.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">⚙️</div><div class="empty-title">No Steps</div></div>`; return; }
+        container.innerHTML = '';
+        agent.steps.forEach((step, i) => {
+            const el = document.createElement('div'); el.className = 'step-item';
+            el.innerHTML = `<div class="step-num">${i+1}</div><div class="step-icon" style="background:${step.color};">${step.icon}</div><div class="step-detail"><div class="step-type">${step.label}</div><div class="step-val">${step.display || ''}</div></div><button class="step-delete" onclick="deleteStep(${i})"><i class="fa-solid fa-xmark"></i></button>`;
+            container.appendChild(el);
+        });
+    }
+
+    function deleteStep(stepIndex) { if (confirm('Delete this step?')) { agents[currentAgentIndex].steps.splice(stepIndex, 1); currentSteps = agents[currentAgentIndex].steps; saveAgents(); renderAgentDetail(currentAgentIndex); } }
+    function openAddStepSheet() { if (currentAgentIndex >= 0) { currentSteps = agents[currentAgentIndex].steps; document.getElementById('finish-agent-btn').style.display = 'none'; } document.getElementById('add-step-sheet').classList.add('active'); }
+    function toggleAgentActive() { if (currentAgentIndex >= 0) { agents[currentAgentIndex].active = document.getElementById('detail-agent-toggle').checked; saveAgents(); updateDashboardStats(); renderAgentList(); } }
+    function runAgentNow() { if (currentAgentIndex < 0) return; const agent = agents[currentAgentIndex]; agent.lastRun = new Date().toLocaleString('en-GB'); saveAgents(); addLog(agent.name, 'success', agent.steps.length); renderAgentDetail(currentAgentIndex); renderAgentList(); alert(`▶ Running "${agent.name}"...`); }
+
+    function editCurrentAgent() { closeSheet('agent-options-sheet'); renderAgentDetail(currentAgentIndex); openPage('view-agent-detail'); }
+    function deleteCurrentAgent() { if (confirm(`Delete "${agents[currentAgentIndex].name}"?`)) { agents.splice(currentAgentIndex, 1); saveAgents(); renderAgentList(); updateDashboardStats(); closeSheet('agent-options-sheet'); } }
+
+    function openVarModal() { document.getElementById('var-name-input').value = ''; document.getElementById('var-value-input').value = ''; document.getElementById('var-modal').classList.add('active'); }
+    function saveVariable() { let name = document.getElementById('var-name-input').value.trim(); let type = document.getElementById('var-type-input').value; let value = document.getElementById('var-value-input').value.trim(); if (!name) return; variables.push({ name, type, value, id: Date.now() }); localStorage.setItem('arif_variables', JSON.stringify(variables)); closeSheet('var-modal'); renderVariables(); updateDashboardStats(); }
+    function renderVariables() { const container = document.getElementById('variables-container'); if (variables.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No Variables</div></div>`; return; } container.innerHTML = ''; variables.forEach((v, i) => { const card = document.createElement('div'); card.className = 'var-card'; card.innerHTML = `<div><div class="var-name">{${v.name}}</div><div class="var-type">${v.type}</div></div><div style="text-align:right;"><div class="var-value">${v.value}</div><button onclick="variables.splice(${i}, 1);localStorage.setItem('arif_variables', JSON.stringify(variables));renderVariables();updateDashboardStats();" style="background:none;border:none;color:var(--danger);cursor:pointer;">delete</button></div>`; container.appendChild(card); }); }
+
+    function addLog(agentName, status, steps) { runLogs.unshift({ agentName, status, steps, time: new Date().toLocaleString('en-GB') }); if (runLogs.length > 50) runLogs = runLogs.slice(0, 50); localStorage.setItem('arif_logs', JSON.stringify(runLogs)); }
+    function renderLogs() { const container = document.getElementById('logs-container'); if (runLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No Runs</div></div>`; return; } container.innerHTML = ''; runLogs.forEach(log => { const card = document.createElement('div'); card.className = 'log-card'; card.innerHTML = `<div class="log-dot ${log.status === 'success' ? 'success' : 'running'}"></div><div class="log-info"><div class="log-name">${log.agentName}</div><div class="log-time">${log.time}</div></div><div class="log-steps">${log.steps} steps</div>`; container.appendChild(card); }); }
+    function clearLogs() { if (confirm('Clear logs?')) { runLogs = []; localStorage.setItem('arif_logs', JSON.stringify([])); renderLogs(); } }
+
     function closeSheet(id) { document.getElementById(id).classList.remove('active'); }
-    function closeModal(event, id) { if (event.target.id === id) closeSheet(id); }
-
-    // 4. DYNAMIC UI TOGGLERS (Naye Engine Features ke liye)
-    function toggleManualInputs() {
-        let action = document.getElementById('manual-action').value;
-        let groupTarget = document.getElementById('input-group-target');
-        let groupExtra = document.getElementById('input-group-extra');
-        let extraLabel = document.getElementById('extra-label');
-
-        if(action === 'CLICK' || action === 'TYPE') {
-            groupTarget.style.display = 'block';
-            groupExtra.style.display = action === 'TYPE' ? 'block' : 'none';
-            if(action === 'TYPE') extraLabel.innerText = 'TEXT TO TYPE';
-        } else {
-            groupTarget.style.display = 'none';
-            groupExtra.style.display = 'block';
-            if(action === 'SWIPE') extraLabel.innerText = 'DIRECTION (UP/DOWN/LEFT/RIGHT)';
-            if(action === 'WAIT') extraLabel.innerText = 'WAIT TIME (in seconds)';
-            if(action === 'SYSTEM') extraLabel.innerText = 'SETTING (e.g. Volume:10, Bright:80)';
-            if(action === 'CONDITION') extraLabel.innerText = 'LOGIC (e.g. IF Battery < 20)';
-        }
-    }
-
-    function toggleTriggerInputs() {
-        let type = document.getElementById('trigger-type').value;
-        let groupTime = document.getElementById('trigger-group-time');
-        let groupPro = document.getElementById('trigger-group-pro');
-        let proLabel = document.getElementById('pro-trigger-label');
-
-        if(type === 'TIME') {
-            groupTime.style.display = 'block';
-            groupPro.style.display = 'none';
-        } else {
-            groupTime.style.display = 'none';
-            groupPro.style.display = 'block';
-            if(type === 'WIFI') proLabel.innerText = 'WIFI NETWORK NAME (SSID)';
-            if(type === 'BATTERY') proLabel.innerText = 'BATTERY LEVEL CONDITION (e.g. < 20%)';
-            if(type === 'APP_OPEN') proLabel.innerText = 'WHEN APP OPENS (App Name)';
-        }
-    }
-
-    // 5. ACTION TRIGGERS FROM BOTTOM SHEET
-    function startLiveRecording() {
-        closeSheet('new-action-sheet');
-        triggerAndroidRecording();
-        addAgentCard('🔴 Live Recorded Macro');
-    }
-
-    function openManualTaskModal() {
-        closeSheet('new-action-sheet');
-        toggleManualInputs(); // Reset form dynamically
-        document.getElementById('manual-task-modal').classList.add('active');
-    }
-
-    function saveManualTask() {
-        closeSheet('manual-task-modal');
-        let action = document.getElementById('manual-action').value;
-        let detail = "Configured";
-        
-        if(action === 'CLICK' || action === 'TYPE') {
-            let app = document.getElementById('manual-app').value || "App";
-            detail = `${action} on ${app}`;
-        } else {
-            let extra = document.getElementById('manual-extra').value || "Default";
-            detail = `${action}: ${extra}`;
-        }
-        addAgentCard(`⚙️ Manual: ${detail}`);
-    }
-
-    // 6. CARD GENERATOR & LONG PRESS LOGIC
-    let agentCount = 1;
-    function addAgentCard(type) {
-        let container = document.getElementById('agent-list-container');
-        let card = document.createElement('div');
-        
-        card.className = "premium-action-card"; 
-        card.style.marginTop = "0px"; card.style.marginBottom = "20px"; card.style.padding = "20px";
-        card.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                <div>
-                    <h3 style="font-size: 20px; color: #000; margin-bottom: 5px;">Agent ${agentCount}</h3>
-                    <p style="font-size: 14px; font-weight: 600; color: var(--primary);">${type}</p>
-                </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--muted);"></i>
-            </div>
-        `;
-
-        let pressTimer;
-        // Long Press Delete
-        card.ontouchstart = function() {
-            pressTimer = window.setTimeout(function() {
-                if (confirm("Are you sure you want to delete this Agent?")) card.remove();
-                pressTimer = null;
-            }, 800); 
-        };
-        // Short Click Trigger Modal
-        card.ontouchend = function() {
-            if (pressTimer !== null) {
-                clearTimeout(pressTimer); 
-                toggleTriggerInputs(); // Reset trigger UI
-                document.getElementById('schedule-modal').classList.add('active');
-            }
-        };
-
-        container.appendChild(card);
-        agentCount++;
-    }
-
-    // 7. ARIF-OS ENGINE LOGIC
-    let recordedSteps = []; 
-    let isRecording = false;
-
-    function triggerAndroidRecording() {
-        isRecording = true;
-        recordedSteps = []; 
-        if (window.ArifNativeEngine) {
-            window.ArifNativeEngine.startMacroRecording();
-            alert("🔴 NATIVE RECORDING STARTED!");
-        } else {
-            console.log("Browser Mode Active.");
-            alert("🔴 BROWSER MODE: System Recording Triggered.");
-        }
-        document.body.style.opacity = "0.5"; 
-        setTimeout(() => { document.body.style.opacity = "1"; }, 3000);
-    }
-
-    function confirmSchedule() {
-        closeSheet('schedule-modal');
-        let type = document.getElementById('trigger-type').value;
-        let info = "";
-        
-        if(type === 'TIME') {
-            let t = document.getElementById('agent-time').value || "Not Set";
-            let d = document.getElementById('agent-days').value || "Daily";
-            info = `${t} (${d})`;
-        } else {
-            info = document.getElementById('pro-trigger-val').value || "Condition Set";
-        }
-        
-        alert(`✅ Agent Trigger Active!\nCondition: [${type}] ${info}\nYeh background mein run hota rahega.`);
-    }
-
-    // 8. PWA INSTALL LOGIC
-    let deferredPrompt;
-    const installCard = document.getElementById('install-card');
-    const installBtn = document.getElementById('install-btn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); deferredPrompt = e; installCard.style.display = 'flex';
-    });
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            if ((await deferredPrompt.userChoice).outcome === 'accepted') installCard.style.display = 'none';
-            deferredPrompt = null;
-        }
-    });
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./service-worker.js'); }
+    updateDashboardStats(); renderAgentList();
 </script>
 
 <script type="text/x-kotlin" id="arif-native-backup">
@@ -513,41 +712,26 @@ import android.util.Log
 
 class ArifMacroService : AccessibilityService() {
 
-    var isRecordingMacro = false
-
-    // 1. EVENT TRACKER (Recording)
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if (event == null || !isRecordingMacro) return
-
-        if (event.eventType == AccessibilityEvent.TYPE_VIEW_CLICKED) {
-            val clickedNode = event.source ?: return
-            val nodeText = clickedNode.text?.toString() ?: "No Text"
-            val viewId = clickedNode.viewIdResourceName ?: "No ID"
-
-            Log.d("ArifEngine", "CLICK -> Text: $nodeText | ID: $viewId")
-            // sendToJS("{action: 'CLICK', target: '$nodeText', id: '$viewId'}")
-        }
+    // 1. EXTRACT TEXT (MEMORY ENGINE)
+    fun extractTextFromScreen(targetIdOrText: String, saveToVar: String) {
+        // Read node and store in local variable
+        val extractedValue = "Dummy Extracted Data" 
+        Log.d("ArifEngine", "Extracted '$extractedValue' to {$saveToVar}")
+        // sendToJS("{variable: '$saveToVar', value: '$extractedValue'}")
     }
 
-    // 2. PRO ACTIONS BRIDGE API (React Native call karega)
-    fun executeAction(actionType: String, target: String) {
-        when(actionType) {
-            "CLICK" -> { /* Find node by text/ID and performClick() */ }
-            "SWIPE" -> { /* Dispatch Android Gesture (swipe) */ }
-            "WAIT" -> { /* Thread sleep delay */ }
-            "SYSTEM_VOL" -> { /* Use AudioManager to set volume */ }
-            "SYSTEM_BRIGHT" -> { /* Use Settings.System for brightness */ }
-        }
-    }
-
-    // 3. PRO AI VISION FALLBACK (ML Kit)
+    // 2. AI VISION FALLBACK (ML Kit OCR)
     fun performAiVisionClick(targetText: String) {
-        // TODO: Agar accessibility node kaam na kare:
-        // 1. Take raw screen capture via MediaProjection API
+        // Agar normal Android Accessibility fail ho gaya:
+        // 1. Take raw screen capture
         // 2. Pass bitmap to Google ML Kit local OCR
         // 3. Find X, Y coordinates of targetText
         // 4. Dispatch simulated tap at X, Y
-        Log.d("ArifEngine", "AI Vision fallback triggered for text: $targetText")
+        Log.d("ArifEngine", "Normal Click failed. AI Vision used for: $targetText")
+    }
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        // Core tracking logic here
     }
 
     override fun onInterrupt() { Log.e("ArifEngine", "Interrupted!") }
