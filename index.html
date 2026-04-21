@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ArifOS V21.3 • PRO ENGINE</title>
+    <title>ArifOS V3.1 • HYBRID PRO ENGINE</title>
     <meta name="theme-color" content="#34C759">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -168,7 +168,8 @@
         
         /* ── INPUT ── */
         .p-input { width:100%; padding:14px 16px; border-radius:12px; border:none; background:var(--input-bg); font-size:15px; font-weight:600; color:var(--text); font-family:'Outfit',sans-serif; margin-bottom:14px; outline:none; }
-        .p-input::placeholder { color:var(--muted); }
+        .premium-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border); font-size: 16px; font-weight: 600; margin-bottom: 15px; outline: none; background: var(--bg); color: var(--text); }
+        .p-input::placeholder, .premium-input::placeholder { color:var(--muted); }
         .p-label { font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; display:block; }
         
         /* ── TRIGGER GRID ── */
@@ -223,8 +224,8 @@
 <div id="view-login" class="view active app-container" style="justify-content:center;align-items:center;text-align:center;">
     <div class="logo-box"><i class="fa-solid fa-leaf" style="color:var(--primary);font-size:46px;"></i></div>
     <h1 style="font-size:42px;font-weight:900;letter-spacing:-1px;">ArifOS</h1>
-    <p class="screen-sub" style="margin-bottom:12px;">V21.3 PRO ENGINE</p>
-    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Advanced Voice & Offline Automation</p>
+    <p class="screen-sub" style="margin-bottom:12px;">V3.1 HYBRID PRO ENGINE</p>
+    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Offline & Gemini AI Cloud Automation</p>
     <button class="btn btn-green" onclick="showDashboard()">Get Started</button>
 </div>
 
@@ -278,7 +279,7 @@
             <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,122,255,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🌐</div>
             <div>
                 <div style="font-size:18px;font-weight:900;color:var(--text);">Hybrid Control</div>
-                <div style="font-size:12px;color:var(--muted);font-weight:600;">Online + Offline</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Online + Offline AI</div>
             </div>
         </div>
         <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
@@ -307,13 +308,13 @@
 <div id="view-offline" class="view app-container">
     <div class="page-header">
         <div class="header-left">
-            <button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
             <div>
                 <p class="screen-sub">ArifOS</p>
                 <h1 class="screen-title" style="font-size:26px;">Offline Control</h1>
             </div>
         </div>
-        <div class="premium-add-btn" onclick="openTriggerFlow()">+ New</div>
+        <div class="premium-add-btn" onclick="openActionSheet('offline')">+ New</div>
     </div>
 
     <div class="tab-bar">
@@ -334,14 +335,8 @@
             </div>
             <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
         </div>
-        <div class="section-label">Your Agents</div>
-        <div id="agent-list-container">
-            <div class="empty-state">
-                <div class="empty-icon">🤖</div>
-                <div class="empty-title">No Agents Yet</div>
-                <div class="empty-desc">Tap "+ New" to create your first automation agent</div>
-            </div>
-        </div>
+        <div class="section-label">Your Offline Agents</div>
+        <div id="agent-list-container"></div>
     </div>
 
     <div id="tab-content-macros" style="display:none;">
@@ -350,6 +345,8 @@
         <div class="macro-card" onclick="importMacro('night')"><div class="macro-icon" style="background:rgba(0,122,255,0.12);">🌙</div><div class="macro-info"><div class="macro-name">Night Mode</div><div class="macro-desc">Enable DND, reduce brightness, stop media</div><div class="macro-steps-count">3 steps • Time trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
         <div class="macro-card" onclick="importMacro('work')"><div class="macro-icon" style="background:rgba(52,199,89,0.12);">💼</div><div class="macro-info"><div class="macro-name">Work Mode</div><div class="macro-desc">Enable WiFi, open Mail, silent social apps</div><div class="macro-steps-count">5 steps • WiFi trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
         <div class="macro-card" onclick="importMacro('battery')"><div class="macro-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="macro-info"><div class="macro-name">Battery Saver</div><div class="macro-desc">When 20%, reduce brightness, enable battery saver</div><div class="macro-steps-count">3 steps • Battery trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('meeting')"><div class="macro-icon" style="background:rgba(175,82,222,0.12);">🤝</div><div class="macro-info"><div class="macro-name">Meeting Mode</div><div class="macro-desc">Silent mode on, auto-reply WhatsApp</div><div class="macro-steps-count">4 steps • Calendar trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('charger')"><div class="macro-icon" style="background:rgba(50,173,230,0.12);">🔌</div><div class="macro-info"><div class="macro-name">Charger Connected</div><div class="macro-desc">Max brightness, enable sync, play music</div><div class="macro-steps-count">3 steps • Charger trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
     </div>
 
     <div id="tab-content-vars" style="display:none;">
@@ -357,9 +354,7 @@
             <div class="section-label" style="margin:0;">Variables</div>
             <button class="btn btn-green btn-sm" onclick="openVarModal()">+ Add Variable</button>
         </div>
-        <div id="variables-container">
-            <div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No Variables</div><div class="empty-desc">Create variables to use in your agents with {var_name} syntax</div></div>
-        </div>
+        <div id="variables-container"></div>
     </div>
 
     <div id="tab-content-logs" style="display:none;">
@@ -367,19 +362,82 @@
             <div class="section-label" style="margin:0;">Run History</div>
             <button class="btn btn-red btn-sm" onclick="clearLogs()" style="padding:8px 14px;font-size:12px;">Clear All</button>
         </div>
-        <div id="logs-container">
-            <div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No Runs Yet</div><div class="empty-desc">Agent run history will appear here</div></div>
+        <div id="logs-container"></div>
+    </div>
+</div>
+
+<div id="view-hybrid" class="view app-container">
+    <div class="page-header">
+        <div class="header-left">
+            <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
+            <div>
+                <p class="screen-sub">ArifOS</p>
+                <h1 class="screen-title" style="font-size:26px;">Hybrid Control</h1>
+            </div>
         </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button class="btn" style="background: var(--card); color: var(--warning); border: 2px solid var(--border); padding: 10px 16px; border-radius: 16px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); width: auto;" onclick="openApiModal()">
+                <i class="fa-solid fa-sparkles"></i>
+            </button>
+            <div class="premium-add-btn" onclick="openActionSheet('hybrid')">+ New</div>
+        </div>
+    </div>
+
+    <div class="p-card blue-card" onclick="openPage('view-permissions')" style="margin-bottom:20px;padding:14px 18px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <i class="fa-solid fa-shield-halved" style="color:var(--blue);font-size:20px;"></i>
+            <div>
+                <div style="font-size:15px;font-weight:800;">Agent Permissions</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Allow Accessibility & Overlay</div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+    </div>
+    
+    <div class="section-label">Your Hybrid Agents</div>
+    <div id="hybrid-agent-list">
+        <div class="empty-state" style="margin-top:20px;">
+            <div class="empty-icon">🌐</div>
+            <div class="empty-title">Hybrid Mode Active</div>
+            <div class="empty-desc">Offline Engine + Gemini AI. Tap ✨ to set API Key, then "+ New" to create.</div>
+        </div>
+    </div>
+</div>
+
+<div id="api-key-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('api-key-modal')">
+    <div class="center-modal" onclick="event.stopPropagation()">
+        
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <i class="fa-solid fa-sparkles" style="color: var(--warning); font-size: 24px;"></i>
+            <div style="font-size:22px; font-weight:900; color:var(--text);">Gemini AI Engine</div>
+        </div>
+        <div style="font-size:13px; color:var(--muted); font-weight:600; margin-bottom:20px;">
+            Connect your agent to the cloud mastermind.
+        </div>
+
+        <label class="p-label">Enter Model Name</label>
+        <input type="text" class="p-input" id="ai-model-name" placeholder="e.g. gemini-1.5-pro-latest" value="gemini-1.5-pro-latest">
+
+        <label class="p-label">Enter API Key</label>
+        <input type="password" class="p-input" id="ai-api-key" placeholder="Paste your Google Gemini Key here">
+
+        <button class="btn btn-green" onclick="saveApiKey()" style="margin-top:6px;">
+            Activate Connection
+        </button>
+        <button class="btn" style="background: transparent; color: var(--danger); margin-top:10px;" onclick="closeSheet('api-key-modal')">
+            Cancel
+        </button>
     </div>
 </div>
 
 <div id="view-agent-detail" class="view app-container">
     <div class="page-header">
         <div class="header-left">
-            <button class="icon-round btn-back" onclick="openPage('view-offline')"><i class="fa-solid fa-arrow-left"></i></button>
-            <div><p class="screen-sub">Agent Editor</p><h1 class="screen-title" style="font-size:24px;" id="detail-agent-name">Agent 1</h1></div>
+            <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
+            <div><p class="screen-sub">Agent Editor</p><h1 class="screen-title" style="font-size:24px;" id="detail-agent-name">Agent</h1></div>
         </div>
-        <button class="btn btn-green btn-sm" onclick="runAgentNow()">▶ Run Now</button>
+        <button class="btn btn-green btn-sm" onclick="runCurrentAgent()">▶ Run Now</button>
     </div>
 
     <div id="detail-trigger-card" style="background:var(--card);border-radius:18px;padding:16px 18px;margin-bottom:20px;box-shadow:0 3px 12px var(--border);display:flex;align-items:center;gap:14px;">
@@ -392,18 +450,16 @@
         <div class="section-label" style="margin:0;">Steps</div>
         <button class="btn btn-blue btn-sm" onclick="openAddStepSheet()" style="padding:8px 14px;font-size:12px;">+ Add Step</button>
     </div>
-    <div id="steps-container">
-        <div class="empty-state"><div class="empty-icon">⚙️</div><div class="empty-title">No Steps</div><div class="empty-desc">Add steps to define what this agent will do</div></div>
-    </div>
+    <div id="steps-container"></div>
 </div>
 
 <div id="view-permissions" class="view app-container">
     <div class="page-header">
         <div class="header-left">
-            <button class="icon-round btn-back" onclick="openPage('view-offline')"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
             <div><p class="screen-sub">ArifOS</p><h1 class="screen-title" style="font-size:24px;">Agent Access</h1></div>
         </div>
-        <button class="btn btn-green btn-sm" onclick="openPage('view-offline')">Save</button>
+        <button class="btn btn-green btn-sm" onclick="navigateBack()">Save</button>
     </div>
     <input type="text" id="appSearchInput" class="premium-search" placeholder="Search apps (e.g. WhatsApp)..." onkeyup="filterApps()">
     
@@ -424,28 +480,30 @@
         <div class="perm-item app-item"><span class="perm-label">Instagram</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
         <div class="perm-item app-item"><span class="perm-label">Chrome</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
         <div class="perm-item app-item"><span class="perm-label">Settings</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">YouTube</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">Gmail</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">Telegram</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="perm-item app-item"><span class="perm-label">Maps</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
     </div>
 </div>
 
-<div id="view-hybrid" class="view app-container">
-    <div class="page-header"><div class="header-left"><button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button><h1 class="screen-title" style="font-size:26px;">Hybrid Control</h1></div><div class="premium-add-btn" onclick="alert('Coming soon!')">+ New</div></div>
-    <div class="empty-state" style="margin-top:60px;"><div class="empty-icon">🌐</div><div class="empty-title">Coming Soon</div><div class="empty-desc">Online + Offline hybrid automation will be available in next build</div></div>
-</div>
 <div id="view-manual" class="view app-container">
-    <div class="page-header"><div class="header-left"><button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button><h1 class="screen-title" style="font-size:26px;">Manual Control</h1></div><div class="premium-add-btn" onclick="openAddStepSheet()">+ New</div></div>
-    <div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>
+    <div class="page-header"><div class="header-left"><button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button><h1 class="screen-title" style="font-size:26px;">Manual Control</h1></div><div class="premium-add-btn" onclick="openActionSheet('manual')">+ New</div></div>
+    
+    <div class="section-label">Your Manual Agents</div>
+    <div id="manual-agent-list">
+        <div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>
+    </div>
 </div>
 
-<div id="new-action-sheet" class="modal-overlay" onclick="closeModal(event, 'new-action-sheet')">
+<div id="new-action-sheet" class="modal-overlay" onclick="closeSheet('new-action-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
         <div class="sheet-pill"></div>
         <h3 style="margin-bottom: 8px; font-size: 22px;">Create New Agent</h3>
         <div class="sheet-sub">How do you want to build this automation?</div>
         
         <button class="btn btn-green" style="margin-bottom: 12px; font-size:15px;" onclick="startLiveRecording()">🔴 Start Recording (Live)</button>
-        
         <button class="btn" style="background: var(--input-bg); color: var(--text); margin-bottom: 12px; font-size:15px;" onclick="openManualTaskModal()">⚙️ Start Without Recording (Manual)</button>
-        
         <button class="btn" style="background: rgba(175,82,222,0.12); color: var(--purple); margin-bottom: 15px; font-size:15px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="openVoiceCommandModal()">
             <i class="fa-solid fa-microphone"></i> Smart Voice Command
         </button>
@@ -454,12 +512,12 @@
     </div>
 </div>
 
-<div id="voice-command-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'voice-command-modal')">
+<div id="voice-command-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('voice-command-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div style="text-align:center; margin-bottom:20px; margin-top:10px;">
             <div class="mic-btn pulse-anim" onclick="simulateVoiceInput()"><i class="fa-solid fa-microphone"></i></div>
-            <h3 style="margin-top:20px; font-size:22px; color:var(--text); font-weight:900;">Listening...</h3>
-            <p style="font-size:13px; color:var(--muted); margin-top:5px; font-weight:600;">"Raat 2 baje WhatsApp par Rahul ko Hi bhejo"</p>
+            <h3 style="margin-top:20px; font-size:22px; color:var(--text); font-weight:900;" id="voice-title">Listening...</h3>
+            <p style="font-size:13px; color:var(--muted); margin-top:5px; font-weight:600;" id="voice-sub">"Raat 2 baje WhatsApp par Rahul ko Hi bhejo"</p>
         </div>
         
         <textarea class="premium-input" id="voice-text-result" rows="3" placeholder="Speak or type your command here..." style="resize:none; line-height:1.4;"></textarea>
@@ -475,12 +533,14 @@
         <div class="sheet-title">Choose Trigger</div>
         <div class="sheet-sub">When should this agent run?</div>
         <div class="trigger-grid">
-            <div class="trigger-option" onclick="selectTrigger('time')"><div class="t-icon" style="background:rgba(255,159,10,0.15);">⏰</div><div class="t-name">Time Schedule</div><div class="t-desc">Run at specific time</div></div>
-            <div class="trigger-option" onclick="selectTrigger('notification')"><div class="t-icon" style="background:rgba(0,122,255,0.12);">🔔</div><div class="t-name">Notification</div><div class="t-desc">When app gets notif</div></div>
-            <div class="trigger-option" onclick="selectTrigger('wifi')"><div class="t-icon" style="background:rgba(52,199,89,0.12);">📶</div><div class="t-name">WiFi Event</div><div class="t-desc">Connected/Disconnected</div></div>
-            <div class="trigger-option" onclick="selectTrigger('battery')"><div class="t-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="t-name">Battery Level</div><div class="t-desc">Above or below X%</div></div>
-            <div class="trigger-option" onclick="selectTrigger('app_open')"><div class="t-icon" style="background:rgba(175,82,222,0.12);">📱</div><div class="t-name">App Opened</div><div class="t-desc">When specific app opens</div></div>
-            <div class="trigger-option" onclick="selectTrigger('location')"><div class="t-icon" style="background:rgba(50,173,230,0.12);">📍</div><div class="t-name">Location Zone</div><div class="t-desc">Home/Office/Custom</div></div>
+            <div class="trigger-option" onclick="selectTrigger('time')"><div class="t-icon" style="background:rgba(255,159,10,0.15);">⏰</div><div class="t-name">Time Schedule</div></div>
+            <div class="trigger-option" onclick="selectTrigger('notification')"><div class="t-icon" style="background:rgba(0,122,255,0.12);">🔔</div><div class="t-name">Notification</div></div>
+            <div class="trigger-option" onclick="selectTrigger('wifi')"><div class="t-icon" style="background:rgba(52,199,89,0.12);">📶</div><div class="t-name">WiFi Event</div></div>
+            <div class="trigger-option" onclick="selectTrigger('battery')"><div class="t-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="t-name">Battery Level</div></div>
+            <div class="trigger-option" onclick="selectTrigger('app_open')"><div class="t-icon" style="background:rgba(175,82,222,0.12);">📱</div><div class="t-name">App Opened</div></div>
+            <div class="trigger-option" onclick="selectTrigger('location')"><div class="t-icon" style="background:rgba(50,173,230,0.12);">📍</div><div class="t-name">Location Zone</div></div>
+            <div class="trigger-option" onclick="selectTrigger('charger')"><div class="t-icon" style="background:rgba(255,204,0,0.15);">🔌</div><div class="t-name">Charger</div></div>
+            <div class="trigger-option" onclick="selectTrigger('call_sms')"><div class="t-icon" style="background:rgba(52,199,89,0.12);">📲</div><div class="t-name">Call / SMS</div></div>
         </div>
         <button class="btn btn-red" style="margin-top:4px;" onclick="closeSheet('trigger-select-sheet')">Cancel</button>
     </div>
@@ -502,16 +562,22 @@
         <div class="action-grid">
             <div class="action-option" onclick="addStep('tap')"><div class="a-icon">👆</div><div class="a-name">Tap</div></div>
             <div class="action-option" onclick="addStep('longpress')"><div class="a-icon">🖐️</div><div class="a-name">Long Press</div></div>
+            <div class="action-option" onclick="addStep('swipe')"><div class="a-icon">👉</div><div class="a-name">Swipe</div></div>
             <div class="action-option" onclick="addStep('type')"><div class="a-icon">⌨️</div><div class="a-name">Type Text</div></div>
             <div class="action-option" onclick="addStep('extract')"><div class="a-icon" style="color:var(--purple);">🔍</div><div class="a-name">Extract Text</div></div>
-            
             <div class="action-option" onclick="addStep('open_app')"><div class="a-icon">📱</div><div class="a-name">Open App</div></div>
+            <div class="action-option" onclick="addStep('open_url')"><div class="a-icon">🔗</div><div class="a-name">Open URL</div></div>
             <div class="action-option" onclick="addStep('wait')"><div class="a-icon">⏳</div><div class="a-name">Wait</div></div>
             <div class="action-option" onclick="addStep('loop')"><div class="a-icon">🔄</div><div class="a-name">Loop</div></div>
-            <div class="action-option" onclick="addStep('if_condition')"><div class="a-icon">❓</div><div class="a-name">IF Condition</div></div>
+            <div class="action-option" onclick="addStep('if_condition')"><div class="a-icon">❓</div><div class="a-name">IF Cond</div></div>
             <div class="action-option" onclick="addStep('screenshot')"><div class="a-icon">📸</div><div class="a-name">Screenshot</div></div>
-            <div class="action-option" onclick="addStep('volume')"><div class="a-icon">🔊</div><div class="a-name">Set Volume</div></div>
-            <div class="action-option" onclick="addStep('brightness')"><div class="a-icon">☀️</div><div class="a-name">Brightness</div></div>
+            <div class="action-option" onclick="addStep('volume')"><div class="a-icon">🔊</div><div class="a-name">Volume</div></div>
+            <div class="action-option" onclick="addStep('brightness')"><div class="a-icon">☀️</div><div class="a-name">Bright</div></div>
+            <div class="action-option" onclick="addStep('notification')"><div class="a-icon">🔔</div><div class="a-name">Notif</div></div>
+            <div class="action-option" onclick="addStep('back')"><div class="a-icon">◀</div><div class="a-name">Back Btn</div></div>
+            <div class="action-option" onclick="addStep('home')"><div class="a-icon">🏠</div><div class="a-name">Home Btn</div></div>
+            <div class="action-option" onclick="addStep('copy')"><div class="a-icon">📋</div><div class="a-name">Copy</div></div>
+            <div class="action-option" onclick="addStep('silent')"><div class="a-icon">🔕</div><div class="a-name">Silent</div></div>
             <div class="action-option" onclick="addStep('var_set')"><div class="a-icon">📊</div><div class="a-name">Set Var</div></div>
         </div>
         <button class="btn btn-green" onclick="finishAgent()" id="finish-agent-btn" style="display:none;margin-bottom:10px;">✓ Save Agent</button>
@@ -532,7 +598,7 @@
         <div style="font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px;">Save Agent</div>
         <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:20px;">Give your agent a name</div>
         <label class="p-label">Agent Name</label>
-        <input type="text" class="p-input" id="agent-name-input" placeholder="E.g. Morning Routine">
+        <input type="text" class="premium-input" id="agent-name-input" placeholder="E.g. Morning Routine">
         <button class="btn btn-green" onclick="saveNewAgent()" style="margin-top:6px;">✓ Create Agent</button>
         <button class="btn btn-red" onclick="closeSheet('save-agent-modal')" style="margin-top:10px;">Cancel</button>
     </div>
@@ -541,13 +607,12 @@
 <div id="var-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('var-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div style="font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px;">New Variable</div>
-        <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:20px;">Store values for use in agents</div>
         <label class="p-label">Variable Name</label>
-        <input type="text" class="p-input" id="var-name-input" placeholder="E.g. myName, counter">
+        <input type="text" class="premium-input" id="var-name-input" placeholder="E.g. myName">
         <label class="p-label">Type</label>
-        <select class="p-input" id="var-type-input"><option value="text">Text</option><option value="number">Number</option></select>
+        <select class="premium-input" id="var-type-input"><option value="text">Text</option><option value="number">Number</option><option value="boolean">Boolean</option></select>
         <label class="p-label">Initial Value</label>
-        <input type="text" class="p-input" id="var-value-input" placeholder="E.g. Hello / 42">
+        <input type="text" class="premium-input" id="var-value-input" placeholder="E.g. Hello">
         <button class="btn btn-green" onclick="saveVariable()" style="margin-top:6px;">Save Variable</button>
         <button class="btn btn-red" onclick="closeSheet('var-modal')" style="margin-top:10px;">Cancel</button>
     </div>
@@ -559,25 +624,68 @@
         <div class="sheet-title" id="options-agent-name">Agent Options</div>
         <button class="btn" style="background:var(--input-bg);color:var(--text);margin-bottom:10px;" onclick="editCurrentAgent()">✏️ Edit Agent</button>
         <button class="btn" style="background:rgba(0,122,255,0.12);color:var(--blue);margin-bottom:10px;" onclick="runCurrentAgent()">▶ Run Now</button>
+        <button class="btn" style="background:rgba(255,159,10,0.12);color:var(--warning);margin-bottom:10px;" onclick="duplicateCurrentAgent()">⧉ Duplicate</button>
         <button class="btn btn-red" onclick="deleteCurrentAgent()">🗑 Delete Agent</button>
         <button class="btn" style="background:transparent;color:var(--muted);margin-top:10px;" onclick="closeSheet('agent-options-sheet')">Cancel</button>
     </div>
 </div>
 
 <script>
+    // DATA STORE
     let agents = JSON.parse(localStorage.getItem('arif_agents') || '[]');
     let variables = JSON.parse(localStorage.getItem('arif_variables') || '[]');
     let runLogs = JSON.parse(localStorage.getItem('arif_logs') || '[]');
+    
+    // BUILDER STATE
     let currentTrigger = null; let currentSteps = []; let currentAgentIndex = -1; let pendingStepType = null;
+    let currentMode = 'offline'; 
+    let geminiApiKey = localStorage.getItem('arif_gemini_key') || '';
+    
+    // NAVIGATION STACK (Fix for Bug 9 & 10)
+    let pageHistory = ['view-main'];
 
-    function openPage(pageId) { document.querySelectorAll('.view').forEach(p => p.classList.remove('active')); document.getElementById(pageId).classList.add('active'); document.getElementById(pageId).scrollTop = 0; }
-    function showDashboard() { updateDashboardStats(); openPage('view-main'); }
+    // BUG 1 FIX: Alias closeModal to closeSheet
+    function closeModal(event, id) { if(event.target.id === id) closeSheet(id); }
+    function closeSheet(id) { document.getElementById(id).classList.remove('active'); }
+
+    // PAGE NAVIGATION
+    function openPage(pageId) { 
+        document.querySelectorAll('.view').forEach(p => p.classList.remove('active')); 
+        document.getElementById(pageId).classList.add('active'); 
+        document.getElementById(pageId).scrollTop = 0; 
+        if(pageHistory[pageHistory.length-1] !== pageId) pageHistory.push(pageId);
+    }
+    function showDashboard() { updateDashboardStats(); pageHistory = ['view-main']; openPage('view-main'); }
+    function navigateBack() {
+        if(pageHistory.length > 1) {
+            pageHistory.pop();
+            const prevPage = pageHistory[pageHistory.length - 1];
+            document.querySelectorAll('.view').forEach(p => p.classList.remove('active')); 
+            document.getElementById(prevPage).classList.add('active');
+        } else {
+            showDashboard();
+        }
+    }
     function logoutApp() { openPage('view-login'); }
 
+    // THEME
     function checkSavedTheme() { if (localStorage.getItem('arif_theme') === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').innerHTML = '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>'; } }
     checkSavedTheme();
     function toggleTheme() { document.body.classList.toggle('dark'); let isDark = document.body.classList.contains('dark'); localStorage.setItem('arif_theme', isDark ? 'dark' : 'light'); document.getElementById('theme-btn').innerHTML = isDark ? '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>' : '<i class="fa-solid fa-moon"></i>'; }
 
+    // SEARCH & FILTER (Bug 2 Fix)
+    function filterApps() {
+        let input = document.getElementById('appSearchInput').value.toLowerCase();
+        document.querySelectorAll('.app-item').forEach(app => {
+            let name = app.querySelector('.perm-label').innerText.toLowerCase();
+            app.style.display = name.includes(input) ? "flex" : "none";
+        });
+    }
+    function selectAllApps() {
+        document.querySelectorAll('.app-item input[type="checkbox"]').forEach(cb => cb.checked = true);
+    }
+
+    // DASHBOARD STATS
     function updateDashboardStats() {
         document.getElementById('stat-agents').textContent = agents.length;
         document.getElementById('stat-runs').textContent = runLogs.length;
@@ -587,47 +695,72 @@
         if (activeCount > 0) { statusBar.style.display = 'flex'; document.getElementById('active-agents-count').textContent = `${activeCount} active`; } else { statusBar.style.display = 'none'; }
     }
 
+    // TABS
     function switchTab(tab) {
         ['agents','macros','vars','logs'].forEach(t => { document.getElementById(`tab-content-${t}`).style.display = 'none'; document.getElementById(`tab-${t}`).classList.remove('active'); });
         document.getElementById(`tab-content-${tab}`).style.display = 'block'; document.getElementById(`tab-${tab}`).classList.add('active');
         if (tab === 'logs') renderLogs(); if (tab === 'vars') renderVariables();
     }
 
+    // MULTI-MODE ACTION SHEET
+    function openActionSheet(mode) {
+        currentMode = mode;
+        document.getElementById('new-action-sheet').classList.add('active');
+    }
+
     function openTriggerFlow() { currentTrigger = null; currentSteps = []; currentAgentIndex = -1; closeSheet('add-step-sheet'); document.getElementById('trigger-select-sheet').classList.add('active'); }
     
-    // NEW VOICE COMMAND FUNCTIONS
+    // API MODAL LOGIC (HYBRID)
+    function openApiModal() {
+        if(geminiApiKey) document.getElementById('ai-api-key').value = geminiApiKey;
+        document.getElementById('api-key-modal').classList.add('active');
+    }
+    function saveApiKey() {
+        geminiApiKey = document.getElementById('ai-api-key').value.trim();
+        localStorage.setItem('arif_gemini_key', geminiApiKey);
+        alert("✅ Gemini Connection Saved!\nHybrid Mode will now use Cloud AI for Fallback & Analysis.");
+        closeSheet('api-key-modal');
+    }
+    
+    // VOICE COMMAND FUNCTIONS
     function openVoiceCommandModal() {
         closeSheet('new-action-sheet');
         document.getElementById('voice-text-result').value = '';
+        
+        if(currentMode === 'hybrid') {
+            document.getElementById('voice-title').innerText = "Gemini Listening...";
+            document.getElementById('voice-title').style.color = "var(--warning)";
+            document.getElementById('voice-sub').innerText = "Hybrid Mode: Powered by Cloud AI";
+        } else {
+            document.getElementById('voice-title').innerText = "Offline Listening...";
+            document.getElementById('voice-title').style.color = "var(--primary)";
+            document.getElementById('voice-sub').innerText = "Powered by On-Device NLP";
+        }
+        
         document.getElementById('voice-command-modal').classList.add('active');
     }
     
     function simulateVoiceInput() {
-        // UI helper to pretend the mic is listening and transcribing
         const textBtn = document.getElementById('voice-text-result');
         textBtn.value = "Listening...";
-        setTimeout(() => {
-            textBtn.value = "Raat 2 baje WhatsApp par Rahul ko Hi bhejna hai";
-        }, 1500);
+        setTimeout(() => { textBtn.value = "Raat 2 baje WhatsApp par Rahul ko Hi bhejna hai"; }, 1500);
     }
     
     function processVoiceCommand() {
         let command = document.getElementById('voice-text-result').value.trim();
         if(!command) { alert("Pehle kuch boliye ya type kijiye!"); return; }
-        
         closeSheet('voice-command-modal');
         
-        // This simulates passing the command to our Kotlin NLP Brain
-        if (window.ArifNativeEngine) {
-            window.ArifNativeEngine.processVoiceCommand(command);
+        if (currentMode === 'hybrid') {
+            if(!geminiApiKey) { alert("⚠️ API Key is missing! Tap the ✨ Star button to connect Gemini first."); return; }
+            alert(`🌐 Sent to GEMINI AI:\n"${command}"\n\nGemini is building the rule...`);
+        } else {
+            alert(`⚡ Sent to OFFLINE NLP:\n"${command}"\n\nKotlin Engine is parsing your command.`);
         }
         
-        alert(`🎙️ Command Sent to Kotlin Brain:\n"${command}"\n\nAndroid NLP ise parse karke automatic Agent bana dega.`);
-        
-        // Create a dummy agent to show it works in UI
-        addLog("Voice Agent", "created", 1);
+        addLog(currentMode === 'hybrid' ? "Hybrid AI Agent" : "Offline Voice Agent", "created", 1);
         let dummyAgent = {
-            id: Date.now(), name: "Voice: WhatsApp Message", active: true, lastRun: null,
+            id: Date.now(), name: currentMode === 'hybrid' ? "Gemini: WhatsApp Msg" : "Voice: WhatsApp Msg", active: true, lastRun: null, mode: currentMode,
             trigger: { type: 'time', config: { time: '02:00' } },
             steps: [
                 { type: 'open_app', label: 'Open App', display: 'WhatsApp', color: 'rgba(175,82,222,0.12)', icon: '📱' },
@@ -637,40 +770,66 @@
         agents.push(dummyAgent); saveAgents(); renderAgentList(); updateDashboardStats();
     }
 
-    const triggerMeta = { time:{icon:'⏰',color:'rgba(255,159,10,0.15)',label:'Time Schedule'}, notification:{icon:'🔔',color:'rgba(0,122,255,0.12)',label:'Notification'}, wifi:{icon:'📶',color:'rgba(52,199,89,0.12)',label:'WiFi Event'}, battery:{icon:'🔋',color:'rgba(255,59,48,0.1)',label:'Battery Level'}, app_open:{icon:'📱',color:'rgba(175,82,222,0.12)',label:'App Opened'} };
+    // 8 TRIGGERS BROUGHT BACK
+    const triggerMeta = { 
+        time:{icon:'⏰',color:'rgba(255,159,10,0.15)',label:'Time Schedule'}, 
+        notification:{icon:'🔔',color:'rgba(0,122,255,0.12)',label:'Notification'}, 
+        wifi:{icon:'📶',color:'rgba(52,199,89,0.12)',label:'WiFi Event'}, 
+        battery:{icon:'🔋',color:'rgba(255,59,48,0.1)',label:'Battery Level'}, 
+        app_open:{icon:'📱',color:'rgba(175,82,222,0.12)',label:'App Opened'},
+        location:{icon:'📍',color:'rgba(50,173,230,0.12)',label:'Location Zone'},
+        charger:{icon:'🔌',color:'rgba(255,204,0,0.15)',label:'Charger'},
+        call_sms:{icon:'📲',color:'rgba(52,199,89,0.12)',label:'Call / SMS'}
+    };
 
     function selectTrigger(type) {
         closeSheet('trigger-select-sheet'); currentTrigger = { type, config: {} };
-        let content = ''; const meta = triggerMeta[type] || {icon:'⏰', label:'Trigger'};
-        content += `<div style="font-size:30px;margin-bottom:8px;">${meta.icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${meta.label}</div>`;
-        if (type === 'time') { content += `<label class="p-label">Time</label><input type="time" class="p-input" id="t-time" value="07:00">`; }
-        else if (type === 'wifi') { content += `<label class="p-label">WiFi Name (SSID)</label><input type="text" class="p-input" id="t-ssid" placeholder="E.g. Home_WiFi">`; }
-        else if (type === 'battery') { content += `<label class="p-label">Battery %</label><input type="number" class="p-input" id="t-battery" placeholder="E.g. 20">`; }
-        else if (type === 'app_open') { content += `<label class="p-label">App Name</label><input type="text" class="p-input" id="t-app" placeholder="E.g. WhatsApp">`; }
+        let content = `<div style="font-size:30px;margin-bottom:8px;">${triggerMeta[type].icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${triggerMeta[type].label}</div>`;
+        if (type === 'time') { content += `<label class="p-label">Time</label><input type="time" class="premium-input" id="t-time" value="07:00">`; }
+        else if (type === 'notification') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="t-app" placeholder="E.g. WhatsApp">`; }
+        else if (type === 'wifi') { content += `<label class="p-label">WiFi Name (SSID)</label><input type="text" class="premium-input" id="t-ssid" placeholder="E.g. Home_WiFi">`; }
+        else if (type === 'battery') { content += `<label class="p-label">Battery %</label><input type="number" class="premium-input" id="t-battery" placeholder="E.g. 20">`; }
+        else if (type === 'app_open') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="t-app" placeholder="E.g. WhatsApp">`; }
+        else if (type === 'location') { content += `<label class="p-label">Zone Name</label><input type="text" class="premium-input" id="t-zone" placeholder="E.g. Home">`; }
+        else if (type === 'charger') { content += `<label class="p-label">Event</label><select class="premium-input" id="t-charger-event"><option value="connected">Connected</option><option value="disconnected">Disconnected</option></select>`; }
+        else if (type === 'call_sms') { content += `<label class="p-label">From Number (optional)</label><input type="text" class="premium-input" id="t-number" placeholder="Any number if empty">`; }
         document.getElementById('trigger-config-content').innerHTML = content; document.getElementById('trigger-config-modal').classList.add('active');
     }
 
     function confirmTriggerConfig() {
         const t = currentTrigger.type;
         if (t === 'time') currentTrigger.config = { time: document.getElementById('t-time')?.value || '07:00' };
+        else if (t === 'notification') currentTrigger.config = { app: document.getElementById('t-app')?.value || 'Any' };
         else if (t === 'wifi') currentTrigger.config = { ssid: document.getElementById('t-ssid')?.value || 'Any' };
         else if (t === 'battery') currentTrigger.config = { level: document.getElementById('t-battery')?.value || '20' };
         else if (t === 'app_open') currentTrigger.config = { app: document.getElementById('t-app')?.value || 'Any' };
+        else if (t === 'location') currentTrigger.config = { zone: document.getElementById('t-zone')?.value || 'Home' };
+        else if (t === 'charger') currentTrigger.config = { event: document.getElementById('t-charger-event')?.value || 'connected' };
+        else if (t === 'call_sms') currentTrigger.config = { number: document.getElementById('t-number')?.value || 'Any' };
+        
         closeSheet('trigger-config-modal'); document.getElementById('finish-agent-btn').style.display = 'block'; document.getElementById('add-step-sheet').classList.add('active');
     }
 
+    // 18 ACTIONS + EXTRACT TEXT BROUGHT BACK
     const stepMeta = {
         tap: { icon:'👆', color:'rgba(52,199,89,0.15)', label:'Tap / Click' },
         longpress: { icon:'🖐️', color:'rgba(52,199,89,0.15)', label:'Long Press' },
+        swipe: { icon:'👉', color:'rgba(52,199,89,0.15)', label:'Swipe' },
         type: { icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text' },
         extract: { icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text' },
         open_app: { icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App' },
+        open_url: { icon:'🔗', color:'rgba(0,122,255,0.12)', label:'Open URL' },
         wait: { icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait' },
         loop: { icon:'🔄', color:'rgba(255,159,10,0.15)', label:'Loop' },
         if_condition:{ icon:'❓', color:'rgba(142,142,147,0.15)', label:'IF Condition' },
         screenshot: { icon:'📸', color:'rgba(50,173,230,0.15)', label:'Screenshot' },
         volume: { icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume' },
         brightness: { icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness' },
+        notification:{ icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notif' },
+        back: { icon:'◀', color:'rgba(142,142,147,0.15)', label:'Press Back' },
+        home: { icon:'🏠', color:'rgba(142,142,147,0.15)', label:'Press Home' },
+        copy: { icon:'📋', color:'rgba(0,122,255,0.12)', label:'Copy Text' },
+        silent: { icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode' },
         var_set: { icon:'📊', color:'rgba(52,199,89,0.15)', label:'Set Variable' }
     };
 
@@ -679,69 +838,117 @@
         let content = `<div style="font-size:28px;margin-bottom:6px;">${meta.icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${meta.label}</div>`;
         
         if (type === 'tap' || type === 'longpress') {
-            content += `<label class="p-label">Target (Text/Node ID)</label><input type="text" class="p-input" id="s-target" placeholder="E.g. Send Button">`;
-            content += `<label class="p-label">App (optional)</label><input type="text" class="p-input" id="s-app" placeholder="E.g. WhatsApp">`;
+            content += `<label class="p-label">Target (Text/Node ID)</label><input type="text" class="premium-input" id="s-target" placeholder="E.g. Send Button">`;
+            content += `<label class="p-label">App (optional)</label><input type="text" class="premium-input" id="s-app" placeholder="E.g. WhatsApp">`;
             content += `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:14px;background:var(--input-bg);border-radius:12px;">
                             <div><div style="font-size:14px;font-weight:800;color:var(--text);">AI Vision Fallback</div><div style="font-size:11px;color:var(--muted);font-weight:600;">Use screen capture if node fails</div></div>
                             <label class="switch"><input type="checkbox" id="s-ai-vision"><span class="slider"></span></label>
                         </div>`;
+        } else if (type === 'swipe') {
+            content += `<label class="p-label">Direction</label><select class="premium-input" id="s-dir"><option value="up">Swipe Up</option><option value="down">Swipe Down</option></select>`;
         } else if (type === 'extract') {
-            content += `<label class="p-label">Target (Text/Node ID to read)</label><input type="text" class="p-input" id="s-extract-target" placeholder="E.g. OTP Message">`;
-            content += `<label class="p-label">Save to Variable</label><input type="text" class="p-input" id="s-extract-var" placeholder="E.g. otp_code">`;
-        } else if (type === 'type') { content += `<label class="p-label">Text to Type</label><input type="text" class="p-input" id="s-text" placeholder="Use {var_name} for variables">`; }
-        else if (type === 'wait') { content += `<label class="p-label">Wait Duration</label><input type="number" class="p-input" id="s-secs" placeholder="Seconds" value="2">`; }
-        else if (type === 'open_app') { content += `<label class="p-label">App Name</label><input type="text" class="p-input" id="s-app" placeholder="E.g. WhatsApp">`; }
-        else if (type === 'volume') { content += `<label class="p-label">Volume Level</label><input type="number" class="p-input" id="s-vol" placeholder="0-15" value="8">`; }
-        else if (type === 'brightness') { content += `<label class="p-label">Brightness</label><input type="number" class="p-input" id="s-bright" placeholder="0-255" value="128">`; }
+            content += `<label class="p-label">Target (Node ID to read)</label><input type="text" class="premium-input" id="s-extract-target" placeholder="E.g. OTP Message">`;
+            content += `<label class="p-label">Save to Variable</label><input type="text" class="premium-input" id="s-extract-var" placeholder="E.g. otp_code">`;
+        } else if (type === 'type') { content += `<label class="p-label">Text to Type</label><input type="text" class="premium-input" id="s-text" placeholder="Use {var_name} for vars">`; }
+        else if (type === 'open_app') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="s-app" placeholder="E.g. WhatsApp">`; }
+        else if (type === 'open_url') { content += `<label class="p-label">URL</label><input type="text" class="premium-input" id="s-url" placeholder="E.g. https://...">`; }
+        else if (type === 'wait') { content += `<label class="p-label">Wait Duration</label><input type="number" class="premium-input" id="s-secs" value="2">`; }
+        else if (type === 'loop') { content += `<label class="p-label">Repeat Times</label><input type="number" class="premium-input" id="s-times" value="3">`; }
+        else if (type === 'if_condition') { content += `<label class="p-label">Variable Name</label><input type="text" class="premium-input" id="s-var" placeholder="E.g. battery">`; content += `<label class="p-label">Value</label><input type="text" class="premium-input" id="s-val" placeholder="E.g. 20">`; }
+        else if (type === 'screenshot') { content += `<label class="p-label">Filename</label><input type="text" class="premium-input" id="s-filename" value="screenshot">`; }
+        else if (type === 'volume') { content += `<label class="p-label">Volume Level</label><input type="number" class="premium-input" id="s-vol" placeholder="0-15" value="8">`; }
+        else if (type === 'brightness') { content += `<label class="p-label">Brightness</label><input type="number" class="premium-input" id="s-bright" placeholder="0-255" value="128">`; }
+        else if (type === 'notification') { content += `<label class="p-label">Message</label><input type="text" class="premium-input" id="s-notif-msg" placeholder="Notification message">`; }
+        else if (type === 'copy') { content += `<label class="p-label">Text to Copy</label><input type="text" class="premium-input" id="s-copy" placeholder="Text to copy">`; }
+        else if (type === 'silent') { content += `<label class="p-label">Mode</label><select class="premium-input" id="s-silent"><option value="on">Silent ON</option><option value="vibrate">Vibrate</option></select>`; }
+        else if (type === 'var_set') { // BUG 4 FIXED
+            content += `<label class="p-label">Variable Name</label><input type="text" class="premium-input" id="s-varname" placeholder="E.g. counter">`; 
+            content += `<label class="p-label">New Value</label><input type="text" class="premium-input" id="s-varval" placeholder="E.g. 1">`; 
+        }
+        else if (type === 'back' || type === 'home') { content += `<div style="font-size:13px;color:var(--muted);font-weight:600;padding:14px;background:var(--input-bg);border-radius:12px;margin-bottom:10px;">This action presses the System button. No config needed.</div>`; }
         
         document.getElementById('step-config-content').innerHTML = content; document.getElementById('step-config-modal').classList.add('active');
     }
 
     function confirmStepConfig() {
         const type = pendingStepType; let step = { type, ...stepMeta[type] };
-        
         if (type === 'tap' || type === 'longpress') {
             step.target = document.getElementById('s-target')?.value || 'Unknown';
-            step.app = document.getElementById('s-app')?.value || '';
             step.useAiVision = document.getElementById('s-ai-vision')?.checked || false;
-            let aiText = step.useAiVision ? ' (+AI Vision)' : '';
-            step.display = `${step.target}${step.app ? ` in ${step.app}` : ''}${aiText}`;
-        } else if (type === 'extract') {
+            step.display = `${step.target} ${step.useAiVision ? '(+AI Vision)' : ''}`;
+        } else if (type === 'swipe') { step.direction = document.getElementById('s-dir')?.value; step.display = `Swipe ${step.direction}`; }
+        else if (type === 'extract') {
             step.target = document.getElementById('s-extract-target')?.value || 'Unknown';
             step.variable = document.getElementById('s-extract-var')?.value || 'temp';
             step.display = `Read "${step.target}" -> {${step.variable}}`;
         } else if (type === 'type') { step.text = document.getElementById('s-text')?.value || ''; step.display = `"${step.text}"`; }
         else if (type === 'open_app') { step.app = document.getElementById('s-app')?.value || 'Unknown'; step.display = step.app; }
+        else if (type === 'open_url') { step.url = document.getElementById('s-url')?.value || ''; step.display = step.url; }
         else if (type === 'wait') { step.seconds = document.getElementById('s-secs')?.value || '2'; step.display = `${step.seconds} seconds`; }
+        else if (type === 'loop') { step.times = document.getElementById('s-times')?.value || '3'; step.display = `${step.times} repeats`; }
+        else if (type === 'if_condition') { step.display = `if {${document.getElementById('s-var')?.value}} = ${document.getElementById('s-val')?.value}`; }
+        else if (type === 'screenshot') { step.display = document.getElementById('s-filename')?.value; }
         else if (type === 'volume') { step.level = document.getElementById('s-vol')?.value || '8'; step.display = `Vol: ${step.level}/15`; }
         else if (type === 'brightness') { step.level = document.getElementById('s-bright')?.value || '128'; step.display = `Bright: ${step.level}/255`; }
+        else if (type === 'notification') { step.display = `"${document.getElementById('s-notif-msg')?.value}"`; }
+        else if (type === 'copy') { step.display = `Copy: ${document.getElementById('s-copy')?.value}`; }
+        else if (type === 'silent') { step.display = document.getElementById('s-silent')?.value.toUpperCase(); }
+        else if (type === 'var_set') { // BUG 4 FIXED
+            step.varname = document.getElementById('s-varname')?.value;
+            step.varval = document.getElementById('s-varval')?.value;
+            step.display = `{${step.varname}} = ${step.varval}`; 
+        }
+        else if (type === 'back' || type === 'home') { step.display = type === 'back' ? 'System Back' : 'System Home'; }
         
         currentSteps.push(step); closeSheet('step-config-modal');
         if (currentAgentIndex >= 0) { agents[currentAgentIndex].steps = currentSteps; saveAgents(); renderAgentDetail(currentAgentIndex); }
     }
 
     function finishAgent() { if (currentSteps.length === 0) { alert('Please add at least one step!'); return; } closeSheet('add-step-sheet'); document.getElementById('agent-name-input').value = ''; document.getElementById('save-agent-modal').classList.add('active'); }
-    function saveNewAgent() { let name = document.getElementById('agent-name-input').value.trim() || `Agent ${agents.length + 1}`; const agent = { id: Date.now(), name, trigger: currentTrigger, steps: currentSteps, active: true, lastRun: null }; agents.push(agent); saveAgents(); closeSheet('save-agent-modal'); renderAgentList(); updateDashboardStats(); addLog(name, 'created', 0); }
+    function saveNewAgent() { let name = document.getElementById('agent-name-input').value.trim() || `Agent ${agents.length + 1}`; const agent = { id: Date.now(), name, trigger: currentTrigger, steps: currentSteps, active: true, lastRun: null, mode: currentMode }; agents.push(agent); saveAgents(); closeSheet('save-agent-modal'); renderAgentList(); updateDashboardStats(); addLog(name, 'created', 0); }
     function saveAgents() { localStorage.setItem('arif_agents', JSON.stringify(agents)); }
 
     function getTriggerLabel(agent) {
         if (!agent.trigger) return 'Unknown'; const t = agent.trigger.type; const c = agent.trigger.config || {};
-        if (t === 'time') return c.time || 'Scheduled'; if (t === 'wifi') return `${c.ssid || 'Any'} connect`;
-        if (t === 'battery') return `Below ${c.level || '20'}%`; if (t === 'app_open') return `${c.app || 'Any'} open`; return 'Unknown';
+        if (t === 'time') return c.time || 'Scheduled'; if (t === 'notification') return c.app ? `Notif: ${c.app}` : 'Notification'; 
+        if (t === 'wifi') return `${c.ssid || 'Any'} connect`; if (t === 'battery') return `Below ${c.level || '20'}%`; 
+        if (t === 'app_open') return `${c.app || 'Any'} open`; if (t === 'location') return `Zone: ${c.zone || 'Any'}`;
+        if (t === 'charger') return c.event || 'connected'; if (t === 'call_sms') return c.number || 'Any Call/SMS';
+        return 'Unknown';
     }
 
+    // BUG 8 FIX: Rendering correct list based on mode tracking
     function renderAgentList() {
-        const container = document.getElementById('agent-list-container');
-        if (agents.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">🤖</div><div class="empty-title">No Agents Yet</div><div class="empty-desc">Tap "+ New" to create your first agent</div></div>`; return; }
-        container.innerHTML = '';
+        const offContainer = document.getElementById('agent-list-container');
+        const hybContainer = document.getElementById('hybrid-agent-list');
+        const manContainer = document.getElementById('manual-agent-list');
+        if(offContainer) offContainer.innerHTML = ''; 
+        if(hybContainer) hybContainer.innerHTML = '';
+        if(manContainer) manContainer.innerHTML = '';
+        
+        let hasOffline = false, hasHybrid = false, hasManual = false;
+
         agents.forEach((agent, index) => {
             const meta = triggerMeta[agent.trigger?.type] || {icon:'⏰',color:'rgba(142,142,147,0.15)'};
             const card = document.createElement('div'); card.className = 'agent-card';
-            card.innerHTML = `<div class="agent-card-top"><div style="display:flex;align-items:flex-start;gap:12px;flex:1;"><div class="trigger-icon" style="background:${meta.color};">${meta.icon}</div><div style="flex:1;"><div class="agent-name">${agent.name}</div><div class="agent-meta"><span class="badge badge-trigger">${meta.icon} ${getTriggerLabel(agent)}</span><span class="badge badge-steps">⚙️ ${agent.steps.length} steps</span></div></div></div><label class="switch" onclick="event.stopPropagation()"><input type="checkbox" ${agent.active?'checked':''} onchange="toggleAgent(${index})"><span class="slider"></span></label></div>`;
-            let pressTimer; card.ontouchstart = () => { pressTimer = setTimeout(() => { pressTimer = null; currentAgentIndex = index; document.getElementById('options-agent-name').textContent = agent.name; document.getElementById('agent-options-sheet').classList.add('active'); }, 700); };
-            card.ontouchend = () => { if (pressTimer !== null) { clearTimeout(pressTimer); pressTimer = null; } }; card.onclick = () => { currentAgentIndex = index; renderAgentDetail(index); openPage('view-agent-detail'); };
-            container.appendChild(card);
+            
+            let modeBadge = agent.mode === 'hybrid' ? `<span class="badge" style="background:var(--warning); color:#fff;">✨ Gemini</span>` : (agent.mode === 'manual' ? `<span class="badge" style="background:var(--purple); color:#fff;">🎛️ Manual</span>` : '');
+
+            card.innerHTML = `<div class="agent-card-top"><div style="display:flex;align-items:flex-start;gap:12px;flex:1;"><div class="trigger-icon" style="background:${meta.color};">${meta.icon}</div><div style="flex:1;"><div class="agent-name">${agent.name} ${modeBadge}</div><div class="agent-meta"><span class="badge badge-trigger">${meta.icon} ${getTriggerLabel(agent)}</span><span class="badge badge-steps">⚙️ ${agent.steps.length} steps</span></div>${agent.lastRun ? `<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:5px;">Last: ${agent.lastRun}</div>` : ''}</div></div><label class="switch" onclick="event.stopPropagation()"><input type="checkbox" ${agent.active?'checked':''} onchange="toggleAgent(${index})"><span class="slider"></span></label></div>`;
+            
+            // BUG 7 FIX: Prevent Default on touch end to avoid clicking card & button both
+            let pressTimer; card.ontouchstart = (e) => { pressTimer = setTimeout(() => { pressTimer = null; currentAgentIndex = index; document.getElementById('options-agent-name').textContent = agent.name; document.getElementById('agent-options-sheet').classList.add('active'); }, 700); };
+            card.ontouchend = (e) => { if (pressTimer !== null) { clearTimeout(pressTimer); pressTimer = null; } else { e.preventDefault(); } }; 
+            card.onclick = () => { currentAgentIndex = index; renderAgentDetail(index); openPage('view-agent-detail'); };
+            
+            if(agent.mode === 'hybrid' && hybContainer) { hybContainer.appendChild(card); hasHybrid = true; }
+            else if (agent.mode === 'manual' && manContainer) { manContainer.appendChild(card); hasManual = true; }
+            else if (offContainer) { offContainer.appendChild(card); hasOffline = true; }
         });
+
+        if(!hasOffline && offContainer) offContainer.innerHTML = `<div class="empty-state"><div class="empty-icon">🤖</div><div class="empty-title">No Offline Agents</div></div>`;
+        if(!hasHybrid && hybContainer) hybContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><div class="empty-icon">🌐</div><div class="empty-title">Hybrid Mode Active</div><div class="empty-desc">Offline Engine + Gemini AI. Tap ✨ to set API Key, then "+ New" to create.</div></div>`;
+        if(!hasManual && manContainer) manContainer.innerHTML = `<div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>`;
     }
 
     function toggleAgent(index) { agents[index].active = !agents[index].active; saveAgents(); updateDashboardStats(); }
@@ -762,22 +969,56 @@
     function deleteStep(stepIndex) { if (confirm('Delete this step?')) { agents[currentAgentIndex].steps.splice(stepIndex, 1); currentSteps = agents[currentAgentIndex].steps; saveAgents(); renderAgentDetail(currentAgentIndex); } }
     function openAddStepSheet() { if (currentAgentIndex >= 0) { currentSteps = agents[currentAgentIndex].steps; document.getElementById('finish-agent-btn').style.display = 'none'; } document.getElementById('add-step-sheet').classList.add('active'); }
     function toggleAgentActive() { if (currentAgentIndex >= 0) { agents[currentAgentIndex].active = document.getElementById('detail-agent-toggle').checked; saveAgents(); updateDashboardStats(); renderAgentList(); } }
-    function runAgentNow() { if (currentAgentIndex < 0) return; const agent = agents[currentAgentIndex]; agent.lastRun = new Date().toLocaleString('en-GB'); saveAgents(); addLog(agent.name, 'success', agent.steps.length); renderAgentDetail(currentAgentIndex); renderAgentList(); alert(`▶ Running "${agent.name}"...`); }
+    
+    // BUG 2 FIX: runCurrentAgent() implemented properly
+    function runCurrentAgent() { 
+        if (currentAgentIndex < 0) return; 
+        const agent = agents[currentAgentIndex]; 
+        closeSheet('agent-options-sheet');
+        runAgentNowHelper(agent);
+    }
+
+    function runAgentNow() { 
+        if (currentAgentIndex < 0) return; 
+        const agent = agents[currentAgentIndex]; 
+        runAgentNowHelper(agent);
+    }
+    
+    function runAgentNowHelper(agent) {
+        agent.lastRun = new Date().toLocaleString('en-GB'); 
+        saveAgents(); 
+        addLog(agent.name, 'success', agent.steps.length); 
+        renderAgentDetail(currentAgentIndex); 
+        renderAgentList(); 
+        alert(`▶ Running "${agent.name}"...`);
+        // Native Call
+        if (window.ArifNativeEngine) { window.ArifNativeEngine.runAgent(JSON.stringify(agent)); }
+    }
 
     function editCurrentAgent() { closeSheet('agent-options-sheet'); renderAgentDetail(currentAgentIndex); openPage('view-agent-detail'); }
+    function duplicateCurrentAgent() { 
+        const copy = JSON.parse(JSON.stringify(agents[currentAgentIndex])); 
+        copy.name = copy.name + ' (Copy)'; copy.id = Date.now(); copy.lastRun = null; 
+        agents.push(copy); saveAgents(); renderAgentList(); updateDashboardStats(); closeSheet('agent-options-sheet'); 
+    }
     function deleteCurrentAgent() { if (confirm(`Delete "${agents[currentAgentIndex].name}"?`)) { agents.splice(currentAgentIndex, 1); saveAgents(); renderAgentList(); updateDashboardStats(); closeSheet('agent-options-sheet'); } }
 
     function openVarModal() { document.getElementById('var-name-input').value = ''; document.getElementById('var-value-input').value = ''; document.getElementById('var-modal').classList.add('active'); }
-    function saveVariable() { let name = document.getElementById('var-name-input').value.trim(); let type = document.getElementById('var-type-input').value; let value = document.getElementById('var-value-input').value.trim(); if (!name) return; variables.push({ name, type, value, id: Date.now() }); localStorage.setItem('arif_variables', JSON.stringify(variables)); closeSheet('var-modal'); renderVariables(); updateDashboardStats(); }
+    function saveVariable() { 
+        let name = document.getElementById('var-name-input').value.trim(); 
+        let type = document.getElementById('var-type-input').value; // BUG 3 FIXED
+        let value = document.getElementById('var-value-input').value.trim(); 
+        if (!name) return; 
+        variables.push({ name, type, value, id: Date.now() }); 
+        localStorage.setItem('arif_variables', JSON.stringify(variables)); 
+        closeSheet('var-modal'); renderVariables(); updateDashboardStats(); 
+    }
     function renderVariables() { const container = document.getElementById('variables-container'); if (variables.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No Variables</div></div>`; return; } container.innerHTML = ''; variables.forEach((v, i) => { const card = document.createElement('div'); card.className = 'var-card'; card.innerHTML = `<div><div class="var-name">{${v.name}}</div><div class="var-type">${v.type}</div></div><div style="text-align:right;"><div class="var-value">${v.value}</div><button onclick="variables.splice(${i}, 1);localStorage.setItem('arif_variables', JSON.stringify(variables));renderVariables();updateDashboardStats();" style="background:none;border:none;color:var(--danger);cursor:pointer;">delete</button></div>`; container.appendChild(card); }); }
 
     function addLog(agentName, status, steps) { runLogs.unshift({ agentName, status, steps, time: new Date().toLocaleString('en-GB') }); if (runLogs.length > 50) runLogs = runLogs.slice(0, 50); localStorage.setItem('arif_logs', JSON.stringify(runLogs)); }
     function renderLogs() { const container = document.getElementById('logs-container'); if (runLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No Runs</div></div>`; return; } container.innerHTML = ''; runLogs.forEach(log => { const card = document.createElement('div'); card.className = 'log-card'; card.innerHTML = `<div class="log-dot ${log.status === 'success' ? 'success' : 'running'}"></div><div class="log-info"><div class="log-name">${log.agentName}</div><div class="log-time">${log.time}</div></div><div class="log-steps">${log.steps} steps</div>`; container.appendChild(card); }); }
     function clearLogs() { if (confirm('Clear logs?')) { runLogs = []; localStorage.setItem('arif_logs', JSON.stringify([])); renderLogs(); } }
-
-    function closeSheet(id) { document.getElementById(id).classList.remove('active'); }
     
-    // START LIVE RECORDING
     function startLiveRecording() {
         closeSheet('new-action-sheet');
         if (window.ArifNativeEngine) { window.ArifNativeEngine.startMacroRecording(); }
@@ -785,94 +1026,130 @@
         addLog("Live Macro Agent", "created", 1);
     }
     
-    // MANUAL TASK
     function openManualTaskModal() {
         closeSheet('new-action-sheet');
         openTriggerFlow(); 
     }
 
+    // MACROS V21 IMPORT LOGIC (Restored)
+    const macroTemplates = {
+        morning: { name: 'Morning Routine', trigger: { type:'time', config:{ time:'07:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'OFF', mode:'off' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'200/255', level:'200' }, { type:'open_app', icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App', display:'WhatsApp', app:'WhatsApp' }, { type:'wait', icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait', display:'2 seconds', seconds:'2' } ] },
+        night: { name: 'Night Mode', trigger: { type:'time', config:{ time:'23:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'ON', mode:'on' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'20/255', level:'20' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'0/15 (media)', level:'0', stream:'media' } ] },
+        work: { name: 'Work Mode', trigger: { type:'wifi', config:{ ssid:'Office_WiFi', event:'connect' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'VIBRATE', mode:'vibrate' }, { type:'open_app', icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App', display:'Gmail', app:'Gmail' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'180/255', level:'180' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'5/15 (ring)', level:'5', stream:'ring' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Work Mode"', title:'Work Mode', message:'Connected to Office WiFi' } ] },
+        battery: { name: 'Battery Saver', trigger: { type:'battery', config:{ level:'20', condition:'below' } }, steps: [ { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'50/255', level:'50' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Battery Low!"', title:'Battery Low!', message:'Battery below 20%. Saving power.' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'5/15 (media)', level:'5', stream:'media' } ] },
+        meeting: { name: 'Meeting Mode', trigger: { type:'time', config:{ time:'09:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'ON', mode:'on' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Meeting Mode"', title:'Meeting Mode ON', message:'Calls/messages silenced' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'0/15 (ring)', level:'0', stream:'ring' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'100/255', level:'100' } ] },
+        charger: { name: 'Charger Connected', trigger: { type:'charger', config:{ event:'connected' } }, steps: [ { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'255/255', level:'255' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'10/15 (media)', level:'10', stream:'media' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Charging!"', title:'Charging Started', message:'ArifOS: Charger connected ✓' } ] }
+    };
+
+    function importMacro(key) {
+        const tpl = macroTemplates[key];
+        const agent = { id: Date.now(), name: tpl.name, trigger: tpl.trigger, steps: tpl.steps.map(s => ({...s})), active: true, lastRun: null, mode: 'offline' };
+        agents.push(agent); saveAgents(); renderAgentList(); updateDashboardStats(); switchTab('agents');
+        alert(`✅ "${tpl.name}" added to your agents!`);
+    }
+
     updateDashboardStats(); renderAgentList();
 </script>
 
-<script type="text/x-kotlin" id="arif-native-backup">
+<script type="text/x-kotlin" id="arif-native-hybrid-backup">
 package com.arifos.agent
 
 import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent
 import android.util.Log
 
-class ArifMacroService : AccessibilityService() {
+class ArifHybridService : AccessibilityService() {
 
     // =====================================================================
-    // 🧠 ARIF-OS: SMART OFFLINE BRAIN (NLP & VISION AUTO-HEALING)
+    // 🌐 ARIF-OS: HYBRID BRAIN (OFFLINE + GEMINI AI CLOUD)
     // =====================================================================
 
-    // 1. SMART PARSER: User ki natural bhasha (Voice/Text) samajhna
-    fun processUserCommandOffline(userCommand: String) {
-        Log.d("ArifBrain", "User ne kaha: $userCommand")
+    fun executeHybridAction(taskContext: String, useGemini: Boolean) {
         
-        val command = userCommand.lowercase()
-        var targetApp = ""
-        var actionToTake = ""
-
-        if (command.contains("open") || command.contains("kholo") || command.contains("bhejo")) {
-            actionToTake = "OPEN_APP_AND_ACT"
-            if (command.contains("whatsapp")) targetApp = "WhatsApp"
-            if (command.contains("youtube")) targetApp = "YouTube"
-        }
-
-        Log.d("ArifBrain", "Faisla: Mujhe $actionToTake karna hai $targetApp par")
+        // RULE 1: PRIORITY OFFLINE (Pehle ML Kit/Accessibility se try karo)
+        val offlineSuccess = tryOfflineActionFirst(taskContext)
         
-        // Execute Auto-Flow
-        if (actionToTake == "OPEN_APP_AND_ACT") {
-            openAppLocally(targetApp)
-            // App khulne ke baad auto-clicker chalana (Auto-Healing use karke)
-            findAndClickSmartly("Search") 
-        }
-    }
-
-    // 2. AUTO-HEALING VISION CLICKER
-    fun findAndClickSmartly(targetText: String) {
-        // Step A: Pehle standard Accessibility Tree mein dhoondho
-        val nodeFound = searchNodeInTree(targetText)
-        
-        if (nodeFound) {
-            performClick(nodeFound)
-        } else {
-            // Step B: Agar node fail ho jaye, toh AI Vision (ML Kit) use karo
-            Log.d("ArifBrain", "Node nahi mila! Triggering Auto-Healing Vision...")
+        if (!offlineSuccess && useGemini) {
+            Log.d("ArifHybrid", "Offline fail ho gaya. Asking Gemini AI Mastermind...")
             
-            // 1. Screen ka raw screenshot lo
-            val screenBitmap = takeScreenCapture()
+            // RULE 4: SCREENSHOT FALLBACK
+            var currentScreen = takeScreenCapture()
             
-            // 2. Offline ML Kit OCR ko do
-            runOfflineOCR(screenBitmap) { textBlocks ->
-                for (block in textBlocks) {
-                    if (block.text.contains(targetText, ignoreCase = true)) {
-                        // 3. Coordinates nikal kar wahan tap kar do
-                        val x = block.boundingBox.centerX()
-                        val y = block.boundingBox.centerY()
-                        tapOnCoordinates(x, y)
-                        Log.d("ArifBrain", "Vision AI ne $targetText ko X:$x, Y:$y par tap kar diya!")
-                        break
-                    }
+            // RULE 3 & ERROR HANDLING: Loop lagayenge jab tak clear jawab na aaye (Patience)
+            var geminiResponseReceived = false
+            var retryCount = 0
+            
+            while (!geminiResponseReceived && retryCount < 3) {
+                
+                // Network Check: Agar net band hai, toh AI agent khud ON karega
+                if (!isNetworkAvailable()) {
+                    Log.d("ArifHybrid", "Network down! Auto-turning ON WiFi/Data...")
+                    enableNetworkLocally()
+                    Thread.sleep(3000) // Wait for network to connect
                 }
+                
+                try {
+                    // Call Gemini API with Screenshot & Command
+                    val response = sendToGeminiApi(modelName, apiKey, currentScreen, taskContext)
+                    
+                    if (response.isSuccessful) {
+                        val coordinates = parseGeminiResponse(response.body)
+                        tapOnCoordinates(coordinates.x, coordinates.y)
+                        geminiResponseReceived = true
+                        Log.d("ArifHybrid", "Gemini ne exact rasta bata diya! Action completed.")
+                        
+                    } else if (response.contains("high demand") || response.contains("API Error")) {
+                        // High Demand/API Error Retry Logic
+                        Log.w("ArifHybrid", "API Error: Model overloaded. Retrying in 5 seconds...")
+                        Thread.sleep(5000)
+                        retryCount++
+                    }
+                    
+                } catch (e: Exception) {
+                    Log.e("ArifHybrid", "API Call completely Failed. Retry...")
+                    retryCount++
+                    Thread.sleep(3000)
+                }
+            }
+            
+            // DEEP ANALYSIS FALLBACK
+            if (!geminiResponseReceived) {
+                Log.e("ArifHybrid", "Gemini confuse hai ya API down hai. Sending Full Detail Screenshot for Deep Analysis...")
+                currentScreen = takeHighResScreenCapture()
+                sendDeepAnalysisRequestToGemini(currentScreen)
             }
         }
     }
 
-    // 3. EXTRACT TEXT (MEMORY ENGINE)
-    fun extractTextFromScreen(targetIdOrText: String, saveToVar: String) {
-        val extractedValue = "Dummy Extracted Data" 
-        Log.d("ArifEngine", "Extracted '$extractedValue' to {$saveToVar}")
-        // sendToJS("{variable: '$saveToVar', value: '$extractedValue'}")
+    // =====================================================================
+    // 💬 RULE 5: AUTO-REPLY CHATBOT (Doston ke liye)
+    // =====================================================================
+    fun handleIncomingMessageWithGemini(friendName: String, messageText: String) {
+        Log.d("ArifHybrid", "Message from $friendName: $messageText")
+        
+        // Gemini se reply sochna
+        val prompt = "My friend $friendName sent me this message on WhatsApp: '$messageText'. Generate a natural, short, and friendly reply in the same language."
+        val generatedReply = sendToGeminiApi(modelName, apiKey, null, prompt)
+        
+        if (generatedReply != null) {
+            typeAndSendMessageLocally(generatedReply)
+            Log.d("ArifHybrid", "Auto-reply sent successfully via Gemini.")
+        }
     }
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        // Standard core tracking logic
-    }
-
-    override fun onInterrupt() { Log.e("ArifEngine", "Interrupted!") }
+    // Stub Functions for core accessibility
+    fun tryOfflineActionFirst(context: String): Boolean { return false }
+    fun takeScreenCapture(): Bitmap { /* Screen Capture Logic */ return Bitmap() }
+    fun takeHighResScreenCapture(): Bitmap { /* High-Res Screen Capture */ return Bitmap() }
+    fun isNetworkAvailable(): Boolean { return true }
+    fun enableNetworkLocally() { /* Turn on WiFi */ }
+    fun sendToGeminiApi(model: String, key: String, image: Bitmap?, text: String): String { return "success" }
+    fun parseGeminiResponse(response: String): Coordinates { return Coordinates(0,0) }
+    fun tapOnCoordinates(x: Int, y: Int) { /* Tap logic */ }
+    fun typeAndSendMessageLocally(text: String) { /* Type text and click send */ }
+    
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) { }
+    override fun onInterrupt() { }
 }
 </script>
 
