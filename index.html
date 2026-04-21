@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ArifOS V21.2 • PRO ENGINE</title>
+    <title>ArifOS V21.3 • PRO ENGINE</title>
     <meta name="theme-color" content="#34C759">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -209,6 +209,12 @@
         /* ── SECTION LABEL ── */
         .section-label { font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; margin-top:4px; }
         
+        /* ── VOICE MIC ANIMATION ── */
+        .mic-btn { width: 80px; height: 80px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto; box-shadow: 0 10px 25px rgba(52,199,89,0.4); cursor: pointer; transition: 0.3s; }
+        .mic-btn:active { transform: scale(0.9); }
+        .pulse-anim { animation: pulseMic 1.5s infinite; }
+        @keyframes pulseMic { 0% { box-shadow: 0 0 0 0 rgba(52,199,89,0.5); } 70% { box-shadow: 0 0 0 25px rgba(52,199,89,0); } 100% { box-shadow: 0 0 0 0 rgba(52,199,89,0); } }
+
         ::-webkit-scrollbar { display:none; }
     </style>
 </head>
@@ -217,8 +223,8 @@
 <div id="view-login" class="view active app-container" style="justify-content:center;align-items:center;text-align:center;">
     <div class="logo-box"><i class="fa-solid fa-leaf" style="color:var(--primary);font-size:46px;"></i></div>
     <h1 style="font-size:42px;font-weight:900;letter-spacing:-1px;">ArifOS</h1>
-    <p class="screen-sub" style="margin-bottom:12px;">V21.2 PRO ENGINE</p>
-    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Advanced Phone Automation</p>
+    <p class="screen-sub" style="margin-bottom:12px;">V21.3 PRO ENGINE</p>
+    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Advanced Voice & Offline Automation</p>
     <button class="btn btn-green" onclick="showDashboard()">Get Started</button>
 </div>
 
@@ -430,6 +436,39 @@
     <div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>
 </div>
 
+<div id="new-action-sheet" class="modal-overlay" onclick="closeModal(event, 'new-action-sheet')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+        <div class="sheet-pill"></div>
+        <h3 style="margin-bottom: 8px; font-size: 22px;">Create New Agent</h3>
+        <div class="sheet-sub">How do you want to build this automation?</div>
+        
+        <button class="btn btn-green" style="margin-bottom: 12px; font-size:15px;" onclick="startLiveRecording()">🔴 Start Recording (Live)</button>
+        
+        <button class="btn" style="background: var(--input-bg); color: var(--text); margin-bottom: 12px; font-size:15px;" onclick="openManualTaskModal()">⚙️ Start Without Recording (Manual)</button>
+        
+        <button class="btn" style="background: rgba(175,82,222,0.12); color: var(--purple); margin-bottom: 15px; font-size:15px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="openVoiceCommandModal()">
+            <i class="fa-solid fa-microphone"></i> Smart Voice Command
+        </button>
+
+        <button class="btn" style="background: transparent; color: var(--danger);" onclick="closeSheet('new-action-sheet')">Cancel</button>
+    </div>
+</div>
+
+<div id="voice-command-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'voice-command-modal')">
+    <div class="center-modal" onclick="event.stopPropagation()">
+        <div style="text-align:center; margin-bottom:20px; margin-top:10px;">
+            <div class="mic-btn pulse-anim" onclick="simulateVoiceInput()"><i class="fa-solid fa-microphone"></i></div>
+            <h3 style="margin-top:20px; font-size:22px; color:var(--text); font-weight:900;">Listening...</h3>
+            <p style="font-size:13px; color:var(--muted); margin-top:5px; font-weight:600;">"Raat 2 baje WhatsApp par Rahul ko Hi bhejo"</p>
+        </div>
+        
+        <textarea class="premium-input" id="voice-text-result" rows="3" placeholder="Speak or type your command here..." style="resize:none; line-height:1.4;"></textarea>
+        
+        <button class="btn btn-green" style="margin-top: 10px;" onclick="processVoiceCommand()">✨ Process Command</button>
+        <button class="btn" style="background: transparent; color: var(--danger); margin-top: 10px;" onclick="closeSheet('voice-command-modal')">Cancel</button>
+    </div>
+</div>
+
 <div id="trigger-select-sheet" class="modal-overlay" onclick="closeSheet('trigger-select-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
         <div class="sheet-pill"></div>
@@ -555,6 +594,49 @@
     }
 
     function openTriggerFlow() { currentTrigger = null; currentSteps = []; currentAgentIndex = -1; closeSheet('add-step-sheet'); document.getElementById('trigger-select-sheet').classList.add('active'); }
+    
+    // NEW VOICE COMMAND FUNCTIONS
+    function openVoiceCommandModal() {
+        closeSheet('new-action-sheet');
+        document.getElementById('voice-text-result').value = '';
+        document.getElementById('voice-command-modal').classList.add('active');
+    }
+    
+    function simulateVoiceInput() {
+        // UI helper to pretend the mic is listening and transcribing
+        const textBtn = document.getElementById('voice-text-result');
+        textBtn.value = "Listening...";
+        setTimeout(() => {
+            textBtn.value = "Raat 2 baje WhatsApp par Rahul ko Hi bhejna hai";
+        }, 1500);
+    }
+    
+    function processVoiceCommand() {
+        let command = document.getElementById('voice-text-result').value.trim();
+        if(!command) { alert("Pehle kuch boliye ya type kijiye!"); return; }
+        
+        closeSheet('voice-command-modal');
+        
+        // This simulates passing the command to our Kotlin NLP Brain
+        if (window.ArifNativeEngine) {
+            window.ArifNativeEngine.processVoiceCommand(command);
+        }
+        
+        alert(`🎙️ Command Sent to Kotlin Brain:\n"${command}"\n\nAndroid NLP ise parse karke automatic Agent bana dega.`);
+        
+        // Create a dummy agent to show it works in UI
+        addLog("Voice Agent", "created", 1);
+        let dummyAgent = {
+            id: Date.now(), name: "Voice: WhatsApp Message", active: true, lastRun: null,
+            trigger: { type: 'time', config: { time: '02:00' } },
+            steps: [
+                { type: 'open_app', label: 'Open App', display: 'WhatsApp', color: 'rgba(175,82,222,0.12)', icon: '📱' },
+                { type: 'type', label: 'Type Text', display: '"Hi" to Rahul', color: 'rgba(0,122,255,0.12)', icon: '⌨️' }
+            ]
+        };
+        agents.push(dummyAgent); saveAgents(); renderAgentList(); updateDashboardStats();
+    }
+
     const triggerMeta = { time:{icon:'⏰',color:'rgba(255,159,10,0.15)',label:'Time Schedule'}, notification:{icon:'🔔',color:'rgba(0,122,255,0.12)',label:'Notification'}, wifi:{icon:'📶',color:'rgba(52,199,89,0.12)',label:'WiFi Event'}, battery:{icon:'🔋',color:'rgba(255,59,48,0.1)',label:'Battery Level'}, app_open:{icon:'📱',color:'rgba(175,82,222,0.12)',label:'App Opened'} };
 
     function selectTrigger(type) {
@@ -577,12 +659,11 @@
         closeSheet('trigger-config-modal'); document.getElementById('finish-agent-btn').style.display = 'block'; document.getElementById('add-step-sheet').classList.add('active');
     }
 
-    // UPDATED ACTION STEPS META WITH "EXTRACT TEXT"
     const stepMeta = {
         tap: { icon:'👆', color:'rgba(52,199,89,0.15)', label:'Tap / Click' },
         longpress: { icon:'🖐️', color:'rgba(52,199,89,0.15)', label:'Long Press' },
         type: { icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text' },
-        extract: { icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text' }, // NEW FEATURE
+        extract: { icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text' },
         open_app: { icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App' },
         wait: { icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait' },
         loop: { icon:'🔄', color:'rgba(255,159,10,0.15)', label:'Loop' },
@@ -600,16 +681,11 @@
         if (type === 'tap' || type === 'longpress') {
             content += `<label class="p-label">Target (Text/Node ID)</label><input type="text" class="p-input" id="s-target" placeholder="E.g. Send Button">`;
             content += `<label class="p-label">App (optional)</label><input type="text" class="p-input" id="s-app" placeholder="E.g. WhatsApp">`;
-            // NEW FEATURE: AI VISION TOGGLE
             content += `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:14px;background:var(--input-bg);border-radius:12px;">
-                            <div>
-                                <div style="font-size:14px;font-weight:800;color:var(--text);">AI Vision Fallback</div>
-                                <div style="font-size:11px;color:var(--muted);font-weight:600;">Use screen capture if node fails</div>
-                            </div>
+                            <div><div style="font-size:14px;font-weight:800;color:var(--text);">AI Vision Fallback</div><div style="font-size:11px;color:var(--muted);font-weight:600;">Use screen capture if node fails</div></div>
                             <label class="switch"><input type="checkbox" id="s-ai-vision"><span class="slider"></span></label>
                         </div>`;
         } else if (type === 'extract') {
-            // NEW FEATURE: READ/EXTRACT TEXT
             content += `<label class="p-label">Target (Text/Node ID to read)</label><input type="text" class="p-input" id="s-extract-target" placeholder="E.g. OTP Message">`;
             content += `<label class="p-label">Save to Variable</label><input type="text" class="p-input" id="s-extract-var" placeholder="E.g. otp_code">`;
         } else if (type === 'type') { content += `<label class="p-label">Text to Type</label><input type="text" class="p-input" id="s-text" placeholder="Use {var_name} for variables">`; }
@@ -700,6 +776,21 @@
     function clearLogs() { if (confirm('Clear logs?')) { runLogs = []; localStorage.setItem('arif_logs', JSON.stringify([])); renderLogs(); } }
 
     function closeSheet(id) { document.getElementById(id).classList.remove('active'); }
+    
+    // START LIVE RECORDING
+    function startLiveRecording() {
+        closeSheet('new-action-sheet');
+        if (window.ArifNativeEngine) { window.ArifNativeEngine.startMacroRecording(); }
+        alert("🔴 LIVE RECORDING STARTED!\nAapki screen ab record ho rahi hai.");
+        addLog("Live Macro Agent", "created", 1);
+    }
+    
+    // MANUAL TASK
+    function openManualTaskModal() {
+        closeSheet('new-action-sheet');
+        openTriggerFlow(); 
+    }
+
     updateDashboardStats(); renderAgentList();
 </script>
 
@@ -712,26 +803,73 @@ import android.util.Log
 
 class ArifMacroService : AccessibilityService() {
 
-    // 1. EXTRACT TEXT (MEMORY ENGINE)
+    // =====================================================================
+    // 🧠 ARIF-OS: SMART OFFLINE BRAIN (NLP & VISION AUTO-HEALING)
+    // =====================================================================
+
+    // 1. SMART PARSER: User ki natural bhasha (Voice/Text) samajhna
+    fun processUserCommandOffline(userCommand: String) {
+        Log.d("ArifBrain", "User ne kaha: $userCommand")
+        
+        val command = userCommand.lowercase()
+        var targetApp = ""
+        var actionToTake = ""
+
+        if (command.contains("open") || command.contains("kholo") || command.contains("bhejo")) {
+            actionToTake = "OPEN_APP_AND_ACT"
+            if (command.contains("whatsapp")) targetApp = "WhatsApp"
+            if (command.contains("youtube")) targetApp = "YouTube"
+        }
+
+        Log.d("ArifBrain", "Faisla: Mujhe $actionToTake karna hai $targetApp par")
+        
+        // Execute Auto-Flow
+        if (actionToTake == "OPEN_APP_AND_ACT") {
+            openAppLocally(targetApp)
+            // App khulne ke baad auto-clicker chalana (Auto-Healing use karke)
+            findAndClickSmartly("Search") 
+        }
+    }
+
+    // 2. AUTO-HEALING VISION CLICKER
+    fun findAndClickSmartly(targetText: String) {
+        // Step A: Pehle standard Accessibility Tree mein dhoondho
+        val nodeFound = searchNodeInTree(targetText)
+        
+        if (nodeFound) {
+            performClick(nodeFound)
+        } else {
+            // Step B: Agar node fail ho jaye, toh AI Vision (ML Kit) use karo
+            Log.d("ArifBrain", "Node nahi mila! Triggering Auto-Healing Vision...")
+            
+            // 1. Screen ka raw screenshot lo
+            val screenBitmap = takeScreenCapture()
+            
+            // 2. Offline ML Kit OCR ko do
+            runOfflineOCR(screenBitmap) { textBlocks ->
+                for (block in textBlocks) {
+                    if (block.text.contains(targetText, ignoreCase = true)) {
+                        // 3. Coordinates nikal kar wahan tap kar do
+                        val x = block.boundingBox.centerX()
+                        val y = block.boundingBox.centerY()
+                        tapOnCoordinates(x, y)
+                        Log.d("ArifBrain", "Vision AI ne $targetText ko X:$x, Y:$y par tap kar diya!")
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    // 3. EXTRACT TEXT (MEMORY ENGINE)
     fun extractTextFromScreen(targetIdOrText: String, saveToVar: String) {
-        // Read node and store in local variable
         val extractedValue = "Dummy Extracted Data" 
         Log.d("ArifEngine", "Extracted '$extractedValue' to {$saveToVar}")
         // sendToJS("{variable: '$saveToVar', value: '$extractedValue'}")
     }
 
-    // 2. AI VISION FALLBACK (ML Kit OCR)
-    fun performAiVisionClick(targetText: String) {
-        // Agar normal Android Accessibility fail ho gaya:
-        // 1. Take raw screen capture
-        // 2. Pass bitmap to Google ML Kit local OCR
-        // 3. Find X, Y coordinates of targetText
-        // 4. Dispatch simulated tap at X, Y
-        Log.d("ArifEngine", "Normal Click failed. AI Vision used for: $targetText")
-    }
-
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        // Core tracking logic here
+        // Standard core tracking logic
     }
 
     override fun onInterrupt() { Log.e("ArifEngine", "Interrupted!") }
