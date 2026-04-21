@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ArifOS V3.1 • HYBRID PRO ENGINE</title>
+    <title>ArifOS V4.0 • ULTIMATE PRO ENGINE</title>
     <meta name="theme-color" content="#34C759">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -224,8 +224,8 @@
 <div id="view-login" class="view active app-container" style="justify-content:center;align-items:center;text-align:center;">
     <div class="logo-box"><i class="fa-solid fa-leaf" style="color:var(--primary);font-size:46px;"></i></div>
     <h1 style="font-size:42px;font-weight:900;letter-spacing:-1px;">ArifOS</h1>
-    <p class="screen-sub" style="margin-bottom:12px;">V3.1 HYBRID PRO ENGINE</p>
-    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Offline & Gemini AI Cloud Automation</p>
+    <p class="screen-sub" style="margin-bottom:12px;">V4.0 ULTIMATE PRO ENGINE</p>
+    <p style="color:var(--muted);font-size:14px;font-weight:500;margin-bottom:50px;">Offline, Gemini Cloud & Custom Server AI</p>
     <button class="btn btn-green" onclick="showDashboard()">Get Started</button>
 </div>
 
@@ -268,7 +268,7 @@
             <div style="width:46px;height:46px;border-radius:14px;background:rgba(52,199,89,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">⚡</div>
             <div>
                 <div style="font-size:18px;font-weight:900;color:var(--text);">Offline Control</div>
-                <div style="font-size:12px;color:var(--muted);font-weight:600;">Triggers, Agents & Macros</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Fast On-Device AI & Macros</div>
             </div>
         </div>
         <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
@@ -279,7 +279,7 @@
             <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,122,255,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🌐</div>
             <div>
                 <div style="font-size:18px;font-weight:900;color:var(--text);">Hybrid Control</div>
-                <div style="font-size:12px;color:var(--muted);font-weight:600;">Online + Offline AI</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Gemini API + Offline Fallback</div>
             </div>
         </div>
         <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
@@ -290,7 +290,7 @@
             <div style="width:46px;height:46px;border-radius:14px;background:rgba(175,82,222,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;">🎛️</div>
             <div>
                 <div style="font-size:18px;font-weight:900;color:var(--text);">Manual Control</div>
-                <div style="font-size:12px;color:var(--muted);font-weight:600;">Direct Actions</div>
+                <div style="font-size:12px;color:var(--muted);font-weight:600;">Universal API Server Connector</div>
             </div>
         </div>
         <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
@@ -309,60 +309,54 @@
     <div class="page-header">
         <div class="header-left">
             <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
-            <div>
-                <p class="screen-sub">ArifOS</p>
-                <h1 class="screen-title" style="font-size:26px;">Offline Control</h1>
-            </div>
+            <div><p class="screen-sub">ArifOS</p><h1 class="screen-title" style="font-size:26px;">Offline Control</h1></div>
         </div>
         <div class="premium-add-btn" onclick="openActionSheet('offline')">+ New</div>
     </div>
 
     <div class="tab-bar">
-        <button class="tab-btn active" id="tab-agents" onclick="switchTab('agents')"><i class="fa-solid fa-robot"></i>Agents</button>
-        <button class="tab-btn" id="tab-macros" onclick="switchTab('macros')"><i class="fa-solid fa-bolt"></i>Macros</button>
-        <button class="tab-btn" id="tab-vars" onclick="switchTab('vars')"><i class="fa-solid fa-code"></i>Variables</button>
-        <button class="tab-btn" id="tab-logs" onclick="switchTab('logs')"><i class="fa-solid fa-list"></i>Logs</button>
+        <button class="tab-btn active" id="tab-agents-offline" onclick="switchTabMode('agents', 'offline')"><i class="fa-solid fa-robot"></i>Agents</button>
+        <button class="tab-btn" id="tab-macros-offline" onclick="switchTabMode('macros', 'offline')"><i class="fa-solid fa-bolt"></i>Macros</button>
+        <button class="tab-btn" id="tab-vars-offline" onclick="switchTabMode('vars', 'offline')"><i class="fa-solid fa-code"></i>Vars</button>
+        <button class="tab-btn" id="tab-logs-offline" onclick="switchTabMode('logs', 'offline')"><i class="fa-solid fa-list"></i>Logs</button>
     </div>
 
-    <div id="tab-content-agents">
+    <div id="tab-content-agents-offline">
         <div class="p-card" onclick="openPage('view-permissions')" style="margin-bottom:20px;padding:14px 18px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <i class="fa-solid fa-shield-halved" style="color:var(--primary);font-size:20px;"></i>
-                <div>
-                    <div style="font-size:15px;font-weight:800;">Agent Permissions</div>
-                    <div style="font-size:12px;color:var(--muted);font-weight:600;">Accessibility, Overlay, Notifications</div>
-                </div>
+                <div><div style="font-size:15px;font-weight:800;">Agent Permissions</div><div style="font-size:12px;color:var(--muted);font-weight:600;">Accessibility & Overlay Setup</div></div>
             </div>
             <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
         </div>
         <div class="section-label">Your Offline Agents</div>
-        <div id="agent-list-container"></div>
+        <div id="agent-list-container-offline"></div>
     </div>
 
-    <div id="tab-content-macros" style="display:none;">
+    <div id="tab-content-macros-offline" style="display:none;">
         <div class="section-label">Quick Macro Templates</div>
-        <div class="macro-card" onclick="importMacro('morning')"><div class="macro-icon" style="background:rgba(255,159,10,0.15);">🌅</div><div class="macro-info"><div class="macro-name">Morning Routine</div><div class="macro-desc">Disable silent, open news, WhatsApp check</div><div class="macro-steps-count">4 steps • Time trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
-        <div class="macro-card" onclick="importMacro('night')"><div class="macro-icon" style="background:rgba(0,122,255,0.12);">🌙</div><div class="macro-info"><div class="macro-name">Night Mode</div><div class="macro-desc">Enable DND, reduce brightness, stop media</div><div class="macro-steps-count">3 steps • Time trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
-        <div class="macro-card" onclick="importMacro('work')"><div class="macro-icon" style="background:rgba(52,199,89,0.12);">💼</div><div class="macro-info"><div class="macro-name">Work Mode</div><div class="macro-desc">Enable WiFi, open Mail, silent social apps</div><div class="macro-steps-count">5 steps • WiFi trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
-        <div class="macro-card" onclick="importMacro('battery')"><div class="macro-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="macro-info"><div class="macro-name">Battery Saver</div><div class="macro-desc">When 20%, reduce brightness, enable battery saver</div><div class="macro-steps-count">3 steps • Battery trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
-        <div class="macro-card" onclick="importMacro('meeting')"><div class="macro-icon" style="background:rgba(175,82,222,0.12);">🤝</div><div class="macro-info"><div class="macro-name">Meeting Mode</div><div class="macro-desc">Silent mode on, auto-reply WhatsApp</div><div class="macro-steps-count">4 steps • Calendar trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
-        <div class="macro-card" onclick="importMacro('charger')"><div class="macro-icon" style="background:rgba(50,173,230,0.12);">🔌</div><div class="macro-info"><div class="macro-name">Charger Connected</div><div class="macro-desc">Max brightness, enable sync, play music</div><div class="macro-steps-count">3 steps • Charger trigger</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('morning', 'offline')"><div class="macro-icon" style="background:rgba(255,159,10,0.15);">🌅</div><div class="macro-info"><div class="macro-name">Morning Routine</div><div class="macro-desc">Disable silent, open news, WhatsApp</div><div class="macro-steps-count">3 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('night', 'offline')"><div class="macro-icon" style="background:rgba(0,122,255,0.12);">🌙</div><div class="macro-info"><div class="macro-name">Night Mode</div><div class="macro-desc">Enable DND, reduce brightness</div><div class="macro-steps-count">2 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('work', 'offline')"><div class="macro-icon" style="background:rgba(52,199,89,0.12);">💼</div><div class="macro-info"><div class="macro-name">Work Mode</div><div class="macro-desc">Enable WiFi, open Mail, vibrate</div><div class="macro-steps-count">2 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('battery', 'offline')"><div class="macro-icon" style="background:rgba(255,59,48,0.1);">🔋</div><div class="macro-info"><div class="macro-name">Battery Saver</div><div class="macro-desc">When 20%, reduce brightness</div><div class="macro-steps-count">2 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('meeting', 'offline')"><div class="macro-icon" style="background:rgba(175,82,222,0.12);">🤝</div><div class="macro-info"><div class="macro-name">Meeting Mode</div><div class="macro-desc">Silent mode on, auto-reply</div><div class="macro-steps-count">3 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('charger', 'offline')"><div class="macro-icon" style="background:rgba(50,173,230,0.12);">🔌</div><div class="macro-info"><div class="macro-name">Charger Connect</div><div class="macro-desc">Max brightness, play music</div><div class="macro-steps-count">2 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
     </div>
 
-    <div id="tab-content-vars" style="display:none;">
+    <div id="tab-content-vars-offline" style="display:none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
             <div class="section-label" style="margin:0;">Variables</div>
             <button class="btn btn-green btn-sm" onclick="openVarModal()">+ Add Variable</button>
         </div>
-        <div id="variables-container"></div>
+        <div id="variables-container-offline"></div>
     </div>
 
-    <div id="tab-content-logs" style="display:none;">
+    <div id="tab-content-logs-offline" style="display:none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
             <div class="section-label" style="margin:0;">Run History</div>
-            <button class="btn btn-red btn-sm" onclick="clearLogs()" style="padding:8px 14px;font-size:12px;">Clear All</button>
+            <button class="btn btn-red btn-sm" onclick="clearLogs()">Clear All</button>
         </div>
-        <div id="logs-container"></div>
+        <div id="logs-container-offline"></div>
     </div>
 </div>
 
@@ -370,87 +364,100 @@
     <div class="page-header">
         <div class="header-left">
             <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
-            <div>
-                <p class="screen-sub">ArifOS</p>
-                <h1 class="screen-title" style="font-size:26px;">Hybrid Control</h1>
-            </div>
+            <div><p class="screen-sub">ArifOS</p><h1 class="screen-title" style="font-size:26px;">Hybrid Control</h1></div>
         </div>
-        
         <div style="display: flex; align-items: center; gap: 10px;">
-            <button class="btn" style="background: var(--card); color: var(--warning); border: 2px solid var(--border); padding: 10px 16px; border-radius: 16px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); width: auto;" onclick="openApiModal()">
+            <button class="btn" style="background: var(--card); color: var(--warning); border: 2px solid var(--border); padding: 10px 16px; border-radius: 16px; font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); width: auto;" onclick="openApiModal('gemini')">
                 <i class="fa-solid fa-sparkles"></i>
             </button>
             <div class="premium-add-btn" onclick="openActionSheet('hybrid')">+ New</div>
         </div>
     </div>
 
-    <div class="p-card blue-card" onclick="openPage('view-permissions')" style="margin-bottom:20px;padding:14px 18px;">
-        <div style="display:flex;align-items:center;gap:12px;">
-            <i class="fa-solid fa-shield-halved" style="color:var(--blue);font-size:20px;"></i>
-            <div>
-                <div style="font-size:15px;font-weight:800;">Agent Permissions</div>
-                <div style="font-size:12px;color:var(--muted);font-weight:600;">Allow Accessibility & Overlay</div>
+    <div class="tab-bar">
+        <button class="tab-btn active" id="tab-agents-hybrid" onclick="switchTabMode('agents', 'hybrid')"><i class="fa-solid fa-robot"></i>Agents</button>
+        <button class="tab-btn" id="tab-macros-hybrid" onclick="switchTabMode('macros', 'hybrid')"><i class="fa-solid fa-bolt"></i>Macros</button>
+        <button class="tab-btn" id="tab-vars-hybrid" onclick="switchTabMode('vars', 'hybrid')"><i class="fa-solid fa-code"></i>Vars</button>
+        <button class="tab-btn" id="tab-logs-hybrid" onclick="switchTabMode('logs', 'hybrid')"><i class="fa-solid fa-list"></i>Logs</button>
+    </div>
+
+    <div id="tab-content-agents-hybrid">
+        <div class="p-card blue-card" onclick="openPage('view-permissions')" style="margin-bottom:20px;padding:14px 18px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <i class="fa-solid fa-shield-halved" style="color:var(--blue);font-size:20px;"></i>
+                <div><div style="font-size:15px;font-weight:800;">Agent Permissions</div><div style="font-size:12px;color:var(--muted);font-weight:600;">Allow Accessibility & Overlay Setup</div></div>
             </div>
+            <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
         </div>
-        <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+        <div class="section-label">Your Gemini AI Agents</div>
+        <div id="agent-list-container-hybrid"></div>
     </div>
-    
-    <div class="section-label">Your Hybrid Agents</div>
-    <div id="hybrid-agent-list">
-        <div class="empty-state" style="margin-top:20px;">
-            <div class="empty-icon">🌐</div>
-            <div class="empty-title">Hybrid Mode Active</div>
-            <div class="empty-desc">Offline Engine + Gemini AI. Tap ✨ to set API Key, then "+ New" to create.</div>
-        </div>
+
+    <div id="tab-content-macros-hybrid" style="display:none;">
+        <div class="section-label">AI Assisted Templates</div>
+        <div class="macro-card" onclick="importMacro('ai_reply', 'hybrid')"><div class="macro-icon" style="background:rgba(0,122,255,0.12);">💬</div><div class="macro-info"><div class="macro-name">Smart WhatsApp Reply</div><div class="macro-desc">Read msg -> Gemini AI -> Auto Send</div><div class="macro-steps-count">4 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('ai_summarize', 'hybrid')"><div class="macro-icon" style="background:rgba(175,82,222,0.12);">📝</div><div class="macro-info"><div class="macro-name">Email Summarizer</div><div class="macro-desc">Extract Email -> AI Summary -> Copy</div><div class="macro-steps-count">3 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
     </div>
-</div>
 
-<div id="api-key-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('api-key-modal')">
-    <div class="center-modal" onclick="event.stopPropagation()">
-        
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-            <i class="fa-solid fa-sparkles" style="color: var(--warning); font-size: 24px;"></i>
-            <div style="font-size:22px; font-weight:900; color:var(--text);">Gemini AI Engine</div>
-        </div>
-        <div style="font-size:13px; color:var(--muted); font-weight:600; margin-bottom:20px;">
-            Connect your agent to the cloud mastermind.
-        </div>
+    <div id="tab-content-vars-hybrid" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><div class="section-label" style="margin:0;">Variables</div><button class="btn btn-green btn-sm" onclick="openVarModal()">+ Add</button></div>
+        <div id="variables-container-hybrid"></div>
+    </div>
 
-        <label class="p-label">Enter Model Name</label>
-        <input type="text" class="p-input" id="ai-model-name" placeholder="e.g. gemini-1.5-pro-latest" value="gemini-1.5-pro-latest">
-
-        <label class="p-label">Enter API Key</label>
-        <input type="password" class="p-input" id="ai-api-key" placeholder="Paste your Google Gemini Key here">
-
-        <button class="btn btn-green" onclick="saveApiKey()" style="margin-top:6px;">
-            Activate Connection
-        </button>
-        <button class="btn" style="background: transparent; color: var(--danger); margin-top:10px;" onclick="closeSheet('api-key-modal')">
-            Cancel
-        </button>
+    <div id="tab-content-logs-hybrid" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><div class="section-label" style="margin:0;">Hybrid Run History</div><button class="btn btn-red btn-sm" onclick="clearLogs()">Clear</button></div>
+        <div id="logs-container-hybrid"></div>
     </div>
 </div>
 
-<div id="view-agent-detail" class="view app-container">
+<div id="view-manual" class="view app-container">
     <div class="page-header">
         <div class="header-left">
             <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
-            <div><p class="screen-sub">Agent Editor</p><h1 class="screen-title" style="font-size:24px;" id="detail-agent-name">Agent</h1></div>
+            <div><p class="screen-sub">ArifOS</p><h1 class="screen-title" style="font-size:26px;">Manual Control</h1></div>
         </div>
-        <button class="btn btn-green btn-sm" onclick="runCurrentAgent()">▶ Run Now</button>
+        <div style="display:flex;gap:10px;">
+            <button class="btn" style="background:var(--card);color:var(--purple);padding:10px;border-radius:16px;width:auto;border:2px solid var(--border);" onclick="openApiModal('manual')">
+                <i class="fa-solid fa-server"></i>
+            </button>
+            <div class="premium-add-btn" onclick="openActionSheet('manual')">+ New</div>
+        </div>
     </div>
 
-    <div id="detail-trigger-card" style="background:var(--card);border-radius:18px;padding:16px 18px;margin-bottom:20px;box-shadow:0 3px 12px var(--border);display:flex;align-items:center;gap:14px;">
-        <div id="detail-trigger-icon" class="trigger-icon" style="background:rgba(0,122,255,0.12);font-size:24px;">⏰</div>
-        <div><div class="section-label" style="margin-bottom:2px;">Trigger</div><div id="detail-trigger-text" style="font-size:16px;font-weight:800;color:var(--text);">Time: 07:00</div></div>
-        <div style="margin-left:auto;"><label class="switch"><input type="checkbox" id="detail-agent-toggle" checked onchange="toggleAgentActive()"><span class="slider"></span></label></div>
+    <div class="tab-bar">
+        <button class="tab-btn active" id="tab-agents-manual" onclick="switchTabMode('agents', 'manual')"><i class="fa-solid fa-robot"></i>Agents</button>
+        <button class="tab-btn" id="tab-macros-manual" onclick="switchTabMode('macros', 'manual')"><i class="fa-solid fa-bolt"></i>Macros</button>
+        <button class="tab-btn" id="tab-vars-manual" onclick="switchTabMode('vars', 'manual')"><i class="fa-solid fa-code"></i>Vars</button>
+        <button class="tab-btn" id="tab-logs-manual" onclick="switchTabMode('logs', 'manual')"><i class="fa-solid fa-list"></i>Logs</button>
     </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div class="section-label" style="margin:0;">Steps</div>
-        <button class="btn btn-blue btn-sm" onclick="openAddStepSheet()" style="padding:8px 14px;font-size:12px;">+ Add Step</button>
+    <div id="tab-content-agents-manual">
+        <div class="p-card purple-card" onclick="openPage('view-permissions')" style="margin-bottom:20px;padding:14px 18px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <i class="fa-solid fa-shield-halved" style="color:var(--purple);font-size:20px;"></i>
+                <div><div style="font-size:15px;font-weight:800;">Agent Permissions</div><div style="font-size:12px;color:var(--muted);font-weight:600;">Allow Accessibility & Overlay Setup</div></div>
+            </div>
+            <i class="fa-solid fa-chevron-right" style="color:var(--muted);"></i>
+        </div>
+        <div class="section-label">Your Universal Server Agents</div>
+        <div id="agent-list-container-manual"></div>
     </div>
-    <div id="steps-container"></div>
+
+    <div id="tab-content-macros-manual" style="display:none;">
+        <div class="section-label">Server Side AI Templates</div>
+        <div class="macro-card" onclick="importMacro('server_ping', 'manual')"><div class="macro-icon" style="background:rgba(175,82,222,0.12);">🔌</div><div class="macro-info"><div class="macro-name">Server Health Check</div><div class="macro-desc">Ping Custom API -> Notif if down</div><div class="macro-steps-count">3 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+        <div class="macro-card" onclick="importMacro('local_llm', 'manual')"><div class="macro-icon" style="background:rgba(0,122,255,0.12);">🖥️</div><div class="macro-info"><div class="macro-name">Local LLM Chat</div><div class="macro-desc">Extract SMS -> Ollama Local -> Send</div><div class="macro-steps-count">4 steps</div></div><i class="fa-solid fa-plus" style="color:var(--primary);font-size:18px;"></i></div>
+    </div>
+
+    <div id="tab-content-vars-manual" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><div class="section-label" style="margin:0;">Variables</div><button class="btn btn-green btn-sm" onclick="openVarModal()">+ Add</button></div>
+        <div id="variables-container-manual"></div>
+    </div>
+
+    <div id="tab-content-logs-manual" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><div class="section-label" style="margin:0;">Server Run History</div><button class="btn btn-red btn-sm" onclick="clearLogs()">Clear</button></div>
+        <div id="logs-container-manual"></div>
+    </div>
 </div>
 
 <div id="view-permissions" class="view app-container">
@@ -487,16 +494,51 @@
     </div>
 </div>
 
-<div id="view-manual" class="view app-container">
-    <div class="page-header"><div class="header-left"><button class="icon-round btn-back" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i></button><h1 class="screen-title" style="font-size:26px;">Manual Control</h1></div><div class="premium-add-btn" onclick="openActionSheet('manual')">+ New</div></div>
-    
-    <div class="section-label">Your Manual Agents</div>
-    <div id="manual-agent-list">
-        <div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>
+<div id="view-agent-detail" class="view app-container">
+    <div class="page-header">
+        <div class="header-left">
+            <button class="icon-round btn-back" onclick="navigateBack()"><i class="fa-solid fa-arrow-left"></i></button>
+            <div><p class="screen-sub">Agent Editor</p><h1 class="screen-title" style="font-size:24px;" id="detail-agent-name">Agent</h1></div>
+        </div>
+        <button class="btn btn-green btn-sm" onclick="runCurrentAgent()">▶ Run Now</button>
+    </div>
+
+    <div id="detail-trigger-card" style="background:var(--card);border-radius:18px;padding:16px 18px;margin-bottom:20px;box-shadow:0 3px 12px var(--border);display:flex;align-items:center;gap:14px;">
+        <div id="detail-trigger-icon" class="trigger-icon" style="background:rgba(0,122,255,0.12);font-size:24px;">⏰</div>
+        <div><div class="section-label" style="margin-bottom:2px;">Trigger</div><div id="detail-trigger-text" style="font-size:16px;font-weight:800;color:var(--text);">Time: 07:00</div></div>
+        <div style="margin-left:auto;"><label class="switch"><input type="checkbox" id="detail-agent-toggle" checked onchange="toggleAgentActive()"><span class="slider"></span></label></div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div class="section-label" style="margin:0;">Steps</div>
+        <button class="btn btn-blue btn-sm" onclick="openAddStepSheet()" style="padding:8px 14px;font-size:12px;">+ Add Step</button>
+    </div>
+    <div id="steps-container"></div>
+</div>
+
+<div id="universal-api-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'universal-api-modal')">
+    <div class="center-modal" onclick="event.stopPropagation()">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <i class="fa-solid fa-server" id="api-modal-icon" style="color: var(--purple); font-size: 22px;"></i>
+            <div style="font-size:20px; font-weight:900; color:var(--text);" id="api-modal-title">Universal AI Config</div>
+        </div>
+        <p style="font-size:12px; color:var(--muted); font-weight:600; margin-bottom:20px;">Connect any AI provider or local server.</p>
+
+        <label class="p-label" id="api-label-url">Server Link (Endpoint URL)</label>
+        <input type="text" class="premium-input" id="api-server-url" placeholder="https://api.openai.com/v1">
+
+        <label class="p-label">Model Name</label>
+        <input type="text" class="premium-input" id="api-model-name" placeholder="gpt-4o / llama3">
+
+        <label class="p-label">API Key</label>
+        <input type="password" class="premium-input" id="api-key" placeholder="Paste Security Key here">
+
+        <button class="btn btn-green" onclick="saveUniversalApi()">✓ Activate AI Link</button>
+        <button class="btn" style="background: transparent; color: var(--danger); margin-top:10px;" onclick="closeSheet('universal-api-modal')">Cancel</button>
     </div>
 </div>
 
-<div id="new-action-sheet" class="modal-overlay" onclick="closeSheet('new-action-sheet')">
+<div id="new-action-sheet" class="modal-overlay" onclick="closeModal(event, 'new-action-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
         <div class="sheet-pill"></div>
         <h3 style="margin-bottom: 8px; font-size: 22px;">Create New Agent</h3>
@@ -512,7 +554,7 @@
     </div>
 </div>
 
-<div id="voice-command-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('voice-command-modal')">
+<div id="voice-command-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'voice-command-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div style="text-align:center; margin-bottom:20px; margin-top:10px;">
             <div class="mic-btn pulse-anim" onclick="simulateVoiceInput()"><i class="fa-solid fa-microphone"></i></div>
@@ -527,7 +569,7 @@
     </div>
 </div>
 
-<div id="trigger-select-sheet" class="modal-overlay" onclick="closeSheet('trigger-select-sheet')">
+<div id="trigger-select-sheet" class="modal-overlay" onclick="closeModal(event, 'trigger-select-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
         <div class="sheet-pill"></div>
         <div class="sheet-title">Choose Trigger</div>
@@ -546,7 +588,7 @@
     </div>
 </div>
 
-<div id="trigger-config-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('trigger-config-modal')">
+<div id="trigger-config-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'trigger-config-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div id="trigger-config-content"></div>
         <button class="btn btn-green" onclick="confirmTriggerConfig()" style="margin-top:6px;">Next: Add Steps →</button>
@@ -554,7 +596,7 @@
     </div>
 </div>
 
-<div id="add-step-sheet" class="modal-overlay" onclick="closeSheet('add-step-sheet')">
+<div id="add-step-sheet" class="modal-overlay" onclick="closeModal(event, 'add-step-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
         <div class="sheet-pill"></div>
         <div class="sheet-title">Add Action Step</div>
@@ -585,7 +627,7 @@
     </div>
 </div>
 
-<div id="step-config-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('step-config-modal')">
+<div id="step-config-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'step-config-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div id="step-config-content"></div>
         <button class="btn btn-green" onclick="confirmStepConfig()" style="margin-top:6px;">Add Step</button>
@@ -593,7 +635,7 @@
     </div>
 </div>
 
-<div id="save-agent-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('save-agent-modal')">
+<div id="save-agent-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'save-agent-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div style="font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px;">Save Agent</div>
         <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:20px;">Give your agent a name</div>
@@ -604,7 +646,7 @@
     </div>
 </div>
 
-<div id="var-modal" class="modal-overlay center-modal-wrap" onclick="closeSheet('var-modal')">
+<div id="var-modal" class="modal-overlay center-modal-wrap" onclick="closeModal(event, 'var-modal')">
     <div class="center-modal" onclick="event.stopPropagation()">
         <div style="font-size:22px;font-weight:900;color:var(--primary);margin-bottom:6px;">New Variable</div>
         <label class="p-label">Variable Name</label>
@@ -618,7 +660,7 @@
     </div>
 </div>
 
-<div id="agent-options-sheet" class="modal-overlay" onclick="closeSheet('agent-options-sheet')">
+<div id="agent-options-sheet" class="modal-overlay" onclick="closeModal(event, 'agent-options-sheet')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
         <div class="sheet-pill"></div>
         <div class="sheet-title" id="options-agent-name">Agent Options</div>
@@ -638,17 +680,14 @@
     
     // BUILDER STATE
     let currentTrigger = null; let currentSteps = []; let currentAgentIndex = -1; let pendingStepType = null;
-    let currentMode = 'offline'; 
-    let geminiApiKey = localStorage.getItem('arif_gemini_key') || '';
-    
-    // NAVIGATION STACK (Fix for Bug 9 & 10)
+    let currentMode = 'offline'; let configMode = 'gemini';
     let pageHistory = ['view-main'];
 
-    // BUG 1 FIX: Alias closeModal to closeSheet
+    // UTILS
     function closeModal(event, id) { if(event.target.id === id) closeSheet(id); }
     function closeSheet(id) { document.getElementById(id).classList.remove('active'); }
 
-    // PAGE NAVIGATION
+    // NAVIGATION
     function openPage(pageId) { 
         document.querySelectorAll('.view').forEach(p => p.classList.remove('active')); 
         document.getElementById(pageId).classList.add('active'); 
@@ -662,28 +701,16 @@
             const prevPage = pageHistory[pageHistory.length - 1];
             document.querySelectorAll('.view').forEach(p => p.classList.remove('active')); 
             document.getElementById(prevPage).classList.add('active');
-        } else {
-            showDashboard();
-        }
+        } else { showDashboard(); }
     }
     function logoutApp() { openPage('view-login'); }
 
-    // THEME
+    // THEME & SEARCH
     function checkSavedTheme() { if (localStorage.getItem('arif_theme') === 'dark') { document.body.classList.add('dark'); document.getElementById('theme-btn').innerHTML = '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>'; } }
     checkSavedTheme();
     function toggleTheme() { document.body.classList.toggle('dark'); let isDark = document.body.classList.contains('dark'); localStorage.setItem('arif_theme', isDark ? 'dark' : 'light'); document.getElementById('theme-btn').innerHTML = isDark ? '<i class="fa-solid fa-sun" style="color:#FF9F0A;"></i>' : '<i class="fa-solid fa-moon"></i>'; }
-
-    // SEARCH & FILTER (Bug 2 Fix)
-    function filterApps() {
-        let input = document.getElementById('appSearchInput').value.toLowerCase();
-        document.querySelectorAll('.app-item').forEach(app => {
-            let name = app.querySelector('.perm-label').innerText.toLowerCase();
-            app.style.display = name.includes(input) ? "flex" : "none";
-        });
-    }
-    function selectAllApps() {
-        document.querySelectorAll('.app-item input[type="checkbox"]').forEach(cb => cb.checked = true);
-    }
+    function filterApps() { let input = document.getElementById('appSearchInput').value.toLowerCase(); document.querySelectorAll('.app-item').forEach(app => { let name = app.querySelector('.perm-label').innerText.toLowerCase(); app.style.display = name.includes(input) ? "flex" : "none"; }); }
+    function selectAllApps() { document.querySelectorAll('.app-item input[type="checkbox"]').forEach(cb => cb.checked = true); }
 
     // DASHBOARD STATS
     function updateDashboardStats() {
@@ -695,54 +722,82 @@
         if (activeCount > 0) { statusBar.style.display = 'flex'; document.getElementById('active-agents-count').textContent = `${activeCount} active`; } else { statusBar.style.display = 'none'; }
     }
 
-    // TABS
-    function switchTab(tab) {
-        ['agents','macros','vars','logs'].forEach(t => { document.getElementById(`tab-content-${t}`).style.display = 'none'; document.getElementById(`tab-${t}`).classList.remove('active'); });
-        document.getElementById(`tab-content-${tab}`).style.display = 'block'; document.getElementById(`tab-${tab}`).classList.add('active');
-        if (tab === 'logs') renderLogs(); if (tab === 'vars') renderVariables();
+    // MODE-AWARE TABS
+    function switchTabMode(tab, mode) {
+        ['agents','macros','vars','logs'].forEach(t => { 
+            const content = document.getElementById(`tab-content-${t}-${mode}`);
+            const btn = document.getElementById(`tab-${t}-${mode}`);
+            if(content) content.style.display = 'none'; 
+            if(btn) btn.classList.remove('active'); 
+        });
+        const activeContent = document.getElementById(`tab-content-${tab}-${mode}`);
+        const activeBtn = document.getElementById(`tab-${tab}-${mode}`);
+        if(activeContent) activeContent.style.display = 'block';
+        if(activeBtn) activeBtn.classList.add('active');
+        if (tab === 'logs') renderLogsMode(mode); 
+        if (tab === 'vars') renderVariablesMode(mode);
     }
 
-    // MULTI-MODE ACTION SHEET
+    // MULTI-MODE ACTIONS
     function openActionSheet(mode) {
         currentMode = mode;
         document.getElementById('new-action-sheet').classList.add('active');
     }
-
     function openTriggerFlow() { currentTrigger = null; currentSteps = []; currentAgentIndex = -1; closeSheet('add-step-sheet'); document.getElementById('trigger-select-sheet').classList.add('active'); }
     
-    // API MODAL LOGIC (HYBRID)
-    function openApiModal() {
-        if(geminiApiKey) document.getElementById('ai-api-key').value = geminiApiKey;
-        document.getElementById('api-key-modal').classList.add('active');
-    }
-    function saveApiKey() {
-        geminiApiKey = document.getElementById('ai-api-key').value.trim();
-        localStorage.setItem('arif_gemini_key', geminiApiKey);
-        alert("✅ Gemini Connection Saved!\nHybrid Mode will now use Cloud AI for Fallback & Analysis.");
-        closeSheet('api-key-modal');
+    // API MODAL (UNIVERSAL)
+    function openApiModal(mode) {
+        configMode = mode;
+        const saved = JSON.parse(localStorage.getItem(`arif_${mode}_config`) || '{}');
+        
+        const urlInput = document.getElementById('api-server-url');
+        const urlLabel = document.getElementById('api-label-url');
+        
+        if(mode === 'gemini') {
+            urlInput.style.display = 'none'; urlLabel.style.display = 'none';
+            document.getElementById('api-model-name').value = saved.model || 'gemini-1.5-pro';
+            document.getElementById('api-modal-title').innerText = 'Gemini AI Config';
+            document.getElementById('api-modal-icon').style.color = 'var(--warning)';
+        } else {
+            urlInput.style.display = 'block'; urlLabel.style.display = 'block';
+            urlInput.value = saved.url || '';
+            document.getElementById('api-model-name').value = saved.model || '';
+            document.getElementById('api-modal-title').innerText = 'Universal AI Config';
+            document.getElementById('api-modal-icon').style.color = 'var(--purple)';
+        }
+        
+        document.getElementById('api-key').value = saved.key || '';
+        document.getElementById('universal-api-modal').classList.add('active');
     }
     
-    // VOICE COMMAND FUNCTIONS
+    function saveUniversalApi() {
+        const config = {
+            url: document.getElementById('api-server-url').value.trim(),
+            model: document.getElementById('api-model-name').value.trim(),
+            key: document.getElementById('api-key').value.trim()
+        };
+        localStorage.setItem(`arif_${configMode}_config`, JSON.stringify(config));
+        alert(`✅ ${configMode.toUpperCase()} API Settings Saved!`);
+        closeSheet('universal-api-modal');
+    }
+    
+    // VOICE COMMAND
     function openVoiceCommandModal() {
         closeSheet('new-action-sheet');
         document.getElementById('voice-text-result').value = '';
         
-        if(currentMode === 'hybrid') {
-            document.getElementById('voice-title').innerText = "Gemini Listening...";
-            document.getElementById('voice-title').style.color = "var(--warning)";
-            document.getElementById('voice-sub').innerText = "Hybrid Mode: Powered by Cloud AI";
-        } else {
-            document.getElementById('voice-title').innerText = "Offline Listening...";
-            document.getElementById('voice-title').style.color = "var(--primary)";
-            document.getElementById('voice-sub').innerText = "Powered by On-Device NLP";
-        }
+        let title = "Offline Listening..."; let color = "var(--primary)"; let sub = "Powered by On-Device NLP";
+        if(currentMode === 'hybrid') { title = "Gemini Listening..."; color = "var(--warning)"; sub = "Hybrid Mode: Powered by Cloud AI"; }
+        else if(currentMode === 'manual') { title = "Server Listening..."; color = "var(--purple)"; sub = "Manual Mode: Powered by Custom Server"; }
         
+        document.getElementById('voice-title').innerText = title;
+        document.getElementById('voice-title').style.color = color;
+        document.getElementById('voice-sub').innerText = sub;
         document.getElementById('voice-command-modal').classList.add('active');
     }
     
     function simulateVoiceInput() {
-        const textBtn = document.getElementById('voice-text-result');
-        textBtn.value = "Listening...";
+        const textBtn = document.getElementById('voice-text-result'); textBtn.value = "Listening...";
         setTimeout(() => { textBtn.value = "Raat 2 baje WhatsApp par Rahul ko Hi bhejna hai"; }, 1500);
     }
     
@@ -751,45 +806,27 @@
         if(!command) { alert("Pehle kuch boliye ya type kijiye!"); return; }
         closeSheet('voice-command-modal');
         
-        if (currentMode === 'hybrid') {
-            if(!geminiApiKey) { alert("⚠️ API Key is missing! Tap the ✨ Star button to connect Gemini first."); return; }
-            alert(`🌐 Sent to GEMINI AI:\n"${command}"\n\nGemini is building the rule...`);
-        } else {
-            alert(`⚡ Sent to OFFLINE NLP:\n"${command}"\n\nKotlin Engine is parsing your command.`);
-        }
+        alert(`🎙️ Sent to ${currentMode.toUpperCase()} Engine:\n"${command}"\n\nBuilding agent...`);
         
-        addLog(currentMode === 'hybrid' ? "Hybrid AI Agent" : "Offline Voice Agent", "created", 1);
         let dummyAgent = {
-            id: Date.now(), name: currentMode === 'hybrid' ? "Gemini: WhatsApp Msg" : "Voice: WhatsApp Msg", active: true, lastRun: null, mode: currentMode,
+            id: Date.now(), name: `${currentMode.toUpperCase()}: WhatsApp Msg`, active: true, lastRun: null, mode: currentMode,
             trigger: { type: 'time', config: { time: '02:00' } },
-            steps: [
-                { type: 'open_app', label: 'Open App', display: 'WhatsApp', color: 'rgba(175,82,222,0.12)', icon: '📱' },
-                { type: 'type', label: 'Type Text', display: '"Hi" to Rahul', color: 'rgba(0,122,255,0.12)', icon: '⌨️' }
-            ]
+            steps: [ { type: 'open_app', label: 'Open App', display: 'WhatsApp', color: 'rgba(175,82,222,0.12)', icon: '📱' }, { type: 'type', label: 'Type Text', display: '"Hi" to Rahul', color: 'rgba(0,122,255,0.12)', icon: '⌨️' } ]
         };
-        agents.push(dummyAgent); saveAgents(); renderAgentList(); updateDashboardStats();
+        agents.push(dummyAgent); saveAgents(); renderAgentList(); updateDashboardStats(); switchTabMode('agents', currentMode);
+        addLog(dummyAgent.name, 'created', 2, currentMode);
     }
 
-    // 8 TRIGGERS BROUGHT BACK
-    const triggerMeta = { 
-        time:{icon:'⏰',color:'rgba(255,159,10,0.15)',label:'Time Schedule'}, 
-        notification:{icon:'🔔',color:'rgba(0,122,255,0.12)',label:'Notification'}, 
-        wifi:{icon:'📶',color:'rgba(52,199,89,0.12)',label:'WiFi Event'}, 
-        battery:{icon:'🔋',color:'rgba(255,59,48,0.1)',label:'Battery Level'}, 
-        app_open:{icon:'📱',color:'rgba(175,82,222,0.12)',label:'App Opened'},
-        location:{icon:'📍',color:'rgba(50,173,230,0.12)',label:'Location Zone'},
-        charger:{icon:'🔌',color:'rgba(255,204,0,0.15)',label:'Charger'},
-        call_sms:{icon:'📲',color:'rgba(52,199,89,0.12)',label:'Call / SMS'}
-    };
+    // 8 FULL TRIGGERS
+    const triggerMeta = { time:{icon:'⏰',color:'rgba(255,159,10,0.15)',label:'Time Schedule'}, notification:{icon:'🔔',color:'rgba(0,122,255,0.12)',label:'Notification'}, wifi:{icon:'📶',color:'rgba(52,199,89,0.12)',label:'WiFi Event'}, battery:{icon:'🔋',color:'rgba(255,59,48,0.1)',label:'Battery Level'}, app_open:{icon:'📱',color:'rgba(175,82,222,0.12)',label:'App Opened'}, location:{icon:'📍',color:'rgba(50,173,230,0.12)',label:'Location Zone'}, charger:{icon:'🔌',color:'rgba(255,204,0,0.15)',label:'Charger'}, call_sms:{icon:'📲',color:'rgba(52,199,89,0.12)',label:'Call / SMS'} };
 
     function selectTrigger(type) {
         closeSheet('trigger-select-sheet'); currentTrigger = { type, config: {} };
         let content = `<div style="font-size:30px;margin-bottom:8px;">${triggerMeta[type].icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${triggerMeta[type].label}</div>`;
         if (type === 'time') { content += `<label class="p-label">Time</label><input type="time" class="premium-input" id="t-time" value="07:00">`; }
-        else if (type === 'notification') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="t-app" placeholder="E.g. WhatsApp">`; }
+        else if (type === 'notification' || type === 'app_open') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="t-app" placeholder="E.g. WhatsApp">`; }
         else if (type === 'wifi') { content += `<label class="p-label">WiFi Name (SSID)</label><input type="text" class="premium-input" id="t-ssid" placeholder="E.g. Home_WiFi">`; }
         else if (type === 'battery') { content += `<label class="p-label">Battery %</label><input type="number" class="premium-input" id="t-battery" placeholder="E.g. 20">`; }
-        else if (type === 'app_open') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="t-app" placeholder="E.g. WhatsApp">`; }
         else if (type === 'location') { content += `<label class="p-label">Zone Name</label><input type="text" class="premium-input" id="t-zone" placeholder="E.g. Home">`; }
         else if (type === 'charger') { content += `<label class="p-label">Event</label><select class="premium-input" id="t-charger-event"><option value="connected">Connected</option><option value="disconnected">Disconnected</option></select>`; }
         else if (type === 'call_sms') { content += `<label class="p-label">From Number (optional)</label><input type="text" class="premium-input" id="t-number" placeholder="Any number if empty">`; }
@@ -799,156 +836,102 @@
     function confirmTriggerConfig() {
         const t = currentTrigger.type;
         if (t === 'time') currentTrigger.config = { time: document.getElementById('t-time')?.value || '07:00' };
-        else if (t === 'notification') currentTrigger.config = { app: document.getElementById('t-app')?.value || 'Any' };
+        else if (t === 'notification' || t === 'app_open') currentTrigger.config = { app: document.getElementById('t-app')?.value || 'Any' };
         else if (t === 'wifi') currentTrigger.config = { ssid: document.getElementById('t-ssid')?.value || 'Any' };
         else if (t === 'battery') currentTrigger.config = { level: document.getElementById('t-battery')?.value || '20' };
-        else if (t === 'app_open') currentTrigger.config = { app: document.getElementById('t-app')?.value || 'Any' };
         else if (t === 'location') currentTrigger.config = { zone: document.getElementById('t-zone')?.value || 'Home' };
         else if (t === 'charger') currentTrigger.config = { event: document.getElementById('t-charger-event')?.value || 'connected' };
         else if (t === 'call_sms') currentTrigger.config = { number: document.getElementById('t-number')?.value || 'Any' };
-        
         closeSheet('trigger-config-modal'); document.getElementById('finish-agent-btn').style.display = 'block'; document.getElementById('add-step-sheet').classList.add('active');
     }
 
-    // 18 ACTIONS + EXTRACT TEXT BROUGHT BACK
-    const stepMeta = {
-        tap: { icon:'👆', color:'rgba(52,199,89,0.15)', label:'Tap / Click' },
-        longpress: { icon:'🖐️', color:'rgba(52,199,89,0.15)', label:'Long Press' },
-        swipe: { icon:'👉', color:'rgba(52,199,89,0.15)', label:'Swipe' },
-        type: { icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text' },
-        extract: { icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text' },
-        open_app: { icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App' },
-        open_url: { icon:'🔗', color:'rgba(0,122,255,0.12)', label:'Open URL' },
-        wait: { icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait' },
-        loop: { icon:'🔄', color:'rgba(255,159,10,0.15)', label:'Loop' },
-        if_condition:{ icon:'❓', color:'rgba(142,142,147,0.15)', label:'IF Condition' },
-        screenshot: { icon:'📸', color:'rgba(50,173,230,0.15)', label:'Screenshot' },
-        volume: { icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume' },
-        brightness: { icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness' },
-        notification:{ icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notif' },
-        back: { icon:'◀', color:'rgba(142,142,147,0.15)', label:'Press Back' },
-        home: { icon:'🏠', color:'rgba(142,142,147,0.15)', label:'Press Home' },
-        copy: { icon:'📋', color:'rgba(0,122,255,0.12)', label:'Copy Text' },
-        silent: { icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode' },
-        var_set: { icon:'📊', color:'rgba(52,199,89,0.15)', label:'Set Variable' }
-    };
+    // 19 FULL ACTIONS
+    const stepMeta = { tap: { icon:'👆', color:'rgba(52,199,89,0.15)', label:'Tap / Click' }, longpress: { icon:'🖐️', color:'rgba(52,199,89,0.15)', label:'Long Press' }, swipe: { icon:'👉', color:'rgba(52,199,89,0.15)', label:'Swipe' }, type: { icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text' }, extract: { icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text' }, open_app: { icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App' }, open_url: { icon:'🔗', color:'rgba(0,122,255,0.12)', label:'Open URL' }, wait: { icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait' }, loop: { icon:'🔄', color:'rgba(255,159,10,0.15)', label:'Loop' }, if_condition:{ icon:'❓', color:'rgba(142,142,147,0.15)', label:'IF Cond' }, screenshot: { icon:'📸', color:'rgba(50,173,230,0.15)', label:'Screenshot' }, volume: { icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Volume' }, brightness: { icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Bright' }, notification:{ icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Notif' }, back: { icon:'◀', color:'rgba(142,142,147,0.15)', label:'Back Btn' }, home: { icon:'🏠', color:'rgba(142,142,147,0.15)', label:'Home Btn' }, copy: { icon:'📋', color:'rgba(0,122,255,0.12)', label:'Copy' }, silent: { icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent' }, var_set: { icon:'📊', color:'rgba(52,199,89,0.15)', label:'Set Var' } };
 
     function addStep(type) {
         pendingStepType = type; const meta = stepMeta[type];
         let content = `<div style="font-size:28px;margin-bottom:6px;">${meta.icon}</div><div style="font-size:20px;font-weight:900;color:var(--primary);margin-bottom:4px;">${meta.label}</div>`;
-        
-        if (type === 'tap' || type === 'longpress') {
-            content += `<label class="p-label">Target (Text/Node ID)</label><input type="text" class="premium-input" id="s-target" placeholder="E.g. Send Button">`;
-            content += `<label class="p-label">App (optional)</label><input type="text" class="premium-input" id="s-app" placeholder="E.g. WhatsApp">`;
-            content += `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:14px;background:var(--input-bg);border-radius:12px;">
-                            <div><div style="font-size:14px;font-weight:800;color:var(--text);">AI Vision Fallback</div><div style="font-size:11px;color:var(--muted);font-weight:600;">Use screen capture if node fails</div></div>
-                            <label class="switch"><input type="checkbox" id="s-ai-vision"><span class="slider"></span></label>
-                        </div>`;
-        } else if (type === 'swipe') {
-            content += `<label class="p-label">Direction</label><select class="premium-input" id="s-dir"><option value="up">Swipe Up</option><option value="down">Swipe Down</option></select>`;
-        } else if (type === 'extract') {
-            content += `<label class="p-label">Target (Node ID to read)</label><input type="text" class="premium-input" id="s-extract-target" placeholder="E.g. OTP Message">`;
-            content += `<label class="p-label">Save to Variable</label><input type="text" class="premium-input" id="s-extract-var" placeholder="E.g. otp_code">`;
-        } else if (type === 'type') { content += `<label class="p-label">Text to Type</label><input type="text" class="premium-input" id="s-text" placeholder="Use {var_name} for vars">`; }
+        if (type === 'tap' || type === 'longpress') { content += `<label class="p-label">Target (Text/Node ID)</label><input type="text" class="premium-input" id="s-target" placeholder="E.g. Send Button"><label class="p-label">App (optional)</label><input type="text" class="premium-input" id="s-app" placeholder="E.g. WhatsApp"><div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:14px;background:var(--input-bg);border-radius:12px;"><div><div style="font-size:14px;font-weight:800;color:var(--text);">AI Vision Fallback</div><div style="font-size:11px;color:var(--muted);font-weight:600;">Use screen capture if node fails</div></div><label class="switch"><input type="checkbox" id="s-ai-vision"><span class="slider"></span></label></div>`; }
+        else if (type === 'swipe') { content += `<label class="p-label">Direction</label><select class="premium-input" id="s-dir"><option value="up">Swipe Up</option><option value="down">Swipe Down</option><option value="left">Swipe Left</option><option value="right">Swipe Right</option></select>`; }
+        else if (type === 'extract') { content += `<label class="p-label">Target ID</label><input type="text" class="premium-input" id="s-extract-target" placeholder="E.g. OTP Message"><label class="p-label">Save to Var</label><input type="text" class="premium-input" id="s-extract-var" placeholder="E.g. otp_code">`; }
+        else if (type === 'type') { content += `<label class="p-label">Text to Type</label><input type="text" class="premium-input" id="s-text" placeholder="Use {var_name} for vars">`; }
         else if (type === 'open_app') { content += `<label class="p-label">App Name</label><input type="text" class="premium-input" id="s-app" placeholder="E.g. WhatsApp">`; }
-        else if (type === 'open_url') { content += `<label class="p-label">URL</label><input type="text" class="premium-input" id="s-url" placeholder="E.g. https://...">`; }
-        else if (type === 'wait') { content += `<label class="p-label">Wait Duration</label><input type="number" class="premium-input" id="s-secs" value="2">`; }
-        else if (type === 'loop') { content += `<label class="p-label">Repeat Times</label><input type="number" class="premium-input" id="s-times" value="3">`; }
-        else if (type === 'if_condition') { content += `<label class="p-label">Variable Name</label><input type="text" class="premium-input" id="s-var" placeholder="E.g. battery">`; content += `<label class="p-label">Value</label><input type="text" class="premium-input" id="s-val" placeholder="E.g. 20">`; }
+        else if (type === 'open_url') { content += `<label class="p-label">URL</label><input type="text" class="premium-input" id="s-url" placeholder="https://...">`; }
+        else if (type === 'wait') { content += `<label class="p-label">Seconds</label><input type="number" class="premium-input" id="s-secs" value="2">`; }
+        else if (type === 'loop') { content += `<label class="p-label">Repeats</label><input type="number" class="premium-input" id="s-times" value="3">`; }
+        else if (type === 'if_condition') { content += `<label class="p-label">Var Name</label><input type="text" class="premium-input" id="s-var" placeholder="E.g. battery"><label class="p-label">Value</label><input type="text" class="premium-input" id="s-val" placeholder="E.g. 20">`; }
         else if (type === 'screenshot') { content += `<label class="p-label">Filename</label><input type="text" class="premium-input" id="s-filename" value="screenshot">`; }
         else if (type === 'volume') { content += `<label class="p-label">Volume Level</label><input type="number" class="premium-input" id="s-vol" placeholder="0-15" value="8">`; }
         else if (type === 'brightness') { content += `<label class="p-label">Brightness</label><input type="number" class="premium-input" id="s-bright" placeholder="0-255" value="128">`; }
-        else if (type === 'notification') { content += `<label class="p-label">Message</label><input type="text" class="premium-input" id="s-notif-msg" placeholder="Notification message">`; }
-        else if (type === 'copy') { content += `<label class="p-label">Text to Copy</label><input type="text" class="premium-input" id="s-copy" placeholder="Text to copy">`; }
+        else if (type === 'notification') { content += `<label class="p-label">Message</label><input type="text" class="premium-input" id="s-notif-msg" placeholder="Message">`; }
+        else if (type === 'copy') { content += `<label class="p-label">Text to Copy</label><input type="text" class="premium-input" id="s-copy" placeholder="Text">`; }
         else if (type === 'silent') { content += `<label class="p-label">Mode</label><select class="premium-input" id="s-silent"><option value="on">Silent ON</option><option value="vibrate">Vibrate</option></select>`; }
-        else if (type === 'var_set') { // BUG 4 FIXED
-            content += `<label class="p-label">Variable Name</label><input type="text" class="premium-input" id="s-varname" placeholder="E.g. counter">`; 
-            content += `<label class="p-label">New Value</label><input type="text" class="premium-input" id="s-varval" placeholder="E.g. 1">`; 
-        }
-        else if (type === 'back' || type === 'home') { content += `<div style="font-size:13px;color:var(--muted);font-weight:600;padding:14px;background:var(--input-bg);border-radius:12px;margin-bottom:10px;">This action presses the System button. No config needed.</div>`; }
-        
+        else if (type === 'var_set') { content += `<label class="p-label">Var Name</label><input type="text" class="premium-input" id="s-varname" placeholder="E.g. counter"><label class="p-label">Value</label><input type="text" class="premium-input" id="s-varval" placeholder="E.g. 1">`; }
+        else if (type === 'back' || type === 'home') { content += `<div style="font-size:13px;color:var(--muted);font-weight:600;padding:14px;background:var(--input-bg);border-radius:12px;">Presses the System button.</div>`; }
         document.getElementById('step-config-content').innerHTML = content; document.getElementById('step-config-modal').classList.add('active');
     }
 
     function confirmStepConfig() {
         const type = pendingStepType; let step = { type, ...stepMeta[type] };
-        if (type === 'tap' || type === 'longpress') {
-            step.target = document.getElementById('s-target')?.value || 'Unknown';
-            step.useAiVision = document.getElementById('s-ai-vision')?.checked || false;
-            step.display = `${step.target} ${step.useAiVision ? '(+AI Vision)' : ''}`;
-        } else if (type === 'swipe') { step.direction = document.getElementById('s-dir')?.value; step.display = `Swipe ${step.direction}`; }
-        else if (type === 'extract') {
-            step.target = document.getElementById('s-extract-target')?.value || 'Unknown';
-            step.variable = document.getElementById('s-extract-var')?.value || 'temp';
-            step.display = `Read "${step.target}" -> {${step.variable}}`;
-        } else if (type === 'type') { step.text = document.getElementById('s-text')?.value || ''; step.display = `"${step.text}"`; }
-        else if (type === 'open_app') { step.app = document.getElementById('s-app')?.value || 'Unknown'; step.display = step.app; }
-        else if (type === 'open_url') { step.url = document.getElementById('s-url')?.value || ''; step.display = step.url; }
-        else if (type === 'wait') { step.seconds = document.getElementById('s-secs')?.value || '2'; step.display = `${step.seconds} seconds`; }
-        else if (type === 'loop') { step.times = document.getElementById('s-times')?.value || '3'; step.display = `${step.times} repeats`; }
+        if (type === 'tap' || type === 'longpress') { step.target = document.getElementById('s-target')?.value || 'Unknown'; step.useAiVision = document.getElementById('s-ai-vision')?.checked || false; step.display = `${step.target} ${step.useAiVision ? '(+AI)' : ''}`; }
+        else if (type === 'swipe') { step.display = `Swipe ${document.getElementById('s-dir')?.value}`; }
+        else if (type === 'extract') { step.display = `Read -> {${document.getElementById('s-extract-var')?.value}}`; }
+        else if (type === 'type') { step.display = `"${document.getElementById('s-text')?.value}"`; }
+        else if (type === 'open_app') { step.display = document.getElementById('s-app')?.value; }
+        else if (type === 'open_url') { step.display = document.getElementById('s-url')?.value; }
+        else if (type === 'wait') { step.display = `${document.getElementById('s-secs')?.value}s`; }
+        else if (type === 'loop') { step.display = `${document.getElementById('s-times')?.value} times`; }
         else if (type === 'if_condition') { step.display = `if {${document.getElementById('s-var')?.value}} = ${document.getElementById('s-val')?.value}`; }
         else if (type === 'screenshot') { step.display = document.getElementById('s-filename')?.value; }
-        else if (type === 'volume') { step.level = document.getElementById('s-vol')?.value || '8'; step.display = `Vol: ${step.level}/15`; }
-        else if (type === 'brightness') { step.level = document.getElementById('s-bright')?.value || '128'; step.display = `Bright: ${step.level}/255`; }
+        else if (type === 'volume') { step.display = `Vol: ${document.getElementById('s-vol')?.value}`; }
+        else if (type === 'brightness') { step.display = `Bright: ${document.getElementById('s-bright')?.value}`; }
         else if (type === 'notification') { step.display = `"${document.getElementById('s-notif-msg')?.value}"`; }
         else if (type === 'copy') { step.display = `Copy: ${document.getElementById('s-copy')?.value}`; }
         else if (type === 'silent') { step.display = document.getElementById('s-silent')?.value.toUpperCase(); }
-        else if (type === 'var_set') { // BUG 4 FIXED
-            step.varname = document.getElementById('s-varname')?.value;
-            step.varval = document.getElementById('s-varval')?.value;
-            step.display = `{${step.varname}} = ${step.varval}`; 
-        }
+        else if (type === 'var_set') { step.display = `{${document.getElementById('s-varname')?.value}} = ${document.getElementById('s-varval')?.value}`; }
         else if (type === 'back' || type === 'home') { step.display = type === 'back' ? 'System Back' : 'System Home'; }
-        
         currentSteps.push(step); closeSheet('step-config-modal');
         if (currentAgentIndex >= 0) { agents[currentAgentIndex].steps = currentSteps; saveAgents(); renderAgentDetail(currentAgentIndex); }
     }
 
     function finishAgent() { if (currentSteps.length === 0) { alert('Please add at least one step!'); return; } closeSheet('add-step-sheet'); document.getElementById('agent-name-input').value = ''; document.getElementById('save-agent-modal').classList.add('active'); }
-    function saveNewAgent() { let name = document.getElementById('agent-name-input').value.trim() || `Agent ${agents.length + 1}`; const agent = { id: Date.now(), name, trigger: currentTrigger, steps: currentSteps, active: true, lastRun: null, mode: currentMode }; agents.push(agent); saveAgents(); closeSheet('save-agent-modal'); renderAgentList(); updateDashboardStats(); addLog(name, 'created', 0); }
+    function saveNewAgent() { let name = document.getElementById('agent-name-input').value.trim() || `Agent ${agents.length + 1}`; const agent = { id: Date.now(), name, trigger: currentTrigger, steps: currentSteps, active: true, lastRun: null, mode: currentMode }; agents.push(agent); saveAgents(); closeSheet('save-agent-modal'); renderAgentList(); updateDashboardStats(); addLog(name, 'created', 0, currentMode); switchTabMode('agents', currentMode); }
     function saveAgents() { localStorage.setItem('arif_agents', JSON.stringify(agents)); }
 
     function getTriggerLabel(agent) {
         if (!agent.trigger) return 'Unknown'; const t = agent.trigger.type; const c = agent.trigger.config || {};
-        if (t === 'time') return c.time || 'Scheduled'; if (t === 'notification') return c.app ? `Notif: ${c.app}` : 'Notification'; 
+        if (t === 'time') return c.time || 'Scheduled'; if (t === 'notification' || t === 'app_open') return c.app || 'Any'; 
         if (t === 'wifi') return `${c.ssid || 'Any'} connect`; if (t === 'battery') return `Below ${c.level || '20'}%`; 
-        if (t === 'app_open') return `${c.app || 'Any'} open`; if (t === 'location') return `Zone: ${c.zone || 'Any'}`;
-        if (t === 'charger') return c.event || 'connected'; if (t === 'call_sms') return c.number || 'Any Call/SMS';
-        return 'Unknown';
+        if (t === 'location') return `Zone: ${c.zone || 'Any'}`; if (t === 'charger') return c.event || 'connected'; if (t === 'call_sms') return c.number || 'Any'; return 'Unknown';
     }
 
-    // BUG 8 FIX: Rendering correct list based on mode tracking
+    // MULTI-MODE AGENT RENDERING
     function renderAgentList() {
-        const offContainer = document.getElementById('agent-list-container');
-        const hybContainer = document.getElementById('hybrid-agent-list');
-        const manContainer = document.getElementById('manual-agent-list');
-        if(offContainer) offContainer.innerHTML = ''; 
-        if(hybContainer) hybContainer.innerHTML = '';
-        if(manContainer) manContainer.innerHTML = '';
+        const cOff = document.getElementById('agent-list-container-offline'); if(cOff) cOff.innerHTML = ''; 
+        const cHyb = document.getElementById('agent-list-container-hybrid'); if(cHyb) cHyb.innerHTML = '';
+        const cMan = document.getElementById('agent-list-container-manual'); if(cMan) cMan.innerHTML = '';
         
-        let hasOffline = false, hasHybrid = false, hasManual = false;
+        let hOff = false, hHyb = false, hMan = false;
 
         agents.forEach((agent, index) => {
             const meta = triggerMeta[agent.trigger?.type] || {icon:'⏰',color:'rgba(142,142,147,0.15)'};
             const card = document.createElement('div'); card.className = 'agent-card';
-            
-            let modeBadge = agent.mode === 'hybrid' ? `<span class="badge" style="background:var(--warning); color:#fff;">✨ Gemini</span>` : (agent.mode === 'manual' ? `<span class="badge" style="background:var(--purple); color:#fff;">🎛️ Manual</span>` : '');
+            let modeBadge = agent.mode === 'hybrid' ? `<span class="badge" style="background:var(--warning); color:#fff;">✨ Gemini API</span>` : (agent.mode === 'manual' ? `<span class="badge" style="background:var(--purple); color:#fff;">🎛️ Custom API</span>` : '');
 
             card.innerHTML = `<div class="agent-card-top"><div style="display:flex;align-items:flex-start;gap:12px;flex:1;"><div class="trigger-icon" style="background:${meta.color};">${meta.icon}</div><div style="flex:1;"><div class="agent-name">${agent.name} ${modeBadge}</div><div class="agent-meta"><span class="badge badge-trigger">${meta.icon} ${getTriggerLabel(agent)}</span><span class="badge badge-steps">⚙️ ${agent.steps.length} steps</span></div>${agent.lastRun ? `<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:5px;">Last: ${agent.lastRun}</div>` : ''}</div></div><label class="switch" onclick="event.stopPropagation()"><input type="checkbox" ${agent.active?'checked':''} onchange="toggleAgent(${index})"><span class="slider"></span></label></div>`;
             
-            // BUG 7 FIX: Prevent Default on touch end to avoid clicking card & button both
             let pressTimer; card.ontouchstart = (e) => { pressTimer = setTimeout(() => { pressTimer = null; currentAgentIndex = index; document.getElementById('options-agent-name').textContent = agent.name; document.getElementById('agent-options-sheet').classList.add('active'); }, 700); };
             card.ontouchend = (e) => { if (pressTimer !== null) { clearTimeout(pressTimer); pressTimer = null; } else { e.preventDefault(); } }; 
             card.onclick = () => { currentAgentIndex = index; renderAgentDetail(index); openPage('view-agent-detail'); };
             
-            if(agent.mode === 'hybrid' && hybContainer) { hybContainer.appendChild(card); hasHybrid = true; }
-            else if (agent.mode === 'manual' && manContainer) { manContainer.appendChild(card); hasManual = true; }
-            else if (offContainer) { offContainer.appendChild(card); hasOffline = true; }
+            if(agent.mode === 'hybrid' && cHyb) { cHyb.appendChild(card); hHyb = true; }
+            else if (agent.mode === 'manual' && cMan) { cMan.appendChild(card); hMan = true; }
+            else if (cOff) { cOff.appendChild(card); hOff = true; }
         });
 
-        if(!hasOffline && offContainer) offContainer.innerHTML = `<div class="empty-state"><div class="empty-icon">🤖</div><div class="empty-title">No Offline Agents</div></div>`;
-        if(!hasHybrid && hybContainer) hybContainer.innerHTML = `<div class="empty-state" style="margin-top:20px;"><div class="empty-icon">🌐</div><div class="empty-title">Hybrid Mode Active</div><div class="empty-desc">Offline Engine + Gemini AI. Tap ✨ to set API Key, then "+ New" to create.</div></div>`;
-        if(!hasManual && manContainer) manContainer.innerHTML = `<div class="empty-state" style="margin-top:40px;"><div class="empty-icon">🎛️</div><div class="empty-title">Manual Actions</div><div class="empty-desc">Add one-time manual actions to run immediately</div></div>`;
+        if(!hOff && cOff) cOff.innerHTML = `<div class="empty-state"><div class="empty-icon">🤖</div><div class="empty-title">No Offline Agents</div></div>`;
+        if(!hHyb && cHyb) cHyb.innerHTML = `<div class="empty-state"><div class="empty-icon">🌐</div><div class="empty-title">No Hybrid Agents</div></div>`;
+        if(!hMan && cMan) cMan.innerHTML = `<div class="empty-state"><div class="empty-icon">🎛️</div><div class="empty-title">No Universal Agents</div></div>`;
     }
 
     function toggleAgent(index) { agents[index].active = !agents[index].active; saveAgents(); updateDashboardStats(); }
@@ -970,187 +953,162 @@
     function openAddStepSheet() { if (currentAgentIndex >= 0) { currentSteps = agents[currentAgentIndex].steps; document.getElementById('finish-agent-btn').style.display = 'none'; } document.getElementById('add-step-sheet').classList.add('active'); }
     function toggleAgentActive() { if (currentAgentIndex >= 0) { agents[currentAgentIndex].active = document.getElementById('detail-agent-toggle').checked; saveAgents(); updateDashboardStats(); renderAgentList(); } }
     
-    // BUG 2 FIX: runCurrentAgent() implemented properly
-    function runCurrentAgent() { 
-        if (currentAgentIndex < 0) return; 
-        const agent = agents[currentAgentIndex]; 
-        closeSheet('agent-options-sheet');
-        runAgentNowHelper(agent);
-    }
-
-    function runAgentNow() { 
-        if (currentAgentIndex < 0) return; 
-        const agent = agents[currentAgentIndex]; 
-        runAgentNowHelper(agent);
-    }
-    
-    function runAgentNowHelper(agent) {
-        agent.lastRun = new Date().toLocaleString('en-GB'); 
-        saveAgents(); 
-        addLog(agent.name, 'success', agent.steps.length); 
-        renderAgentDetail(currentAgentIndex); 
-        renderAgentList(); 
-        alert(`▶ Running "${agent.name}"...`);
-        // Native Call
-        if (window.ArifNativeEngine) { window.ArifNativeEngine.runAgent(JSON.stringify(agent)); }
-    }
+    function runCurrentAgent() { if (currentAgentIndex < 0) return; const agent = agents[currentAgentIndex]; closeSheet('agent-options-sheet'); runAgentNowHelper(agent); }
+    function runAgentNow() { if (currentAgentIndex < 0) return; const agent = agents[currentAgentIndex]; runAgentNowHelper(agent); }
+    function runAgentNowHelper(agent) { agent.lastRun = new Date().toLocaleString('en-GB'); saveAgents(); addLog(agent.name, 'success', agent.steps.length, agent.mode); renderAgentDetail(currentAgentIndex); renderAgentList(); alert(`▶ Running "${agent.name}"... Native Android Execution Triggered via ${agent.mode.toUpperCase()} engine.`); if (window.ArifNativeEngine) { window.ArifNativeEngine.runAgent(JSON.stringify(agent)); } }
 
     function editCurrentAgent() { closeSheet('agent-options-sheet'); renderAgentDetail(currentAgentIndex); openPage('view-agent-detail'); }
-    function duplicateCurrentAgent() { 
-        const copy = JSON.parse(JSON.stringify(agents[currentAgentIndex])); 
-        copy.name = copy.name + ' (Copy)'; copy.id = Date.now(); copy.lastRun = null; 
-        agents.push(copy); saveAgents(); renderAgentList(); updateDashboardStats(); closeSheet('agent-options-sheet'); 
-    }
+    function duplicateCurrentAgent() { const copy = JSON.parse(JSON.stringify(agents[currentAgentIndex])); copy.name = copy.name + ' (Copy)'; copy.id = Date.now(); copy.lastRun = null; agents.push(copy); saveAgents(); renderAgentList(); updateDashboardStats(); closeSheet('agent-options-sheet'); }
     function deleteCurrentAgent() { if (confirm(`Delete "${agents[currentAgentIndex].name}"?`)) { agents.splice(currentAgentIndex, 1); saveAgents(); renderAgentList(); updateDashboardStats(); closeSheet('agent-options-sheet'); } }
 
+    // VARS (Multi-Mode Render)
     function openVarModal() { document.getElementById('var-name-input').value = ''; document.getElementById('var-value-input').value = ''; document.getElementById('var-modal').classList.add('active'); }
-    function saveVariable() { 
-        let name = document.getElementById('var-name-input').value.trim(); 
-        let type = document.getElementById('var-type-input').value; // BUG 3 FIXED
-        let value = document.getElementById('var-value-input').value.trim(); 
-        if (!name) return; 
-        variables.push({ name, type, value, id: Date.now() }); 
-        localStorage.setItem('arif_variables', JSON.stringify(variables)); 
-        closeSheet('var-modal'); renderVariables(); updateDashboardStats(); 
-    }
-    function renderVariables() { const container = document.getElementById('variables-container'); if (variables.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No Variables</div></div>`; return; } container.innerHTML = ''; variables.forEach((v, i) => { const card = document.createElement('div'); card.className = 'var-card'; card.innerHTML = `<div><div class="var-name">{${v.name}}</div><div class="var-type">${v.type}</div></div><div style="text-align:right;"><div class="var-value">${v.value}</div><button onclick="variables.splice(${i}, 1);localStorage.setItem('arif_variables', JSON.stringify(variables));renderVariables();updateDashboardStats();" style="background:none;border:none;color:var(--danger);cursor:pointer;">delete</button></div>`; container.appendChild(card); }); }
+    function saveVariable() { let name = document.getElementById('var-name-input').value.trim(); let type = document.getElementById('var-type-input').value; let value = document.getElementById('var-value-input').value.trim(); if (!name) return; variables.push({ name, type, value, id: Date.now() }); localStorage.setItem('arif_variables', JSON.stringify(variables)); closeSheet('var-modal'); renderVariablesMode(currentMode); updateDashboardStats(); }
+    function renderVariablesMode(mode) { const container = document.getElementById(`variables-container-${mode}`); if(!container) return; if (variables.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No Variables</div></div>`; return; } container.innerHTML = ''; variables.forEach((v, i) => { const card = document.createElement('div'); card.className = 'var-card'; card.innerHTML = `<div><div class="var-name">{${v.name}}</div><div class="var-type">${v.type}</div></div><div style="text-align:right;"><div class="var-value">${v.value}</div><button onclick="variables.splice(${i}, 1);localStorage.setItem('arif_variables', JSON.stringify(variables));renderVariablesMode('${mode}');updateDashboardStats();" style="background:none;border:none;color:var(--danger);cursor:pointer;">delete</button></div>`; container.appendChild(card); }); }
 
-    function addLog(agentName, status, steps) { runLogs.unshift({ agentName, status, steps, time: new Date().toLocaleString('en-GB') }); if (runLogs.length > 50) runLogs = runLogs.slice(0, 50); localStorage.setItem('arif_logs', JSON.stringify(runLogs)); }
-    function renderLogs() { const container = document.getElementById('logs-container'); if (runLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No Runs</div></div>`; return; } container.innerHTML = ''; runLogs.forEach(log => { const card = document.createElement('div'); card.className = 'log-card'; card.innerHTML = `<div class="log-dot ${log.status === 'success' ? 'success' : 'running'}"></div><div class="log-info"><div class="log-name">${log.agentName}</div><div class="log-time">${log.time}</div></div><div class="log-steps">${log.steps} steps</div>`; container.appendChild(card); }); }
-    function clearLogs() { if (confirm('Clear logs?')) { runLogs = []; localStorage.setItem('arif_logs', JSON.stringify([])); renderLogs(); } }
+    // LOGS (Multi-Mode)
+    function addLog(agentName, status, steps, mode) { runLogs.unshift({ agentName, status, steps, time: new Date().toLocaleString('en-GB'), mode }); if (runLogs.length > 50) runLogs = runLogs.slice(0, 50); localStorage.setItem('arif_logs', JSON.stringify(runLogs)); }
+    function renderLogsMode(mode) { const container = document.getElementById(`logs-container-${mode}`); if(!container) return; const filteredLogs = runLogs.filter(l => l.mode === mode); if (filteredLogs.length === 0) { container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No Runs</div></div>`; return; } container.innerHTML = ''; filteredLogs.forEach(log => { const card = document.createElement('div'); card.className = 'log-card'; card.innerHTML = `<div class="log-dot ${log.status === 'success' ? 'success' : 'running'}"></div><div class="log-info"><div class="log-name">${log.agentName}</div><div class="log-time">${log.time}</div></div><div class="log-steps">${log.steps} steps</div>`; container.appendChild(card); }); }
+    function clearLogs() { if (confirm('Clear logs?')) { runLogs = runLogs.filter(l => l.mode !== currentMode); localStorage.setItem('arif_logs', JSON.stringify(runLogs)); renderLogsMode(currentMode); } }
     
-    function startLiveRecording() {
-        closeSheet('new-action-sheet');
-        if (window.ArifNativeEngine) { window.ArifNativeEngine.startMacroRecording(); }
-        alert("🔴 LIVE RECORDING STARTED!\nAapki screen ab record ho rahi hai.");
-        addLog("Live Macro Agent", "created", 1);
-    }
-    
-    function openManualTaskModal() {
-        closeSheet('new-action-sheet');
-        openTriggerFlow(); 
-    }
+    function startLiveRecording() { closeSheet('new-action-sheet'); if (window.ArifNativeEngine) { window.ArifNativeEngine.startMacroRecording(); } alert("🔴 LIVE RECORDING STARTED!\nAndroid Accessibility Hook is active."); addLog("Live Macro Agent", "created", 1, currentMode); switchTabMode('agents', currentMode); }
+    function openManualTaskModal() { closeSheet('new-action-sheet'); openTriggerFlow(); }
 
-    // MACROS V21 IMPORT LOGIC (Restored)
+    // FULL MACROS RESTORED (Mapped by Mode)
     const macroTemplates = {
-        morning: { name: 'Morning Routine', trigger: { type:'time', config:{ time:'07:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'OFF', mode:'off' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'200/255', level:'200' }, { type:'open_app', icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App', display:'WhatsApp', app:'WhatsApp' }, { type:'wait', icon:'⏳', color:'rgba(255,159,10,0.15)', label:'Wait', display:'2 seconds', seconds:'2' } ] },
-        night: { name: 'Night Mode', trigger: { type:'time', config:{ time:'23:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'ON', mode:'on' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'20/255', level:'20' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'0/15 (media)', level:'0', stream:'media' } ] },
-        work: { name: 'Work Mode', trigger: { type:'wifi', config:{ ssid:'Office_WiFi', event:'connect' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'VIBRATE', mode:'vibrate' }, { type:'open_app', icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App', display:'Gmail', app:'Gmail' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'180/255', level:'180' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'5/15 (ring)', level:'5', stream:'ring' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Work Mode"', title:'Work Mode', message:'Connected to Office WiFi' } ] },
-        battery: { name: 'Battery Saver', trigger: { type:'battery', config:{ level:'20', condition:'below' } }, steps: [ { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'50/255', level:'50' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Battery Low!"', title:'Battery Low!', message:'Battery below 20%. Saving power.' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'5/15 (media)', level:'5', stream:'media' } ] },
-        meeting: { name: 'Meeting Mode', trigger: { type:'time', config:{ time:'09:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'ON', mode:'on' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Meeting Mode"', title:'Meeting Mode ON', message:'Calls/messages silenced' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'0/15 (ring)', level:'0', stream:'ring' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'100/255', level:'100' } ] },
-        charger: { name: 'Charger Connected', trigger: { type:'charger', config:{ event:'connected' } }, steps: [ { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'255/255', level:'255' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'10/15 (media)', level:'10', stream:'media' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Show Notification', display:'"Charging!"', title:'Charging Started', message:'ArifOS: Charger connected ✓' } ] }
+        morning: { name: 'Morning Routine', trigger: { type:'time', config:{ time:'07:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'OFF', mode:'off' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'200/255', level:'200' }, { type:'open_app', icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App', display:'WhatsApp', app:'WhatsApp' } ] },
+        night: { name: 'Night Mode', trigger: { type:'time', config:{ time:'23:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'ON', mode:'on' }, { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'20', level:'20' } ] },
+        work: { name: 'Work Mode', trigger: { type:'wifi', config:{ ssid:'Office_WiFi' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'VIBRATE', mode:'vibrate' }, { type:'open_app', icon:'📱', color:'rgba(175,82,222,0.12)', label:'Open App', display:'Gmail', app:'Gmail' } ] },
+        battery: { name: 'Battery Saver', trigger: { type:'battery', config:{ level:'20' } }, steps: [ { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'50', level:'50' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'5', level:'5' } ] },
+        meeting: { name: 'Meeting Mode', trigger: { type:'time', config:{ time:'09:00' } }, steps: [ { type:'silent', icon:'🔕', color:'rgba(255,59,48,0.1)', label:'Silent Mode', display:'ON', mode:'on' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Notif', display:'"Meeting Mode"' }, { type:'volume', icon:'🔊', color:'rgba(255,159,10,0.15)', label:'Set Volume', display:'0' } ] },
+        charger: { name: 'Charger Connected', trigger: { type:'charger', config:{ event:'connected' } }, steps: [ { type:'brightness', icon:'☀️', color:'rgba(255,204,0,0.15)', label:'Set Brightness', display:'255', level:'255' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Notif', display:'"Charging!"' } ] },
+        // Hybrid Macros
+        ai_reply: { name: 'Smart WhatsApp Reply', trigger: { type:'notification', config:{ app:'WhatsApp' } }, steps: [ { type:'extract', icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text', display:'Read Msg -> {msg}' }, { type:'type', icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text', display:'Generate Gemini Reply' }, { type:'tap', icon:'👆', color:'rgba(52,199,89,0.15)', label:'Tap', display:'Send Button' } ] },
+        ai_summarize: { name: 'Email Summarizer', trigger: { type:'app_open', config:{ app:'Gmail' } }, steps: [ { type:'extract', icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text', display:'Read Body -> {email}' }, { type:'copy', icon:'📋', color:'rgba(0,122,255,0.12)', label:'Copy', display:'Gemini Summary' } ] },
+        // Universal Macros
+        server_ping: { name: 'Server Health Check', trigger: { type:'time', config:{ time:'00:00' } }, steps: [ { type:'open_url', icon:'🔗', color:'rgba(0,122,255,0.12)', label:'Open URL', display:'Ping Custom API' }, { type:'if_condition', icon:'❓', color:'rgba(142,142,147,0.15)', label:'IF Cond', display:'if {status} = down' }, { type:'notification', icon:'🔔', color:'rgba(0,122,255,0.12)', label:'Notif', display:'"Server is down!"' } ] },
+        local_llm: { name: 'Local LLM Chat', trigger: { type:'call_sms', config:{ number:'Any' } }, steps: [ { type:'extract', icon:'🔍', color:'rgba(175,82,222,0.12)', label:'Extract Text', display:'Read SMS -> {text}' }, { type:'type', icon:'⌨️', color:'rgba(0,122,255,0.12)', label:'Type Text', display:'Send to Local Ollama' }, { type:'copy', icon:'📋', color:'rgba(0,122,255,0.12)', label:'Copy', display:'LLM Response' } ] }
     };
+    function importMacro(key, mode) { const tpl = macroTemplates[key]; const agent = { id: Date.now(), name: tpl.name, trigger: tpl.trigger, steps: tpl.steps.map(s => ({...s})), active: true, lastRun: null, mode: mode }; agents.push(agent); saveAgents(); renderAgentList(); updateDashboardStats(); switchTabMode('agents', mode); alert(`✅ "${tpl.name}" added to ${mode.toUpperCase()} agents!`); }
 
-    function importMacro(key) {
-        const tpl = macroTemplates[key];
-        const agent = { id: Date.now(), name: tpl.name, trigger: tpl.trigger, steps: tpl.steps.map(s => ({...s})), active: true, lastRun: null, mode: 'offline' };
-        agents.push(agent); saveAgents(); renderAgentList(); updateDashboardStats(); switchTab('agents');
-        alert(`✅ "${tpl.name}" added to your agents!`);
-    }
-
-    updateDashboardStats(); renderAgentList();
+    window.onload = () => { renderAgentList(); updateDashboardStats(); switchTabMode('agents', 'offline'); };
 </script>
 
-<script type="text/x-kotlin" id="arif-native-hybrid-backup">
+<script type="text/x-kotlin" id="arif-ultimate-bridge">
 package com.arifos.agent
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.GestureDescription
+import android.graphics.Path
 import android.view.accessibility.AccessibilityEvent
 import android.util.Log
 
-class ArifHybridService : AccessibilityService() {
+class ArifUltimateAgent : AccessibilityService() {
 
     // =====================================================================
-    // 🌐 ARIF-OS: HYBRID BRAIN (OFFLINE + GEMINI AI CLOUD)
+    // 🌐 1. THE HYBRID & UNIVERSAL MASTER LOOP
     // =====================================================================
+    fun executeAutomationTask(userCommand: String, mode: String) {
+        val config = getSavedConfigFromUIBridge(mode) // Parses the JS local storage via bridge
+        
+        // PHASE 1: OFFLINE SPEED PRIORITY
+        val offlineSuccess = attemptOfflineNLPAndClick(userCommand)
+        if (offlineSuccess) return
 
-    fun executeHybridAction(taskContext: String, useGemini: Boolean) {
-        
-        // RULE 1: PRIORITY OFFLINE (Pehle ML Kit/Accessibility se try karo)
-        val offlineSuccess = tryOfflineActionFirst(taskContext)
-        
-        if (!offlineSuccess && useGemini) {
-            Log.d("ArifHybrid", "Offline fail ho gaya. Asking Gemini AI Mastermind...")
+        // PHASE 2: AI BRAIN FALLBACK (GEMINI OR CUSTOM SERVER)
+        if (config.url.isNotEmpty() && config.key.isNotEmpty()) {
+            Log.d("ArifEngine", "Offline failed. Booting up AI Engine: ${config.model}")
             
-            // RULE 4: SCREENSHOT FALLBACK
-            var currentScreen = takeScreenCapture()
-            
-            // RULE 3 & ERROR HANDLING: Loop lagayenge jab tak clear jawab na aaye (Patience)
-            var geminiResponseReceived = false
+            var completed = false
             var retryCount = 0
             
-            while (!geminiResponseReceived && retryCount < 3) {
-                
-                // Network Check: Agar net band hai, toh AI agent khud ON karega
+            while (!completed && retryCount < 3) {
+                // Ensure connectivity
                 if (!isNetworkAvailable()) {
-                    Log.d("ArifHybrid", "Network down! Auto-turning ON WiFi/Data...")
                     enableNetworkLocally()
-                    Thread.sleep(3000) // Wait for network to connect
-                }
-                
-                try {
-                    // Call Gemini API with Screenshot & Command
-                    val response = sendToGeminiApi(modelName, apiKey, currentScreen, taskContext)
-                    
-                    if (response.isSuccessful) {
-                        val coordinates = parseGeminiResponse(response.body)
-                        tapOnCoordinates(coordinates.x, coordinates.y)
-                        geminiResponseReceived = true
-                        Log.d("ArifHybrid", "Gemini ne exact rasta bata diya! Action completed.")
-                        
-                    } else if (response.contains("high demand") || response.contains("API Error")) {
-                        // High Demand/API Error Retry Logic
-                        Log.w("ArifHybrid", "API Error: Model overloaded. Retrying in 5 seconds...")
-                        Thread.sleep(5000)
-                        retryCount++
-                    }
-                    
-                } catch (e: Exception) {
-                    Log.e("ArifHybrid", "API Call completely Failed. Retry...")
-                    retryCount++
                     Thread.sleep(3000)
                 }
-            }
-            
-            // DEEP ANALYSIS FALLBACK
-            if (!geminiResponseReceived) {
-                Log.e("ArifHybrid", "Gemini confuse hai ya API down hai. Sending Full Detail Screenshot for Deep Analysis...")
-                currentScreen = takeHighResScreenCapture()
-                sendDeepAnalysisRequestToGemini(currentScreen)
+
+                // Capture Screen using MediaProjection API
+                val screenBitmap = takeHighResScreenCapture()
+                val payload = buildJSONPayload(config.model, userCommand, screenBitmap)
+
+                try {
+                    // Send to Universal Endpoint (Gemini/OpenAI/Ollama format supported)
+                    val response = customHttpClient.post(config.url, config.key, payload)
+                    
+                    if (response.isSuccessful) {
+                        val coords = extractCoordinatesFromAI(response.body)
+                        executePhysicalTap(coords.x, coords.y)
+                        completed = true
+                        Log.d("ArifEngine", "AI Mastermind executed task successfully.")
+                    } else {
+                        // Handle 429 Too Many Requests (API Limits)
+                        if (response.code == 429 || response.body.contains("high demand")) {
+                            Log.w("ArifEngine", "API Throttled. Patiently waiting 5 seconds...")
+                            Thread.sleep(5000)
+                        } else {
+                            Log.e("ArifEngine", "API Error ${response.code}")
+                        }
+                        retryCount++
+                    }
+                } catch (e: Exception) {
+                    retryCount++
+                    Thread.sleep(2000)
+                }
             }
         }
     }
 
     // =====================================================================
-    // 💬 RULE 5: AUTO-REPLY CHATBOT (Doston ke liye)
+    // 👁️ 2. ML KIT ON-DEVICE AUTO-HEALING VISION
     // =====================================================================
-    fun handleIncomingMessageWithGemini(friendName: String, messageText: String) {
-        Log.d("ArifHybrid", "Message from $friendName: $messageText")
-        
-        // Gemini se reply sochna
-        val prompt = "My friend $friendName sent me this message on WhatsApp: '$messageText'. Generate a natural, short, and friendly reply in the same language."
-        val generatedReply = sendToGeminiApi(modelName, apiKey, null, prompt)
-        
-        if (generatedReply != null) {
-            typeAndSendMessageLocally(generatedReply)
-            Log.d("ArifHybrid", "Auto-reply sent successfully via Gemini.")
+    fun attemptOfflineNLPAndClick(command: String): Boolean {
+        // Tries standard Android Accessibility Node tree first...
+        val nodeFound = searchNodeInTree(command)
+        if (nodeFound) { performClick(nodeFound); return true }
+
+        // Fallback: ML Kit Offline Vision OCR
+        val screenBitmap = takeScreenCapture()
+        var clicked = false
+        runOfflineOCR(screenBitmap) { textBlocks ->
+            for (block in textBlocks) {
+                if (block.text.contains(command, ignoreCase = true)) {
+                    executePhysicalTap(block.boundingBox.centerX(), block.boundingBox.centerY())
+                    clicked = true
+                    break
+                }
+            }
         }
+        return clicked
     }
 
-    // Stub Functions for core accessibility
-    fun tryOfflineActionFirst(context: String): Boolean { return false }
-    fun takeScreenCapture(): Bitmap { /* Screen Capture Logic */ return Bitmap() }
-    fun takeHighResScreenCapture(): Bitmap { /* High-Res Screen Capture */ return Bitmap() }
+    // =====================================================================
+    // 👆 3. EXACT COORDINATE TAP GENERATOR (Accessibility Gesture)
+    // =====================================================================
+    fun executePhysicalTap(x: Int, y: Int) {
+        val path = Path()
+        path.moveTo(x.toFloat(), y.toFloat())
+        val gestureBuilder = GestureDescription.Builder()
+        gestureBuilder.addStroke(GestureDescription.StrokeDescription(path, 0, 100))
+        dispatchGesture(gestureBuilder.build(), null, null)
+    }
+
+    // Stubs for remaining implementation
+    fun getSavedConfigFromUIBridge(mode: String): AIConfig { return AIConfig() }
+    fun takeScreenCapture(): Bitmap { return Bitmap() }
+    fun takeHighResScreenCapture(): Bitmap { return Bitmap() }
     fun isNetworkAvailable(): Boolean { return true }
-    fun enableNetworkLocally() { /* Turn on WiFi */ }
-    fun sendToGeminiApi(model: String, key: String, image: Bitmap?, text: String): String { return "success" }
-    fun parseGeminiResponse(response: String): Coordinates { return Coordinates(0,0) }
-    fun tapOnCoordinates(x: Int, y: Int) { /* Tap logic */ }
-    fun typeAndSendMessageLocally(text: String) { /* Type text and click send */ }
+    fun enableNetworkLocally() { }
+    fun buildJSONPayload(model: String, text: String, img: Bitmap): String { return "{}" }
+    fun extractCoordinatesFromAI(response: String): Coordinates { return Coordinates(0,0) }
     
     override fun onAccessibilityEvent(event: AccessibilityEvent?) { }
     override fun onInterrupt() { }
 }
+
+data class AIConfig(val url: String = "", val model: String = "", val key: String = "")
+data class Coordinates(val x: Int, val y: Int)
 </script>
 
 </body>
